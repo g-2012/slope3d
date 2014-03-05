@@ -1,5 +1,7 @@
 package gauthierUtils;
 
+import imranUtils.FilesUtils;
+
 public class Triangle {
 
 	
@@ -18,6 +20,8 @@ public class Triangle {
 	 ******   CONSTRUCTEURS
 	 *******************************************************************************************************/				
 	
+	
+	// 	Construit le triangle en lui donnant :	indice ; trois points sous forme de tableau ; vecteur normal sous forme de tableau ;  pente 
 	public Triangle ( int i , double e[] , double f[] , double g[] , double n[] , double p ){
 		
 		indice = i;
@@ -40,6 +44,8 @@ public class Triangle {
 		
 	}
 		
+	
+	//	Construit le triangle en lui donnant :  indice ; trois points sous forme 9 coordonnées
 	public Triangle ( int ind , double xA , double yA , double zA , double xB , double yB , double zB , double xC , double yC , double zC  ){
 
 		indice = ind;
@@ -61,7 +67,9 @@ public class Triangle {
 		pente = TrianglesOutils.penteTriangle(vecteurNormal);
 		
 	}
-
+	
+	
+	//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
 	public Triangle ( int ind , double e[] , double f[] , double g[]  ){
 		
 		indice = ind;
@@ -83,6 +91,34 @@ public class Triangle {
 		pente = TrianglesOutils.penteTriangle(vecteurNormal);
 		
 	}
+	
+	
+//	Construit le triangle en lui donnant :  une chaine bien pensée
+	public Triangle ( String  chaine ){
+		
+		indice = FilesUtils.getIndice(chaine);
+		
+		a = FilesUtils.getVertices(chaine)[0];
+		//a[1] = FilesUtils.getVertices(chaine)[0][1];
+		//a[2] = FilesUtils.getVertices(chaine)[0][2];
+		
+		b = FilesUtils.getVertices(chaine)[1];
+		//b[1] = FilesUtils.getVertices(chaine)[1][1];
+		//b[2] = FilesUtils.getVertices(chaine)[1][2];
+		
+		c = FilesUtils.getVertices(chaine)[2];
+		//c[1] = FilesUtils.getVertices(chaine)[2][1];
+		//c[2] = FilesUtils.getVertices(chaine)[2][2];
+		
+		vecteurNormal = FilesUtils.getNormale(chaine);
+		//vecteurNormal[1] = FilesUtils.getNormale(chaine)[1];
+		//vecteurNormal[2] = FilesUtils.getNormale(chaine)[2];
+		
+		pente = FilesUtils.getPente(chaine);
+		
+	}
+	
+	
 	
 	/*******************************************************************************************************
 	 ******    METHODES
@@ -150,6 +186,8 @@ public class Triangle {
 		return chaine;
 	}
 	
+	
+	
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/
@@ -190,11 +228,16 @@ public class Triangle {
 			//Triangle abc = new Triangle( 10 , a , b , c , N , 0 );
 			
 			Triangle abc = new Triangle( 2 , a , b , c );
-			abc.afficherCaracteristiquesTriangle();
+			//abc.afficherCaracteristiquesTriangle();
 			
-			System.out.println(" ");
-			System.out.println(abc.caracteristiquesTriangle());
+			//System.out.println(" ");
+			//System.out.println(abc.caracteristiquesTriangle());
 			
+			String chaineTriangle1;
+			chaineTriangle1 = abc.caracteristiquesTriangle();
+			System.out.println(chaineTriangle1);
+			Triangle def = new Triangle(chaineTriangle1);
+			def.afficherCaracteristiquesTriangle();
 		}	//fin du main
 		
 		
