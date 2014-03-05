@@ -3,6 +3,7 @@ package Utils;
 
 public abstract class TrianglesOutils {
 	
+	
 	// Retourne les coordonnées du vecteur AB à partir des points A et B
 	public static double[] coordVecteur(double A[], double B[]){
 		double[] coord = new double[3];
@@ -12,6 +13,7 @@ public abstract class TrianglesOutils {
 		return coord;	
 	}
 	
+	
 	// Retourne la norme du vecteur V
 	public static double norme(double V[]){
 		double norme;
@@ -19,12 +21,14 @@ public abstract class TrianglesOutils {
 		return norme;	
 	}
 	
+	
 	// Retourne le Produit Scalaire des vecteurs U et V
 	public static double produitScalaire(double U[],double V[]){
 		double produitScalaire;
 		produitScalaire = U[0]*V[0] + U[1]*V[1] + U[2]*V[2];
 		return produitScalaire;	
 	}
+	
 	
 	// Retourne le Produit Vectoriel des vecteurs U et V
 	public static double[] produitVectoriel(double U[],double V[]){
@@ -37,44 +41,39 @@ public abstract class TrianglesOutils {
 		return	 produitVect;	
 	}
 	
-	// Retourne la pente d'un triangle ABC
-	public static double penteTriangle(double A[], double B[], double C[]){
-		double pente;
-		pente=0;
-		double[] k, AB, AC;
-		k  = new double[3];
-		AB = new double[3];
-		AC = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		AB = coordVecteur(A,B);
-											double xAB = AB[0];
-											double yAB = AB[1];
-											double zAB = AB[2];
-											System.out.println(" xAB = " +xAB);
-											System.out.println(" yAB = " +yAB);
-											System.out.println(" zAB = " +zAB);	
-											System.out.println(" ");	
+	
+	// Retourne le vecteur normal normalisé d'un triangle défini par trois points
+	public static double[] vecteurNormalTriangle(double a[], double b[], double c[]){
+		double [] n;
+		n= new double[3];
+		n[0]=0;
+		n[1]=0;
+		n[2]=0;
+		
+		double[] ab, ac;
+		
+		ab = coordVecteur(a,b);
+		/*double xAB = AB[0];
+		double yAB = AB[1];
+		double zAB = AB[2];
+		System.out.println(" xAB = " +xAB);
+		System.out.println(" yAB = " +yAB);
+		System.out.println(" zAB = " +zAB);	
+		System.out.println(" ");*/	
 
-		AC = coordVecteur(A,C);
-											double xAC = AC[0];
-											double yAC = AC[1];
-											double zAC = AC[2];
-											System.out.println(" xAC = " +xAC);
-											System.out.println(" yAC = " +yAC);
-											System.out.println(" zAC = " +zAC);	
-											System.out.println(" ");	
-		double[] n = produitVectoriel(AB,AC);
-											double xn = n[0];
-											double yn = n[1];
-											double zn = n[2];
-											double N = norme(n);
-											System.out.println(" xn  = " +xn);
-											System.out.println(" yn  = " +yn);
-											System.out.println(" zn  = " +zn);
-											System.out.println(" norme  n  =  " +N);
-											System.out.println(" ");
+		ac = coordVecteur(a,c);
+		/*double xAC = AC[0];
+		double yAC = AC[1];
+		double zAC = AC[2];
+		System.out.println(" xAC = " +xAC);
+		System.out.println(" yAC = " +yAC);
+		System.out.println(" zAC = " +zAC);	
+		System.out.println(" ");*/	
+		
+		n = produitVectoriel(ab,ac);
+		
+		double N = norme(n);
+		
 		if (n[2]<0){
 			for (int j=0;j<3;j++){
 				double  T = - n[j]/N;
@@ -87,17 +86,31 @@ public abstract class TrianglesOutils {
 				n[i] = t;	
 			}
 		}
-											double xnn = n[0];
-											double ynn = n[1];
-											double znn = n[2];
-											System.out.println(" xn' = " +xnn);
-											System.out.println(" yn' = " +ynn);
-											System.out.println(" zn' = " +znn);	
-											System.out.println(" norme  n' =  " +norme(n));
-											System.out.println(" ");
-											
+		/*double xnn = n[0];
+		double ynn = n[1];
+		double znn = n[2];
+		System.out.println(" xn' = " +xnn);
+		System.out.println(" yn' = " +ynn);
+		System.out.println(" zn' = " +znn);	
+		System.out.println(" norme  n' =  " +norme(n));
+		System.out.println(" ");*/
+		
+		return n;
+	}
+	
+	
+	// Retourne la pente d'un triangle ABC
+	public static double penteTriangle(double n[]){
+		double pente;
+		pente=0;
+		double[] k;
+		k  = new double[3];
+		k[0]=0;
+		k[1]=0;
+		k[2]=1;
+		
 		double nScalairek = produitScalaire(n,k);
-		pente =  /*Math.PI/2 - */Math.acos(nScalairek) ;
+		pente = Math.acos(nScalairek) ;
 		pente = Math.toDegrees(pente);
 		return	pente;	
 	}
@@ -129,10 +142,15 @@ public abstract class TrianglesOutils {
 		C[0] = 150 ;
 		C[1] = -180 ;
 		C[2] = 96 ;
-						
-		double p = penteTriangle(A,B,C);
+		
+		double[] n = vecteurNormalTriangle(A,B,C);
+		 
+		double p = penteTriangle(n);
+		
 		System.out.println(" pente = " +p);
 		
 	}   //fin du main
 
+	
+	
 }       //fin de la classe

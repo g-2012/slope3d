@@ -1,8 +1,8 @@
 package test;
 
-import java.util.Arrays;
-
 import Utils.GrilleATriangles;
+
+import java.util.Arrays;
 
 public class MainTest {
 
