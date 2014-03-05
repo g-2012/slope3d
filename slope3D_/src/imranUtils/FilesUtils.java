@@ -41,6 +41,8 @@ public abstract class FilesUtils {
 			return lignes;
 		}
 		
+		// methodes qui parsent une chaine bien formee pour renvoyer
+		// les elements adequats, i.e indice, vecteur normal, sommets etc..
 		public static int getIndice(String wellFormedLine){
 			String pattern = "i:(\\d*);";
 			Matcher mat = Pattern.compile(pattern).matcher(wellFormedLine);
@@ -50,7 +52,7 @@ public abstract class FilesUtils {
 		}
 		
 		public static double getPente(String wellFormedLine){
-			String pattern = "p:(\\d*\\.\\d*);";
+			String pattern = "p:(-?\\d*\\.\\d*);";
 			Matcher mat = Pattern.compile(pattern).matcher(wellFormedLine);
 
 			mat.find();
@@ -59,9 +61,9 @@ public abstract class FilesUtils {
 		
 		public static double[][] getVertices(String wellFormedLine){
 			double [][] vertices = new double[3][3];
-			String pattern = "a:\\((\\d*\\.\\d*),(\\d*\\.\\d*),(\\d*\\.\\d*)\\)"+
-							 "b:\\((\\d*\\.\\d*),(\\d*\\.\\d*),(\\d*\\.\\d*)\\)"+
-							 "c:\\((\\d*\\.\\d*),(\\d*\\.\\d*),(\\d*\\.\\d*)\\)";
+			String pattern = "a:\\((-?\\d*\\.\\d*),(-?\\d*\\.\\d*),(-?\\d*\\.\\d*)\\)"+
+							 "b:\\((-?\\d*\\.\\d*),(-?\\d*\\.\\d*),(-?\\d*\\.\\d*)\\)"+
+							 "c:\\((-?\\d*\\.\\d*),(-?\\d*\\.\\d*),(-?\\d*\\.\\d*)\\)";
 			Matcher mat = Pattern.compile(pattern).matcher(wellFormedLine);
 			mat.find();
 			vertices[0][0] = Double.parseDouble(mat.group(1));
@@ -78,7 +80,7 @@ public abstract class FilesUtils {
 		
 		public static double[] getNormale(String wellFormedLine){
 			double [] normale = new double[3];
-			String pattern = "n:\\((\\d*\\.\\d*),(\\d*\\.\\d*),(\\d*\\.\\d*)\\)";
+			String pattern = "n:\\((-?\\d*\\.\\d*),(-?\\d*\\.\\d*),(-?\\d*\\.\\d*)\\)";
 			Matcher mat = Pattern.compile(pattern).matcher(wellFormedLine);
 			mat.find();
 			normale[0] = Double.parseDouble(mat.group(1));
@@ -89,7 +91,7 @@ public abstract class FilesUtils {
 		
 		public static void main(String[] args) {
 			String file = "/test/test.txt";
-			String[] lines = {"i:3;a:(1.2,2.3,4.2)b:(10.2,2.1,40.1)c:(0.1,0.2,0.4);p:21.365;n:(1.2,2.001,0.24)"};
+			String[] lines = {"i:3;a:(1.2,2.3,-4.2)b:(10.2,-2.1,40.1)c:(-0.1,0.2,0.4);p:21.365;n:(1.2,-2.001,0.24)"};
 			System.out.println(file);
 			//System.out.println(Arrays.toString(lines));
 			FilesUtils.addLinesToFile(lines, file);
