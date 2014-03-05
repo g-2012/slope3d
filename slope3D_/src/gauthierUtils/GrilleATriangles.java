@@ -36,7 +36,7 @@ public abstract class GrilleATriangles {
 						grille.valeurs[i+1][j]
 				};
 				
-				listeT.add(new Triangle(a, b, c, n));
+				listeT.add(new Triangle( n , a , b , c ));
 			}
 			
 			else if(n%2 == 1) { // indice impair -> triangle inversé
@@ -58,13 +58,15 @@ public abstract class GrilleATriangles {
 							grille.valeurs[i+1][j]
 				};
 					
-				listeT.add(new Triangle(b, c, d, n));
+				listeT.add(new Triangle( n , b , c , d ));
 			}
 			
 		}
 		
 		/*for (int n = 0; n < nTT; n++){  // affichage pour tester
-			Triangle.afficherCoordonneesPointsTriangle(listeT.get(n));
-		}*/
+			listeT.get(n).afficherCaracteristiquesTriangle();*/
+		for (Triangle t: listeT)
+			t.afficherCaracteristiquesTriangle();
+		}
 	}
-}
+

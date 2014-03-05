@@ -7,64 +7,20 @@ public class Triangle {
 	 ******    ATTRIBUTS
 	 *******************************************************************************************************/	
 	
+	private 	int 		indice;
 	private		double[]	a = new double[3];
 	private		double[] 	b = new double[3];
 	private		double[] 	c = new double[3];
-	private 	double 		pente;
-	private 	int 		indice;
 	private		double[] 	vecteurNormal = new double[3];
+	private 	double 		pente;
 	
 	/*******************************************************************************************************
 	 ******   CONSTRUCTEURS
 	 *******************************************************************************************************/				
 	
-	public Triangle ( double xA , double yA , double zA , double xB , double yB , double zB , double xC , double yC , double zC ){
+	public Triangle ( int i , double e[] , double f[] , double g[] , double n[] , double p ){
 		
-		a[0] = xA;
-		a[1] = yA;
-		a[2] = zA;
-		
-		b[0] = xB;
-		b[1] = yB;
-		b[2] = zB;
-		
-		c[0] = xC;
-		c[1] = yC;
-		c[2] = zC;
-		
-		double[] k, ab, ac;
-		k  = new double[3];
-		ab = new double[3];
-		ac = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		ab = TrianglesOutils.coordVecteur(a,b);
-		ac = TrianglesOutils.coordVecteur(a,c);
-		double[] n = TrianglesOutils.produitVectoriel(ab,ac);
-		double N = TrianglesOutils.norme(n);
-		if (n[2]<0){
-			for (int j=0;j<3;j++){
-				double  T = - n[j]/N;
-				n[j] = T;
-				vecteurNormal[j] = n[j];
-			}	
-		} 
-		else{
-			for (int i=0;i<3;i++){
-				double t = n[i]/N;
-				n[i] = t;
-				vecteurNormal[i] = n[i];
-			}
-		}
-		
-		double nScalairek = TrianglesOutils.produitScalaire(n,k);
-		pente = Math.acos(nScalairek) ;
-		pente = Math.toDegrees(pente);	
-		
-	}
-	
-	public Triangle ( double e[] , double f[] , double g[] ){
+		indice = i;
 		
 		a[0] = e[0];
 		a[1] = e[1];
@@ -78,54 +34,13 @@ public class Triangle {
 		c[1] = g[1];
 		c[2] = g[2];
 		
-		double[] k, ab, ac;
-		k  = new double[3];
-		ab = new double[3];
-		ac = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		ab = TrianglesOutils.coordVecteur(a,b);
-		ac = TrianglesOutils.coordVecteur(a,c);
-		double[] n = TrianglesOutils.produitVectoriel(ab,ac);
-			/*double xn = n[0];
-			double yn = n[1];
-			double zn = n[2];*/
-		double N = TrianglesOutils.norme(n);
-			/*System.out.println(" xn  = " +xn);
-			System.out.println(" yn  = " +yn);
-			System.out.println(" zn  = " +zn);
-			System.out.println(" norme  n  =  " +N);
-			System.out.println(" ");*/
-		if (n[2]<0){
-			for (int j=0;j<3;j++){
-				double  T = - n[j]/N;
-				n[j] = T;
-				vecteurNormal[j] = n[j];
-			}
-		}
-		else{
-			for (int i=0;i<3;i++){
-				double t = n[i]/N;
-				n[i] = t;	
-				vecteurNormal[i] = n[i];
-			}
-		}
-			/*double xnn = n[0];
-			double ynn = n[1];
-			double znn = n[2];
-			System.out.println(" xn' = " +xnn);
-			System.out.println(" yn' = " +ynn);
-			System.out.println(" zn' = " +znn);	
-			System.out.println(" norme  n' =  " +TrianglesOutils.norme(n));
-			System.out.println(" ");*/
-		double nScalairek = TrianglesOutils.produitScalaire(n,k);
-		pente = Math.acos(nScalairek);
-		pente = Math.toDegrees(pente);	
+		vecteurNormal = n;
+		
+		pente = p;
 		
 	}
-	
-	public Triangle ( double xA , double yA , double zA , double xB , double yB , double zB , double xC , double yC , double zC , int ind ){
+		
+	public Triangle ( int ind , double xA , double yA , double zA , double xB , double yB , double zB , double xC , double yC , double zC  ){
 
 		indice = ind;
 		
@@ -141,39 +56,13 @@ public class Triangle {
 		c[1] = yC;
 		c[2] = zC;
 		
-		double[] k, ab, ac;
-		k  = new double[3];
-		ab = new double[3];
-		ac = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		ab = TrianglesOutils.coordVecteur(a,b);
-		ac = TrianglesOutils.coordVecteur(a,c);
-		double[] n = TrianglesOutils.produitVectoriel(ab,ac);
-		double N = TrianglesOutils.norme(n);
-		if (n[2]<0){
-			for (int j=0;j<3;j++){
-				double  T = - n[j]/N;
-				n[j] = T;
-				vecteurNormal[j] = n[j];
-			}
-		}
-		else{
-			for (int i=0;i<3;i++){
-				double t = n[i]/N;
-				n[i] = t;	
-				vecteurNormal[i] = n[i];
-			}
-		}
+		vecteurNormal = TrianglesOutils.vecteurNormalTriangle(a,b,c);
 		
-		double nScalairek = TrianglesOutils.produitScalaire(n,k);
-		pente = Math.acos(nScalairek) ;
-		pente = Math.toDegrees(pente);	
+		pente = TrianglesOutils.penteTriangle(vecteurNormal);
 		
 	}
 
-	public Triangle ( double e[] , double f[] , double g[] , int ind ){
+	public Triangle ( int ind , double e[] , double f[] , double g[]  ){
 		
 		indice = ind;
 		
@@ -189,50 +78,9 @@ public class Triangle {
 		c[1] = g[1];
 		c[2] = g[2];
 		
-		double[] k, ab, ac;
-		k  = new double[3];
-		ab = new double[3];
-		ac = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		ab = TrianglesOutils.coordVecteur(a,b);
-		ac = TrianglesOutils.coordVecteur(a,c);
-		double[] n = TrianglesOutils.produitVectoriel(ab,ac);
-			/*double xn = n[0];
-			double yn = n[1];
-			double zn = n[2];*/
-		double N = TrianglesOutils.norme(n);
-			/*System.out.println(" xn  = " +xn);
-			System.out.println(" yn  = " +yn);
-			System.out.println(" zn  = " +zn);
-			System.out.println(" norme  n  =  " +N);
-			System.out.println(" ");*/
-		if (n[2]<0){
-			for (int j=0;j<3;j++){
-				double  T = - n[j]/N;
-				n[j] = T;
-				vecteurNormal[j] = n[j];
-			}
-		}
-		else{
-			for (int i=0;i<3;i++){
-				double t = n[i]/N;
-				n[i] = t;	
-				vecteurNormal[i] = n[i];
-			}
-		}
-			/*double xnn = n[0];
-			double ynn = n[1];
-			double znn = n[2];
-			System.out.println(" xn' = " +xnn);
-			System.out.println(" yn' = " +ynn);
-			System.out.println(" zn' = " +znn);	
-			System.out.println(" norme  n' =  " +TrianglesOutils.norme(n));
-			System.out.println(" ");*/
-		double nScalairek = TrianglesOutils.produitScalaire(n,k);
-		pente = Math.acos(nScalairek);
-		pente = Math.toDegrees(pente);	
+		vecteurNormal = TrianglesOutils.vecteurNormalTriangle(a,b,c);
+		
+		pente = TrianglesOutils.penteTriangle(vecteurNormal);
 		
 	}
 	
@@ -240,46 +88,68 @@ public class Triangle {
 	 ******    METHODES
 	 *******************************************************************************************************/
 	
-	public double getx1(){return a[0];}
-	public double gety1(){return a[1];}
-	public double getz1(){return a[2];}
+	public 	double 		getx1()			{return a[0];}
+	public 	double 		gety1()			{return a[1];}
+	public 	double 		getz1()			{return a[2];}
 	
-	public double getx2(){return b[0];}
-	public double gety2(){return b[1];}
-	public double getz2(){return b[2];}
+	public 	double 		getx2()			{return b[0];}
+	public 	double 		gety2()			{return b[1];}
+	public 	double 		getz2()			{return b[2];}
 	
-	public double getx3(){return c[0];}
-	public double gety3(){return c[1];}
-	public double getz3(){return c[2];}
+	public 	double 		getx3()			{return c[0];}
+	public 	double 		gety3()			{return c[1];}
+	public 	double 		getz3()			{return c[2];}
 	
-	public double getxn(){return vecteurNormal[0];}
-	public double getyn(){return vecteurNormal[1];}
-	public double getzn(){return vecteurNormal[2];}
+	public 	double 		getxn()			{return vecteurNormal[0];}
+	public 	double 		getyn()			{return vecteurNormal[1];}
+	public	double 		getzn()			{return vecteurNormal[2];}
 	
-	public int getIndice(){return indice;}
-	public double getPente(){return pente;}
+	public 	int 		getIndice()		{return indice;}
+	public 	double 		getPente()		{return pente;}
 	
-	// Affiche les trois coordonnées des trois sommets du triangle
-	public static void afficherCoordonneesPointsTriangle(Triangle abc){	
+	
+	// Affiche les trois coordonnées des trois sommets ; le vecteur normal ; la pente  du ième triangle
+	public void afficherCaracteristiquesTriangle(){	
 		
 		System.out.println(" ");
-		System.out.println("Voici les coordonnées des trois sommets du Triangle "+abc.getIndice()+" : ");
 		System.out.println(" ");
-		System.out.println(" x1 : "+abc.getx1());
-		System.out.println(" y1 : "+abc.gety1());
-		System.out.println(" z1 : "+abc.getz1());
+		System.out.println(" Voici les caractéristiques  du Triangle "+this.getIndice()+" : ");
 		System.out.println(" ");
-		System.out.println(" x2 : "+abc.getx2());
-		System.out.println(" y2 : "+abc.gety2());
-		System.out.println(" z2 : "+abc.getz2());
+		System.out.println(" Ses trois sommets : ");
 		System.out.println(" ");
-		System.out.println(" x3 : "+abc.getx3());
-		System.out.println(" y3 : "+abc.gety3());
-		System.out.println(" z3 : "+abc.getz3());
+		System.out.println(" x1 : "+this.getx1());
+		System.out.println(" y1 : "+this.gety1());
+		System.out.println(" z1 : "+this.getz1());
 		System.out.println(" ");
-		System.out.println("La pente du triangle est : "+abc.getPente());
+		System.out.println(" x2 : "+this.getx2());
+		System.out.println(" y2 : "+this.gety2());
+		System.out.println(" z2 : "+this.getz2());
+		System.out.println(" ");
+		System.out.println(" x3 : "+this.getx3());
+		System.out.println(" y3 : "+this.gety3());
+		System.out.println(" z3 : "+this.getz3());
+		System.out.println(" ");
+		System.out.println(" Son vecteur normal : ");
+		System.out.println(" ");
+		System.out.println(" xn  = " +this.getxn());
+		System.out.println(" yn  = " +this.getyn());
+		System.out.println(" zn  = " +this.getzn());
+		System.out.println(" ");
+		System.out.println( " La pente du " +this.getIndice()+ "ème triangle est de " +this.getPente() +"°");
 	}		
-		
+	
+	// Chaine de caractères qui contient l'ensembles des caractéristiques d'un triangles
+	public String caracteristiquesTriangle(){
+		String chaine;
+		chaine = 	"i:"  +  this.getIndice() +  ";"  +
+					"a:(" +  this.getx1()	  +  ","  +  this.gety1()  + "," +  this.getz1()  + ")" 	+
+					"b:(" +  this.getx2()     +  ","  +  this.gety2()  + "," +  this.getz2()  + ")"		+
+					"c:(" +  this.getx3()     +  ","  +  this.gety3()  + "," +  this.getz3()  + ");"	+
+					"p:"  +	 this.getPente()  +  ";"  +
+					"n:(" +  this.getxn()	  +  ","  +  this.getyn()  + "," +  this.getzn()  + ")";
+		return chaine;
+	}
+	
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/
@@ -312,16 +182,18 @@ public class Triangle {
 			c[1] = -180 ;
 			c[2] = 96 ;
 			
+			double[] N = new double[3];
+			N[0] = 1 ;
+			N[1] = 2 ;
+			N[2] = 3 ;
 			
-			Triangle abc = new Triangle(a,b,c,2);
-			afficherCoordonneesPointsTriangle(abc);
-			//System.out.println( " la pente du " +abc.getIndice()+ "ème triangle est de " +abc.getPente() +"°");
+			//Triangle abc = new Triangle( 10 , a , b , c , N , 0 );
+			
+			Triangle abc = new Triangle( 2 , a , b , c );
+			abc.afficherCaracteristiquesTriangle();
+			
 			System.out.println(" ");
-			System.out.println(" xn  = " +abc.getxn());
-			System.out.println(" yn  = " +abc.getyn());
-			System.out.println(" zn  = " +abc.getzn());
-		
-			
+			System.out.println(abc.caracteristiquesTriangle());
 		}	//fin du main
 		
 		
