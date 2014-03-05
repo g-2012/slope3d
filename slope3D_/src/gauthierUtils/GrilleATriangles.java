@@ -63,7 +63,7 @@ public abstract class GrilleATriangles {
 			
 		}
 		
-		/*for (int n = 0; n < nTT; n++){  // affichage pour tester
+		/*for (int n = 0; n < nTT; n++){   
 			listeT.get(n).afficherCaracteristiquesTriangle();*/
 		for (Triangle t: listeT)
 			t.afficherCaracteristiquesTriangle();

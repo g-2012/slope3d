@@ -42,7 +42,7 @@ public abstract class TrianglesOutils {
 	}
 	
 	
-	// Retourne le vecteur normal normalisé d'un triangle défini par deux vecteurs
+	// Retourne le vecteur normal normalisé d'un triangle défini par trois points
 	public static double[] vecteurNormalTriangle(double a[], double b[], double c[]){
 		double [] n;
 		n= new double[3];
@@ -151,4 +151,6 @@ public abstract class TrianglesOutils {
 		
 	}   //fin du main
 
+	
+	
 }       //fin de la classe

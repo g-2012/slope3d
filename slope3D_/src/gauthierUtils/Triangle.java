@@ -194,6 +194,7 @@ public class Triangle {
 			
 			System.out.println(" ");
 			System.out.println(abc.caracteristiquesTriangle());
+			
 		}	//fin du main
 		
 		
