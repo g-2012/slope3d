@@ -56,6 +56,18 @@ public abstract class FilesUtils {
 			System.out.println("file written");
 		}
 		
+		//charge les triangles decrits dans le fichier file dans un liste de triangles
+		public static List<Triangle> loadTriangles(String file){
+			List<Triangle> triangles = new ArrayList<>();
+			List<String> stri = new ArrayList<String>();
+			stri = tabLines(file);
+			System.out.println("fin chargement des lignes dans un String[]");
+			for (String s:stri)
+				triangles.add(new Triangle(s));
+			System.out.println("fin appels de tous les constructeurs");
+			return triangles;
+		}
+		
 		// methodes qui parsent une chaine bien formee pour renvoyer
 		// les elements adequats, i.e indice, vecteur normal, sommets etc..
 		public static int getIndice(String wellFormedLine){
