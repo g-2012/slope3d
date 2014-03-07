@@ -1,6 +1,7 @@
-package Utils;
+package structures;
 
 import Utils.FilesUtils;
+import Utils.TrianglesOutils;
 
 public class Triangle {
 

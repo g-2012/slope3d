@@ -1,15 +1,17 @@
 package Utils;
 
-import test.GrilleTest;
+import structures.Grille;
+import structures.Triangle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class GrilleATriangles {
-	public static void grilleVersTriangles(GrilleTest grille) { // lit la grille fournie pour en extraire les sommets des triangles
+	public static List<Triangle> grilleVersTriangles(Grille grille) { // lit la grille fournie pour en extraire les sommets des triangles
 		int nTL = 2*(grille.nCol-1); // nombre de triangles par ligne
 		int nTT = nTL*(grille.nLig-1); // nombre total de triangles dans la grille
-		System.out.println(nTL+" triangles par ligne, "+nTT+" triangles au total.");
+		//System.out.println(nTL+" triangles par ligne, "+nTT+" triangles au total.");
 		ArrayList<Triangle> listeT = new ArrayList<>();
 		int i,j;
 		
@@ -63,10 +65,9 @@ public abstract class GrilleATriangles {
 			
 		}
 		
-		/*for (int n = 0; n < nTT; n++){   
-			listeT.get(n).afficherCaracteristiquesTriangle();*/
-		for (Triangle t: listeT)
-			t.afficherCaracteristiquesTriangle();
+		/*for (Triangle t: listeT)
+			t.afficherCaracteristiquesTriangle();*/
+		return listeT;
 		}
 	}
 

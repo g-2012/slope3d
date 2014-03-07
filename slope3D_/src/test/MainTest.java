@@ -1,16 +1,24 @@
 package test;
 
+import Utils.FilesUtils;
 import Utils.GrilleATriangles;
 
 import java.util.Arrays;
+import java.util.List;
+
+import structures.Grille;
+import structures.Triangle;
 
 public class MainTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		GrilleTest grille = new GrilleTest();
-		//System.out.println(Arrays.deepToString(grille.valeurs)); // affichage pour test du contenu
-		GrilleATriangles.grilleVersTriangles(grille);
+		
+		Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+		String file = "/test/test.txt";
+		List<Triangle> triangles = GrilleATriangles.grilleVersTriangles(grille);
+		
+		FilesUtils.triangles2file(triangles, file);
 	}
 
 }

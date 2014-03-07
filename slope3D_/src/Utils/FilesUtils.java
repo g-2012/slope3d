@@ -1,5 +1,8 @@
 package Utils;
 
+import structures.Grille;
+import structures.Triangle;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -39,6 +42,18 @@ public abstract class FilesUtils {
 				System.out.println("bad shit happened : "+e.getMessage());
 			}
 			return lignes;
+		}
+		
+		// ecrit dans file une description des triangles contenus dans triangles
+		public static void triangles2file(List<Triangle> triangles, String file){
+			int taille = triangles.size();
+			String [] lignes = new String[taille];
+			int i = 0;
+			for (Triangle t: triangles)
+				lignes[i++] = t.caracteristiquesTriangle();
+				//System.out.println(t.caracteristiquesTriangle());
+			addLinesToFile(lignes, file);
+			System.out.println("file written");
 		}
 		
 		// methodes qui parsent une chaine bien formee pour renvoyer
@@ -88,6 +103,72 @@ public abstract class FilesUtils {
 			normale[2] = Double.parseDouble(mat.group(3));
 			return normale;
 		}
+		
+		
+
+		public static Grille loadMNTAsc (String file){
+		// crée liste de string à partir de l'adresse du fichier sous forme de string
+				List<String> liste;
+				liste = FilesUtils.tabLines(file);		
+				// parse la liste de string
+				
+				
+				
+				// recuperation des metadonnées
+					
+					String line;
+					line = liste.get(0);
+					//ligne 1 : la nombre de colonnes
+					int cols = Integer.parseInt(line.substring(6,line.length()));
+					//ligne 2 : le nombre de lignes
+					line = liste.get(1);
+					int rows = Integer.parseInt(line.substring(6,line.length()));
+					//ligne 3 : x du centre
+					line = liste.get(2);
+					double xllcenter  = Double.parseDouble(line.substring(10,line.length()));
+					//ligne 4 : y du centre
+					line = liste.get(3);
+					double yllcenter = Double.parseDouble(line.substring(10,line.length()));
+					//ligne 5
+					line = liste.get(4);
+					double step = Double.parseDouble(line.substring(9,line.length()));
+					
+					
+					double x0 , y0 ;
+					x0 = xllcenter + ( 1 - rows)*step/2;
+					y0 = yllcenter + ( 1 - cols)*step/2;
+				
+					
+			
+				// recuperation des valeurs dans values
+					
+					double[][] values = 	new double[rows][cols];
+					String ligne;
+					String[] str;
+					
+					for (int i=6 ; i<liste.size() ; i++){
+						
+						ligne = liste.get(i).trim();
+						str = ligne.split(" ");
+						
+						for (int j=0 ; j < str.length ; j++){
+							values[i-6][j] = Double.parseDouble(str[j]);
+						}	// fin du for j
+						
+					} // fin du for i
+			
+				
+					
+					
+				// creation de la grille à retourner
+					
+				Grille grille;
+				grille = new Grille ( step  , rows , cols , x0 , y0 ,  values );
+			 
+				return grille;
+			  
+		}
+		
 		
 		public static void main(String[] args) {
 			String file = "/test/test.txt";

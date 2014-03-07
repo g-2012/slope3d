@@ -1,4 +1,4 @@
-package gauthierUtils;
+package structures;
 
 import java.util.Arrays;
 
