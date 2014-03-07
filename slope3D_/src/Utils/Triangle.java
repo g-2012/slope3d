@@ -174,7 +174,7 @@ public class Triangle {
 		System.out.println( " La pente du " +this.getIndice()+ "ème triangle est de " +this.getPente() +"°");
 	}		
 	
-	// Chaine de caractères qui contient l'ensembles des caractéristiques d'un triangles
+	// Chaine de caractères qui contient l'ensembles des caractéristiques d'un triangle
 	public String caracteristiquesTriangle(){
 		String chaine;
 		chaine = 	"i:"  +  this.getIndice() +  ";"  +
