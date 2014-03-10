@@ -86,11 +86,11 @@ public class Grille {
 				if ( valeurs[i][j] > valueMax ){
 					indLigMax = i ;
 					indColMax = j ;
-				} //end if
+				} 
 				if ( valeurs[i][j] < valueMin ){
 					indLigMin = i ;
 					indColMin = j ;
-				} //end if
+				} 
 			} 
 		}
 	
