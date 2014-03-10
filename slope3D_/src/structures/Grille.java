@@ -2,6 +2,8 @@ package structures;
 
 import java.util.Arrays;
 
+import Utils.FilesUtils;
+
 public class Grille {
 
 	
@@ -41,6 +43,14 @@ public class Grille {
 	 ******    METHODES
 	 *******************************************************************************************************/
 	
+	public 	double 		getpa()			{return pas;}
+	public 	double 		getnL()			{return nLig;}
+	public 	double 		getnC()			{return nCol;}
+	public 	double 		getx0()			{return x0;}
+	public 	double 		gety0()			{return y0;}
+	
+	
+	
 	public String toString (){
 		String chaine="\n";
 		
@@ -58,6 +68,40 @@ public class Grille {
 	}
 	
 	
+	
+	public double[] zMinMax() {
+		double[] minmax = new double[2];
+			
+		int 	indColMin = 0	;
+		int 	indLigMin = 0;
+		double 	valueMin  = valeurs[0][0];
+	
+		int 	indColMax = 0;
+		int 	indLigMax = 0;
+		double 	valueMax = 0;
+	
+	
+		for ( int i=0 ; i<nLig ; i++ ){
+			for ( int j=0 ; j<nCol ; j++ ){
+				if ( valeurs[i][j] > valueMax ){
+					indLigMax = i ;
+					indColMax = j ;
+				} 
+				if ( valeurs[i][j] < valueMin ){
+					indLigMin = i ;
+					indColMin = j ;
+				} 
+			} 
+		}
+	
+		minmax[0]  = valeurs[indLigMin][indColMin];
+		minmax[1]  = valeurs[indLigMax][indColMax];
+	
+		return minmax;
+	}
+	
+	 	
+	
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/
@@ -65,7 +109,10 @@ public class Grille {
 	
 	public static void main(String[] args) {
 		
-			
+		Grille grille = FilesUtils.loadMNTAsc("D:\\Slope3D\\testMNT.asc");
+		
+		System.out.println(grille.zMinMax()[0]);
+		System.out.println(grille.zMinMax()[1]);
 		
 	}	//fin du main
 	
