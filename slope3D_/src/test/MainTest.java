@@ -14,8 +14,8 @@ public class MainTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
-		String file = "/test/test.txt";
+		Grille grille = FilesUtils.loadMNTAsc("D:\\Slope3D\\MNT\\ASC\\0473_6915_MNT.asc");
+		String file = "D:\\Slope3D\\MNT\\ASC\\0473_6915_MNT.tri";
 		List<Triangle> triangles = GrilleATriangles.grilleVersTriangles(grille);
 		
 		FilesUtils.triangles2file(triangles, file);

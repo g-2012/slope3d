@@ -57,6 +57,28 @@ public class Grille {
 		return chaine;
 	}
 	
+	/*public double[] maxGrille() {
+	double[] vectMaximum = new double[3];
+			
+	int indColMax = 0;
+	int indLigMax = 0;
+	double valueMax = 0;
+	
+	for ( int i=0 ; i<nCol ; i++){
+		for ( int j=0 ; i<nLig ; j++){
+			if ( valeurs[i] [j]>valueMax ) {
+				indColMax = i ;
+				indLigMax = j ;
+				valueMax  = valeurs[i] [j];
+			} //end if
+		} 
+	}
+	
+	vectMaximum[1] = x0 + indColMax*pas;
+	vectMaximum[2] = y0 + indLigMax*pas;
+	vectMaximum[3] = valueMax;
+	return vectMaximum;
+}*/
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/
