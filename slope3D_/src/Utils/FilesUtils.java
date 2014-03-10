@@ -147,8 +147,8 @@ public abstract class FilesUtils {
 					
 					
 					double x0 , y0 ;
-					x0 = xllcenter + ( 1 - rows)*step/2;
-					y0 = yllcenter + ( 1 - cols)*step/2;
+					x0 = xllcenter ;//+ ( 1 - rows)*step/2;
+					y0 = yllcenter ;//+ ( 1 - cols)*step/2;
 				
 					
 			
