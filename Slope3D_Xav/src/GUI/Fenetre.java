@@ -21,7 +21,8 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 	
 	
 	private Panneau3D panEnv; // Le panneau d'environnement 3D qui affichera la représentation graphique du MNT.
-	private PanneauControle panCtrl; // Panneau qui permet de paramétrer la vue 
+	private PanneauControle panCtrl; // Panneau qui permet de paramétrer la vue
+	private BarreMenu bandeauMenu; // Barre de menu
 		
 	
 	// Constructeur.
@@ -45,8 +46,9 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
-		BarreMenu bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth(),20));
+		bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth(),20));
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
+		
 		
 			
 		
