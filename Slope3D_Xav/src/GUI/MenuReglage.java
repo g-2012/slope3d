@@ -9,8 +9,10 @@ import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 
+import Utils.Constantes;
+
 public class MenuReglage extends JMenu {
-	/* Menu permettant d'accéder aux réglages de la visualisation.
+	/** Menu permettant d'accéder aux réglages de la visualisation.
 	 * Ces réglages incluent :
 	 *	- Le réglage des objets affichés (MNT et/ou courbes de niveau)
 	 * 	- Le réglage du type de Caméra :
@@ -22,19 +24,30 @@ public class MenuReglage extends JMenu {
 	 *		° Mode utilisateur : l'utilisateur choisit des plages de valeurs et y associe des couleurs
 	 */
 	
+	/* 
+	 * Composants du menu
+	 */
 	// Cases à cocher pour le choix des objets affichés
 	JCheckBoxMenuItem chkObjMNT, chkObjIsoligne;
 	// Groupes de boutons radio pour s'assurer que seule une option soit sélectionnable par groupe.
 	ButtonGroup grpCamera, grpCouleurs; 
 	// Boutons radio
 	JRadioButtonMenuItem radCamOrtho, radCamOrbite, radCamPerso, // pour les réglages caméra
-						radCouAuto, radCouPerso; // pour les réglages couleurs
+	radCouAuto, radCouPerso; // pour les réglages couleurs
 	
+	/*
+	 * Paramètres : valeurs des choix
+	 */
+	private byte choixObj, choixCam;
+	private boolean choixCou;
 
-	
+
+	/*
+	 * Constructeur
+	 */
 	public MenuReglage() {
 		super("Reglages");
-		
+
 		// Menu de sélection des objets affichés
 		JLabel titreObj = new JLabel("  Objets affichés  ", CENTER);
 		titreObj.setHorizontalTextPosition(CENTER);
@@ -43,11 +56,11 @@ public class MenuReglage extends JMenu {
 		chkObjIsoligne = new JCheckBoxMenuItem("Isolignes");
 		this.add(chkObjMNT);
 		this.add(chkObjIsoligne);
-		
-		
+
+
 		this.addSeparator();
-		
-		
+
+
 		// Menu de sélection du type de vue
 		JLabel titreCam = new JLabel("  Type de caméra  ", CENTER);
 		titreCam.setHorizontalTextPosition(CENTER);
@@ -64,11 +77,11 @@ public class MenuReglage extends JMenu {
 		this.add(radCamOrtho);
 		this.add(radCamOrbite);
 		this.add(radCamPerso);
-		
-		
+
+
 		this.addSeparator();
-		
-		
+
+
 		// Menu de choix des couleurs du MNT
 		JLabel titreCou = new JLabel("  Couleurs du MNT  ", CENTER);
 		titreCou.setHorizontalTextPosition(CENTER);
@@ -83,11 +96,28 @@ public class MenuReglage extends JMenu {
 		this.add(radCouAuto);
 		this.add(radCouPerso);
 		
-		
-		
+		// Initialisation des valeurs de choix
+		choixObj = Constantes.OBJ_MNT;
+		choixCam = Constantes.CAM_DESSUS;
+		choixCou = Constantes.COU_AUTO;
 
-		
+
 	}
 	
+	
+	/*
+	 * Getters associés aux valeurs des choix
+	 */
+	public byte getChoixObj() {
+		return choixObj;
+	}
+	
+	public byte getChoixCam() {
+		return choixCam;
+	}
+	
+	public boolean getChoixCou() {
+		return choixCou;
+	}
 
 }
