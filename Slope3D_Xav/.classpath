@@ -2,21 +2,21 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-java-src.zip"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt-natives-linux-amd64.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt-natives-linux-i586.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/gluegen-rt-natives-windows-i586.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all-natives-linux-amd64.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all-natives-linux-i586.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-all-natives-windows-i586.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/jogl-java-src.zip"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/metadata-extractor-2.6.4.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/dumetz/Slope3D_Xav/lib/xmpcore.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-java-src.zip"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/jogl-java-src.zip"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/metadata-extractor-2.6.4.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/dumetz/git/slope3d/slope3d/Slope3D_Xav/lib/xmpcore.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
