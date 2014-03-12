@@ -115,7 +115,38 @@ public abstract class TrianglesOutils {
 		return	pente;	
 	}
 	
+	// Retourne le point I de cote zi  interpolé entre M de cote zm et n de cote zn
+	public static double[] interpol( double zi , double[] m , double[] n ){
+		
+		double[] i = new double[3];
+		
+		if ( m[0] == n[0] ) { i[0] = m[0];}
+		else {
+				double ax , bx;
+				ax = (n[2]-m[2])/(n[0]-m[0]);
+				bx =  m[2] - ax * m[0];
+				//System.out.println(" ax = " +ax);	
+				//System.out.println(" bx = " +bx);
+				i[0] =	( zi - bx ) / ax ;
+		}
+		
+		if ( m[1] == n[1] ) { i[1] = m[1];}
+		else {
+				double ay , by;
+				ay = (n[2]-m[2])/(n[1]-m[1]);
+				by =  m[2] - ay * m[1];
+				//System.out.println(" ay = " +ay);	
+				//System.out.println(" by = " +by);
+				i[1] =	( zi - by ) / ay ;
+		}
+		
+		i[2] = zi;
 
+		return i;
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		
 		
@@ -129,25 +160,32 @@ public abstract class TrianglesOutils {
 		 */
 		
 		double[] A = new double[3];
-		A[0] = 150 ;
-		A[1] = -150 ;
-		A[2] = 500 ;
+		A[0] = 30  ;
+		A[1] = 0   ;
+		A[2] = 0   ;
 		
 		double[] B = new double[3];
-		B[0] = 180 ;
-		B[1] = -150 ;
-		B[2] = 96 ;
+		B[0] = -20  ;
+		B[1] = 20  ;
+		B[2] = 10  ;
 		
 		double[] C = new double[3];
-		C[0] = 150 ;
+		C[0] = 150  ;
 		C[1] = -180 ;
-		C[2] = 96 ;
+		C[2] = 100  ;
 		
-		double[] n = vecteurNormalTriangle(A,B,C);
+		double[] I = new double[3];
+		
+		I = interpol ( 5 , A , B );
+		System.out.println(" xi = "+ I[0]);
+		System.out.println(" yi = "+ I[1]);
+		System.out.println(" zi = "+ I[2]);
+		
+		//double[] n = vecteurNormalTriangle(A,B,C);
 		 
-		double p = penteTriangle(n);
+		//double p = penteTriangle(n);
 		
-		System.out.println(" pente = " +p);
+		//System.out.println(" pente = " +p);
 		
 	}   //fin du main
 

@@ -61,8 +61,8 @@ public class Grille {
 		chaine	+= " x0= " 					+ 	x0 		+ 	"\n";
 		chaine	+= " y0= " 					+ 	y0 		+ 	"\n";
 		
-		for (double[] l: valeurs)
-			chaine += Arrays.toString(l)+"\n";
+		/*for (double[] l: valeurs)
+			chaine += Arrays.toString(l)+"\n";*/
 		
 		return chaine;
 	}
