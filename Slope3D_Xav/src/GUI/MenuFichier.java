@@ -10,7 +10,6 @@ public class MenuFichier extends JMenu {
 	
 	private JMenuItem ouvrir;
 	private JMenuItem quitter;
-	private JSeparator sep;
 	
 	public MenuFichier() {
 		super("Fichier");
@@ -22,12 +21,10 @@ public class MenuFichier extends JMenu {
 		/* Création de l'item "Quitter" qui permet de fermer le programme */
 		quitter = new JMenuItem("Quitter");
 		
-		/* Separateur à rôle purement esthétique */
-		sep = new JSeparator();
 		
 		/* Ajout des éléments du menu dans ce dernier */
 		this.add(ouvrir);
-		this.add(sep);
+		this.addSeparator();
 		this.add(quitter);
 	}
 
