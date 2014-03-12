@@ -73,7 +73,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		champVertical = 50;
 		ratio = (double) (d.getWidth() / d.getHeight());
 		profProche = 1;
-		profLoin = 1000;
+		profLoin = 100;
 	}
 	
 	
