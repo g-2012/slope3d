@@ -45,8 +45,7 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
-		JMenuBar bandeauMenu = new JMenuBar();
-		bandeauMenu.setPreferredSize(new Dimension(this.getContentPane().getWidth(),20));
+		BarreMenu bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth(),20));
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
 		
 			
