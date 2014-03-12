@@ -10,7 +10,7 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		GrilleTest grille = new GrilleTest();
 		//System.out.println(Arrays.deepToString(grille.valeurs)); // affichage pour test du contenu
-		GrilleATriangles.grilleVersTriangles(grille);
+		//GrilleATriangles.grilleVersTriangles(grille);
 	}
 
 }
