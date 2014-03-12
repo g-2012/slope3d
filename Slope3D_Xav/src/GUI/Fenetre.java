@@ -7,7 +7,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
 
 
@@ -38,8 +37,7 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		
 		this.setLayout(new BorderLayout()); // Choix de la mise en page des composants.
 		
-		panEnv = new Panneau3D(); // Création du panneau contenant l'environnement 3D.
-		panEnv.setPreferredSize(new Dimension(this.getContentPane().getWidth()-250,this.getContentPane().getHeight()-20));
+		panEnv = new Panneau3D(new Dimension(this.getContentPane().getWidth()-250,this.getContentPane().getHeight()-20)); // Création du panneau contenant l'environnement 3D.
 		this.getContentPane().add(panEnv, BorderLayout.CENTER);
 		
 		panCtrl = new PanneauControle();
@@ -51,20 +49,21 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		
 		
 			
-		
-		/*this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// S'assure que l'animateur est bien arrêté lorsqu'on ferme le programme
-				new Thread() {
-					@Override
-					public void run() {
-						if (panEnv.getAnimateur().isStarted()) {panEnv.getAnimateur().stop();}
-						System.exit(0);
-					}
-				}.start();
-			}
-		});*/
+		/* A ajouter au main pour fermer l'animateur en même temps que la fenêtre */
+//		this.addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosing(WindowEvent e) {
+//				// Use a dedicate thread to run the stop() to ensure that the
+//				// animator stops before program exits.
+//				new Thread() {
+//					@Override
+//					public void run() {
+//						if (((Panneau3D) panEnv).getAnimateur().isStarted()) ((Panneau3D) panEnv).getAnimateur().stop();
+//						System.exit(0);
+//					}
+//				}.start();
+//			}
+//		});
 		
 		this.setTitle(TITRE);
 		this.pack();
@@ -73,6 +72,11 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		
 		
 		
+	}
+	
+	/* Getter pour le panneau d'environnement 3D */
+	public Panneau3D getPanEnv(){
+		return panEnv;
 	}
 	
 }
