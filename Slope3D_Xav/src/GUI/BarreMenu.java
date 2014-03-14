@@ -22,5 +22,12 @@ public class BarreMenu extends JMenuBar {
 		this.add(mReglages);
 		
 	}
+	
+	/*
+	 * getter des reglages
+	 */
+	public MenuReglage getMenuReglage() {
+		return mReglages;
+	}
 
 }
