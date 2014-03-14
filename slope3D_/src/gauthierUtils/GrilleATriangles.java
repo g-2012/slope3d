@@ -1,14 +1,11 @@
 package gauthierUtils;
 
-import gauthierTest.GrilleTest;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import structures.Grille;
-import structures.Triangle;
-
-
+import gauthierTest.Grille;
+//import structures.Triangle;
+import gauthierUtils.Triangle;
+  
 public abstract class GrilleATriangles {
 	
 	public static List<Triangle> grilleVersTriangles(Grille grille) { // lit la grille fournie pour en extraire les sommets des triangles
@@ -63,7 +60,7 @@ public abstract class GrilleATriangles {
 							grille.valeurs[i+1][j]
 				};
 					
-				listeT.add(new Triangle( n , b , c , d ));
+				listeT.add(new Triangle( n , d , b , c ));
 			}
 			
 		}

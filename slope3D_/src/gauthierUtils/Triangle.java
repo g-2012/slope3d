@@ -69,6 +69,28 @@ public class Triangle {
 		
 	}
 	
+//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
+	public Triangle ( double e[] , double f[] , double g[]  ){
+			
+		a[0] = e[0];
+		a[1] = e[1];
+		a[2] = e[2];
+		
+		b[0] = f[0];
+		b[1] = f[1];
+		b[2] = f[2];
+		
+		c[0] = g[0];
+		c[1] = g[1];
+		c[2] = g[2];
+		
+		vecteurNormal = TrianglesOutils.vecteurNormalTriangle(a,b,c);
+		
+		pente = TrianglesOutils.penteTriangle(vecteurNormal);
+		
+	}
+	
+	
 	
 	//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
 	public Triangle ( int ind , double e[] , double f[] , double g[]  ){
@@ -125,6 +147,10 @@ public class Triangle {
 	 ******    METHODES
 	 *******************************************************************************************************/
 	
+	public 	double[] 	geta()			{return a;}
+	public 	double[] 	getb()			{return b;}
+	public 	double[] 	getc()			{return c;}
+	
 	public 	double 		getx1()			{return a[0];}
 	public 	double 		gety1()			{return a[1];}
 	public 	double 		getz1()			{return a[2];}
@@ -147,7 +173,7 @@ public class Triangle {
 
 	public void classif(double zi){
 
-		if (  a[2]<zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 0;}
+		/*if (  a[2]<zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 0;}*/
 		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]<zi  ||  a[2]==zi  &&   b[2]<zi   &&   c[2]>zi  ) {type = 1;}
 		if (  a[2]>zi   &&   b[2]==zi  &&   c[2]<zi  ||  a[2]<zi   &&   b[2]==zi  &&   c[2]>zi  ) {type = 2;}
 		if (  a[2]>zi   &&   b[2]<zi   &&   c[2]==zi ||  a[2]<zi   &&   b[2]>zi   &&   c[2]==zi ) {type = 3;}
@@ -158,7 +184,7 @@ public class Triangle {
 		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]==zi ||  a[2]==zi  &&   b[2]<zi   &&   c[2]==zi ) {type = 8;}
 		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]>zi  ||  a[2]==zi  &&   b[2]==zi  &&   c[2]<zi  ) {type = 9;}
 		
-		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]==zi ) {type = 0;}
+		
 	
 	} 
 	

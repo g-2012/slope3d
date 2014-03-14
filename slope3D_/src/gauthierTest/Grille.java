@@ -1,8 +1,8 @@
-package gauthierUtils;
+package gauthierTest;
 
 import java.util.Arrays;
 
-import gauthierUtils.FilesUtils;
+import Utils.FilesUtils;
 
 public class Grille {
 
@@ -25,17 +25,43 @@ public class Grille {
 	 ******   CONSTRUCTEURS
 	 *******************************************************************************************************/	
 	
-	public Grille ( double pa  , int nL , int nC , double xO , double yO , double[][] values ){
+	public Grille(){
 		
-		pas		=	pa	;
-		nLig	=	nL	;
-		nCol	=	nC	;
-		x0		=	xO	;
-		y0		=	yO	;
+		pas		=	25;//1	;
+		nLig	=	5;//4	;
+		nCol	=	5;//4	;
+		x0		=	0;//0	;
+		y0		=	100;//0	;
 		
-		valeurs = 	new double[nL][nC]					;
-		System.arraycopy(values, 0, valeurs, 0, nLig)	;
+		valeurs = new double[][]{ 
+				
+				/*{  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,   70  }, // altitudes des points du MNT (m)
+				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  },
+				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
+				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
+				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
+				{  70   ,  92   ,  94   ,  95   ,  96   ,  500  ,  96   ,  95   ,  95   ,   95  },
+				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
+				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
+				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
+				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  }*/
 		
+				
+				/*{  350   ,  400   ,  425   ,  400     }, // grille test pour isolignes 500
+				{  300   ,  650   ,  700   ,  420     },
+				{  350   ,  600   ,  650   ,  440     },
+				{  400   ,  450   ,  500   ,  460     },*/
+				
+				 {0.5, 1.0, 1.0, 3.0, 2.0},
+				 {1.0, 3.0, 6.0, 6.0, 3.0},
+				 {3.0, 7.0, 9.0, 7.0, 3.0},
+				 {5.0, 7.0, 8.0, 6.0, 2.0},
+				 {1.0, 2.0, 3.0, 4.0, 3.0},
+				
+				
+				
+				
+		};
 	}
 		
 	
@@ -61,8 +87,8 @@ public class Grille {
 		chaine	+= " x0= " 					+ 	x0 		+ 	"\n";
 		chaine	+= " y0= " 					+ 	y0 		+ 	"\n";
 		
-		for (double[] l: valeurs)
-			chaine += Arrays.toString(l)+"\n";
+		/*for (double[] l: valeurs)
+			chaine += Arrays.toString(l)+"\n";*/
 		
 		return chaine;
 	}
@@ -72,13 +98,13 @@ public class Grille {
 	public double[] zMinMax() {
 		double[] minmax = new double[2];
 			
-		int 	indColMin = 0;
+		int 	indColMin = 0	;
 		int 	indLigMin = 0;
 		double 	valueMin  = valeurs[0][0];
 	
 		int 	indColMax = 0;
 		int 	indLigMax = 0;
-		double 	valueMax = valeurs[0][0];
+		double 	valueMax = 0;
 	
 	
 		for ( int i=0 ; i<nLig ; i++ ){
@@ -86,12 +112,10 @@ public class Grille {
 				if ( valeurs[i][j] > valueMax ){
 					indLigMax = i ;
 					indColMax = j ;
-					valueMax = valeurs[i][j];
 				} 
 				if ( valeurs[i][j] < valueMin ){
 					indLigMin = i ;
 					indColMin = j ;
-					valueMin = valeurs[i][j];
 				} 
 			} 
 		}
@@ -111,10 +135,7 @@ public class Grille {
 	
 	public static void main(String[] args) {
 		
-		Grille grille = FilesUtils.loadMNTAsc("D:\\Slope3D\\testMNT.asc");
 		
-		System.out.println(grille.zMinMax()[0]);
-		System.out.println(grille.zMinMax()[1]);
 		
 	}	//fin du main
 	

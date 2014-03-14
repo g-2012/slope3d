@@ -1,5 +1,9 @@
 package gauthierTest;
 
+import java.util.List;
+import structures.Triangle;
+import Utils.GrilleATriangles;
+
 public class GrilleTest {  // MNT fictif créé pour les tests
 	
 	public 		double 		pas  = 30	; 		// pas du MNT (m)
