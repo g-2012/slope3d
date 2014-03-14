@@ -1,7 +1,9 @@
 package Utils;
 
 import structures.Grille;
+import structures.Isoligne;
 import structures.Triangle;
+import Utils.GrilleATriangles;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -207,18 +209,25 @@ public abstract class FilesUtils {
 		// 1ere passe, on recupere le nblignes, le nbcols, le pas et les z;
 		startTime = System.nanoTime();
 		int i = 0;
+		int tailleLigne = 1;
 		for (String ligne: liste){
 			mat = pat.matcher(ligne);
 			mat.find();
 			x = Double.parseDouble(mat.group(1));
 			y = Double.parseDouble(mat.group(2));
 			z = Double.parseDouble(mat.group(3));
-			//zs[i++]= z;
-			if (y != oldY){ // teste si on change de ligne, si c'est le cas on courtcircuite le prochain test c'en est fini du nb de cols
-				nbLignes++;
-				ligne1 = false;
-				if (pasY == 0)
+			zs[i++]= z;
+			++tailleLigne;
+			if (y != oldY){ // teste si on change de ligne, si c'est le cas on courtcircuite 
+				nbLignes++; // le prochain test c'en est fini du nb de cols et du pas en y
+				System.out.print("nL");
+				if (tailleLigne % 3201 != 0){
+					System.out.println(nbLignes +" : "+ tailleLigne);
+				}
+				if (pasY == 0 && ligne1)
 					pasY = oldY - y;
+				ligne1 = false;
+				tailleLigne = 1;
 			}
 			if (ligne1 && x != oldX){
 				nbCols++;
@@ -231,6 +240,7 @@ public abstract class FilesUtils {
 			oldX = x;
 		}
 		System.out.println("nbLignes : "+ nbLignes);
+		System.out.println("i : "+ i);
 		endTime = System.nanoTime();
 		liste = null;
 		System.out.print("passe 1 : ");
@@ -250,7 +260,9 @@ public abstract class FilesUtils {
 	}
 
 	public static void main(String[] args) {
-		String file = "/test/Ecrins_1_xyz.xyz";
+		String file = "/test/testMNT.xyz";
+		String file1 = "/test/0473_6915_MNT.asc";
+		String file2 = "/test/Ecrins.xyz";
 		/*String[] lines = {"i:3;a:(1.2,2.3,-4.2)b:(10.2,-2.1,40.1)c:(-0.1,0.2,0.4);p:21.365;n:(1.2,-2.001,0.24)"};
 		System.out.println(file);
 		System.out.println(Arrays.toString(lines));
@@ -264,13 +276,44 @@ public abstract class FilesUtils {
 		System.out.println(Arrays.toString(getNormale(lines[0])));
 		*/
 		//long startTime = System.nanoTime();
-		Grille grille = FilesUtils.loadMNTxyz(file);
+		
+		
+		
+		
+		/*Isoligne iso500 = new Isoligne( 500 , listeT );
+		for ( int i =0 ; i<iso500.segments.size() ; i++){
+			System.out.println(Arrays.deepToString(iso500.segments.get(i)));
+		}
+		
+		System.out.println(iso500.segments.size());*/
+		
+		
+		
+		
+		Grille grille = FilesUtils.loadMNTAsc(file1);
 		System.out.println(grille);
 		long startTime = System.nanoTime();
 		Triangle[] triangles = GrilleATriangles.grilleVersTriangles2(grille);
 		long endTime = System.nanoTime();
+		/*
 		System.out.print("Transfo grille en tableau de triangles : ");
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println("nb triangles : " + triangles.length);
+		*/
+		startTime = System.nanoTime();
+		List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
+		endTime = System.nanoTime();
+		System.out.print("Transfo grille en tableau de triangles : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println("nb triangles : " + triangles.length);
+		
+		startTime = System.nanoTime();
+		Isoligne iso3 = new Isoligne(4, listeT);
+		endTime = System.nanoTime();
+		System.out.print("Isoligne en  : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println(iso3.segments.size());
+		//System.out.println(triangles[51183].caracteristiquesTriangle());
 		//long endTime = System.nanoTime();
 		//System.out.print("Chargement MNT xyz en grille : ");
 		//System.out.println(((float)endTime-startTime)/1e9 +" secondes");

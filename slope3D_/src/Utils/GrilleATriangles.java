@@ -60,7 +60,7 @@ public abstract class GrilleATriangles {
 							grille.valeurs[i+1][j]
 				};
 					
-				listeT.add(new Triangle( n , b , c , d ));
+				listeT.add(new Triangle( n , d , b , c ));
 			}
 			
 		}

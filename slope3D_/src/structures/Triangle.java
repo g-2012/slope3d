@@ -16,7 +16,7 @@ public class Triangle {
 	private		double[] 	c = new double[3];
 	private		double[] 	vecteurNormal = new double[3];
 	private 	double 		pente;
-	private		int			type;
+	//private		int			type;
 	
 	/*******************************************************************************************************
 	 ******   CONSTRUCTEURS
@@ -70,6 +70,26 @@ public class Triangle {
 		
 	}
 	
+//	Construit le triangle en lui donnant :  trois points sous forme de tableau 
+	public Triangle ( double e[] , double f[] , double g[]  ){
+			
+		a[0] = e[0];
+		a[1] = e[1];
+		a[2] = e[2];
+		
+		b[0] = f[0];
+		b[1] = f[1];
+		b[2] = f[2];
+		
+		c[0] = g[0];
+		c[1] = g[1];
+		c[2] = g[2];
+		
+		vecteurNormal = TrianglesOutils.vecteurNormalTriangle(a,b,c);
+		
+		pente = TrianglesOutils.penteTriangle(vecteurNormal);
+		
+	}
 	
 	//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
 	public Triangle ( int ind , double e[] , double f[] , double g[]  ){
@@ -125,6 +145,9 @@ public class Triangle {
 	/*******************************************************************************************************
 	 ******    METHODES
 	 *******************************************************************************************************/
+	public 	double[] 	geta()			{return a;}
+	public 	double[] 	getb()			{return b;}
+	public 	double[] 	getc()			{return c;}
 	
 	public 	double 		getx1()			{return a[0];}
 	public 	double 		gety1()			{return a[1];}
@@ -146,7 +169,7 @@ public class Triangle {
 	public 	double 		getPente()		{return pente;}
 	
 
-	public void classif(double zi){
+	/*public void classif(double zi){
 
 		if (  a[2]<zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 0;}
 		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]<zi  ||  a[2]==zi  &&   b[2]<zi   &&   c[2]>zi  ) {type = 1;}
@@ -161,7 +184,7 @@ public class Triangle {
 		
 		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]==zi ) {type = 0;}
 	
-	} 
+	} */
 	
 	
 	
@@ -261,8 +284,8 @@ public class Triangle {
 			def.afficherCaracteristiquesTriangle();
 			
 			
-			abc.classif(450);
-			System.out.println("\n Le triangle numéro "+ abc.indice +" est de type : "+ abc.type);
+			
+			System.out.println("\n Le triangle numéro "+ abc.indice);
 			
 		}	//fin du main
 		
