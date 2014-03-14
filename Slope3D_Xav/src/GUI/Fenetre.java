@@ -40,12 +40,11 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		panEnv = new Panneau3D(new Dimension(this.getContentPane().getWidth()-250,this.getContentPane().getHeight()-20)); // Création du panneau contenant l'environnement 3D.
 		this.getContentPane().add(panEnv, BorderLayout.CENTER);
 		
-		panCtrl = new PanneauControle();
-		panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
-		this.getContentPane().add(panCtrl, BorderLayout.EAST);
-		
 		bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth(),20));
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
+		
+		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250,this.getContentPane().getHeight()-20));
+		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
 		
 			
