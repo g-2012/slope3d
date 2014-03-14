@@ -20,7 +20,7 @@ public abstract class GrilleATriangles {
 			j = (n - i*nTL) / 2; // indice de la colonne du coin supérieur gauche de la case dans la grille
 			
 			if (n%2 == 0){ // indice pair -> triangle droit
-				double a[] = { //sommet supérieur gauche du triangle
+				double a[] = { //sommet supérieur gauche du triangle (angle droit)
 					grille.x0 + j * grille.pas, // absisse du sommet en m (Easting)
 					grille.y0 - i * grille.pas, // ordonnée du sommet en m (Northing)
 					grille.valeurs[i][j] // altitude du sommet
@@ -42,7 +42,7 @@ public abstract class GrilleATriangles {
 			}
 			
 			else if(n%2 == 1) { // indice impair -> triangle inversé
-				double d[] = { //sommet inférieur droit du triangle
+				double d[] = { //sommet inférieur droit du triangle (angle droit)
 						grille.x0 + (j+1) * grille.pas, // absisse du sommet en m (Easting)
 						grille.y0 - (i+1) * grille.pas, // ordonnée du sommet en m (Northing)
 						grille.valeurs[i+1][j+1] // altitude du sommet
@@ -60,7 +60,7 @@ public abstract class GrilleATriangles {
 							grille.valeurs[i+1][j]
 				};
 					
-				listeT.add(new Triangle( n , b , c , d ));
+				listeT.add(new Triangle( n , d , b , c ));
 			}
 			
 		}
