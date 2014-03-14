@@ -187,6 +187,7 @@ public class PanneauControleRotation extends JPanel {
 		bVitMoins.setLocation(160, 135+140); // bouton -
 		this.add(bVitMoins);
 				
+		this.setVisible(true);
 		
 	}
 
