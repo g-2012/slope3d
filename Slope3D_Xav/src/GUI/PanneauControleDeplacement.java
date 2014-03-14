@@ -95,6 +95,9 @@ public class PanneauControleDeplacement extends JPanel {
 		// case 3,2		
 		this.add(bDroit);
 		
+		this.setVisible(true);
+		
+		
 		
 	}
 
