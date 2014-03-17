@@ -24,16 +24,16 @@ public class PanneauControleRotation extends JPanel {
 	 * - En vue de dessus, aucune rotation autorisée
 	 * - En vue libre, rotation verticale ou horizontale de la caméra, et modification de la sensibilité des commandes
 	 */
-	
+
 	/*
 	 * Attributs : boutons
 	 */
 	JButton bSensHora, bSensAnti, // Boutons de choix du sens : respectivement horaire et antihoraire
-			bVitPlus, bVitMoins,  // Vitesse de rotation / sensibilité des commandes de rotation
-			bHPlus, bHMoins, // Rotation par rapport au plan vertical (dans le plan horizontal)
-			bVPlus, bVMoins; // Rotation par rapport au plan horizontal (dans le plan vertical)
-	
-		
+	bVitPlus, bVitMoins,  // Vitesse de rotation / sensibilité des commandes de rotation
+	bHPlus, bHMoins, // Rotation par rapport au plan vertical (dans le plan horizontal)
+	bVPlus, bVMoins; // Rotation par rapport au plan horizontal (dans le plan vertical)
+
+
 	/*
 	 * Constructeur
 	 */
@@ -41,8 +41,7 @@ public class PanneauControleRotation extends JPanel {
 		super();
 		this.setPreferredSize(d);
 		this.setBackground(new Color(225,225,225));
-		//this.setFont(new Font("TimesRoman", Font.PLAIN, 10));
-		
+
 		/*
 		 * Création des boutons
 		 */
@@ -51,10 +50,10 @@ public class PanneauControleRotation extends JPanel {
 		bVitPlus = new JButton("\u002b" /* signe + */);
 		bVitMoins = new JButton("\u002d" /* signe - */);
 		bHPlus = new JButton("\u002b");
-		bHMoins = new JButton("\u002D");
+		bHMoins = new JButton("\u002d");
 		bVPlus = new JButton("\u002b");
 		bVMoins = new JButton("\u002d");
-		
+
 		/*
 		 * Dimensionnement des boutons
 		 */
@@ -66,8 +65,8 @@ public class PanneauControleRotation extends JPanel {
 		bVMoins.setSize(30,30);
 		bHPlus.setSize(30,30);
 		bHMoins.setSize(30,30);
-		
-		
+
+
 		/*
 		 * Activation ou désactivation des boutons selon la vue choisie
 		 */
@@ -104,109 +103,25 @@ public class PanneauControleRotation extends JPanel {
 			bVPlus.setEnabled(true);
 			bVMoins.setEnabled(true);			
 		}
-		
+
 		/*
 		 * Mise en page et intégration de boutons
 		 */
-		/* pas de Layout*/
-		/*
-		this.setLayout(null);
-		
-		JLabel tRot = new JLabel("Rotation"); // Le titre du panneau
-		tRot.setSize(70, 25);
-		tRot.setHorizontalAlignment(AbstractButton.CENTER);
-		tRot.setVerticalAlignment(AbstractButton.CENTER);
-		tRot.setLocation(90, 10);
-		this.add(tRot);
-		
-		//Boutons liés à l'angle horizontal
-		JLabel tHor = new JLabel("Horizontal"); // Titre
-		tHor.setSize(70,25);
-		tHor.setHorizontalAlignment(AbstractButton.CENTER);
-		tHor.setVerticalAlignment(AbstractButton.CENTER);
-		tHor.setLocation(40, 45);
-		this.add(tHor);
-		bHPlus.setLocation(60, 75); // bouton +
-		this.add(bHPlus);
-		JLabel vHor = new JLabel("XXX"); // Valeur
-		vHor.setSize(40, 25);
-		vHor.setHorizontalAlignment(AbstractButton.CENTER);
-		vHor.setVerticalAlignment(AbstractButton.CENTER);
-		vHor.setLocation(55, 110);
-		this.add(vHor);
-		bHMoins.setLocation(60, 140); // bouton -
-		this.add(bHMoins);
-		
-		//Boutons liés à l'angle vertical
-		JLabel tVer = new JLabel("Horizontal"); // Titre
-		tVer.setSize(70,25);
-		tVer.setHorizontalAlignment(AbstractButton.CENTER);
-		tVer.setVerticalAlignment(AbstractButton.CENTER);
-		tVer.setLocation(140, 45);
-		this.add(tVer);
-		bVPlus.setLocation(160, 75); // bouton +
-		this.add(bVPlus);
-		JLabel vVer = new JLabel("XXX"); // Valeur
-		vVer.setSize(40, 25);
-		vVer.setHorizontalAlignment(AbstractButton.CENTER);
-		vVer.setVerticalAlignment(AbstractButton.CENTER);
-		vVer.setLocation(155, 110);
-		this.add(vVer);
-		bVMoins.setLocation(160, 140); // bouton -
-		this.add(bVMoins);
-		
-		//Boutons liés au sens de rotation
-		JLabel tSens = new JLabel("Sens"); // Titre
-		tSens.setSize(70,25);
-		tSens.setHorizontalAlignment(AbstractButton.CENTER);
-		tSens.setVerticalAlignment(AbstractButton.CENTER);
-		tSens.setLocation(40, 135+45);
-		this.add(tSens);
-		bSensHora.setLocation(60, 135+75); // bouton sens horaire
-		this.add(bSensHora);
-		JLabel vSens = new JLabel("XXX"); // Valeur
-		vSens.setSize(40, 25);
-		vSens.setHorizontalAlignment(AbstractButton.CENTER);
-		vSens.setVerticalAlignment(AbstractButton.CENTER);
-		vSens.setLocation(55, 135+110);
-		this.add(vSens);
-		bSensAnti.setLocation(60, 135+140); // bouton sens antihoraire
-		this.add(bSensAnti);
 
-		//Boutons liés à la vitesse
-		JLabel tVit = new JLabel("Vitesse"); // Titre
-		tVit.setSize(70,25);
-		tVit.setHorizontalAlignment(AbstractButton.CENTER);
-		tVit.setVerticalAlignment(AbstractButton.CENTER);
-		tVit.setLocation(140, 135+45);
-		this.add(tVit);
-		bVitPlus.setLocation(160, 135+75); // bouton +
-		this.add(bVitPlus);
-		JLabel vVit = new JLabel("XXX"); // Valeur
-		vVit.setSize(40, 25);
-		vVit.setHorizontalAlignment(AbstractButton.CENTER);
-		vVit.setVerticalAlignment(AbstractButton.CENTER);
-		vVit.setLocation(155, 135+110);
-		this.add(vVit);
-		bVitMoins.setLocation(160, 135+140); // bouton -
-		this.add(bVitMoins);
-		*/
-		
-		/* Layout = GroupLayout */
-		
+		// Gestionnaire de mise en page = GroupLayout
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-		
+
 		// Espacements entre composants et bordure puis entre composants
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
-		
+
 		// Création des éléments
 		JLabel tRot = new JLabel("Rotation"); // Le titre du panneau
 		tRot.setSize(70, 25);
 		tRot.setHorizontalAlignment(AbstractButton.CENTER);
 		tRot.setVerticalAlignment(AbstractButton.CENTER);
-		
+
 		//Boutons liés à l'angle horizontal
 		JLabel tHor = new JLabel("Horizontal"); // Titre
 		tHor.setSize(70,25);
@@ -217,7 +132,7 @@ public class PanneauControleRotation extends JPanel {
 		vHor.setSize(40, 25);
 		vHor.setHorizontalAlignment(AbstractButton.CENTER);
 		vHor.setVerticalAlignment(AbstractButton.CENTER);
-		
+
 		//Boutons liés à l'angle vertical
 		JLabel tVer = new JLabel("Vertical"); // Titre
 		tVer.setSize(70,25);
@@ -228,7 +143,7 @@ public class PanneauControleRotation extends JPanel {
 		vVer.setSize(40, 25);
 		vVer.setHorizontalAlignment(AbstractButton.CENTER);
 		vVer.setVerticalAlignment(AbstractButton.CENTER);
-		
+
 		//Boutons liés au sens de rotation
 		JLabel tSens = new JLabel("Sens"); // Titre
 		tSens.setSize(70,25);
@@ -316,10 +231,10 @@ public class PanneauControleRotation extends JPanel {
 												)
 								)
 				);
-		
-				
+
+
 		this.setVisible(true);
-		
+
 	}
 
 }
