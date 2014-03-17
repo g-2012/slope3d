@@ -1,13 +1,14 @@
-package structures;
+package imranUtils;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import Utils.FilesUtils;
-
 public class Grille {
+
+	
+
 	/*******************************************************************************************************
 	 ******    ATTRIBUTS
 	 *******************************************************************************************************/	
@@ -15,8 +16,8 @@ public class Grille {
 	public 		double 		pas			; 		// pas du MNT (m)
 	public 		int 		nLig		; 		// nombre de lignes   de la grille
 	public		int			nCol		; 		// nombre de colonnes de la grille
-	public 		double 		x0  		; 		// abcsisse  du coin supérieur gauche
-	public 		double 		y0 			; 		// ordonnée  du coin supérieur gauche
+	public 		double 		x0  		; 		// abcsisse  du coin supï¿½rieur gauche
+	public 		double 		y0 			; 		// ordonnee  du coin supï¿½rieur gauche
 	
 	public 		double[][] 	valeurs 	;		// valeurs
 	
@@ -24,45 +25,6 @@ public class Grille {
 	/*******************************************************************************************************
 	 ******   CONSTRUCTEURS
 	 *******************************************************************************************************/	
-	
-	public Grille(){
-		
-		pas		=	25;//1	;
-		nLig	=	5;//4	;
-		nCol	=	5;//4	;
-		x0		=	0;//0	;
-		y0		=	100;//0	;
-		
-		valeurs = new double[][]{ 
-				
-				/*{  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,   70  }, // altitudes des points du MNT (m)
-				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  },
-				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
-				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
-				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
-				{  70   ,  92   ,  94   ,  95   ,  96   ,  500  ,  96   ,  95   ,  95   ,   95  },
-				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
-				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
-				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
-				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  }*/
-		
-				
-				/*{  350   ,  400   ,  425   ,  400     }, // grille test pour isolignes 500
-				{  300   ,  650   ,  700   ,  420     },
-				{  350   ,  600   ,  650   ,  440     },
-				{  400   ,  450   ,  500   ,  460     },*/
-				
-				 {0.5, 1.0, 1.0, 3.0, 2.0},
-				 {1.0, 3.0, 6.0, 6.0, 3.0},
-				 {3.0, 7.0, 9.0, 7.0, 3.0},
-				 {5.0, 7.0, 8.0, 6.0, 2.0},
-				 {1.0, 2.0, 3.0, 4.0, 3.0},
-				
-				
-				
-				
-		};
-	}
 	
 	public Grille ( double pa  , int nL , int nC , double xO , double yO , double[][] values ){
 		
@@ -76,6 +38,7 @@ public class Grille {
 		System.arraycopy(values, 0, valeurs, 0, nLig)	;
 		
 	}
+		
 	
 	/*******************************************************************************************************
 	 ******    METHODES
@@ -99,8 +62,8 @@ public class Grille {
 		chaine	+= " x0= " 					+ 	x0 		+ 	"\n";
 		chaine	+= " y0= " 					+ 	y0 		+ 	"\n";
 		
-		/*for (double[] l: valeurs)
-			chaine += Arrays.toString(l)+"\n";*/
+		for (double[] l: valeurs)
+			chaine += Arrays.toString(l)+"\n";
 		
 		return chaine;
 	}
@@ -140,6 +103,7 @@ public class Grille {
 		return minmax;
 	}
 	
+		
 	public byte cellType(double z, double a, double b, double c){
 		byte type = 0;
 		if (a > z )
@@ -161,7 +125,7 @@ public class Grille {
 	// a--b      c
 	// |         |
 	// c      b--a
-	//code volontairement explosé pour chercher la performance
+	//code volontairement explosÃ© pour chercher la performance
 	//facteur 10 sur la methode ecrite dans Isoligne teste sur core i3
 	public List<Point2D.Double[]> makeIsoZt(double z){
 		List<Point2D.Double[]> segments = new ArrayList<>();
@@ -179,7 +143,7 @@ public class Grille {
 				za = valeurs[i][j] ; zb = valeurs[i][j+1] ; zc = valeurs[i+1][j];
 				type = cellType(z, za, zb, zc);
 				switch(type){
-					//cas où on ne fait rien : cas "0"
+					//cas oÃ¹ on ne fait rien : cas "0"
 					case 0b00000000:
 					case 0b00000111:
 					case 0b01000000:
@@ -289,7 +253,7 @@ public class Grille {
 				za = valeurs[i+1][j+1] ; zb = valeurs[i+1][j] ; zc = valeurs[i][j+1];
 				type = cellType(z, za, zb, zc);
 				switch(type){
-					//cas où on ne fait rien : cas "0"
+					//cas oÃ¹ on ne fait rien : cas "0"
 					case 0b00000000:
 					case 0b00000111:
 					case 0b01000000:
@@ -397,9 +361,6 @@ public class Grille {
 		}
 		return segments;
 	}
-
-	
-	 	
 	
 	/*******************************************************************************************************
 	 ******    MAIN   
@@ -407,12 +368,26 @@ public class Grille {
 	
 	
 	public static void main(String[] args) {
-		
-		Grille grille = FilesUtils.loadMNTAsc("D:\\Slope3D\\testMNT.asc");
-		
+		long startTime = System.nanoTime();
+		Grille grille = FilesUtils.loadMNTAsc("/test/fakemnt.asc");
+		long endTime = System.nanoTime();
+		System.out.print("creation grille : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		//System.out.println(grille);
+		List<Point2D.Double[]> segment;
 		System.out.println(grille.zMinMax()[0]);
 		System.out.println(grille.zMinMax()[1]);
-		
+		startTime = System.nanoTime();
+		segment = grille.makeIsoZt(5);
+		endTime = System.nanoTime();
+		System.out.print("calcul isoligne : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println(segment.size());
+		for (Point2D.Double[] p: segment)
+			System.out.println(Arrays.deepToString(p));
+		//System.out.println(grille.makeIsoZ(5).get(0)[0]);
+		//System.out.println(grille.makeIsoZ(5).get(0)[1]);
+		//System.out.println(Integer.toBinaryString(grille.cellType(5,1,3,7,3)));
 	}	//fin du main
 	
 		

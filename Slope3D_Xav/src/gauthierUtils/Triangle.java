@@ -1,7 +1,6 @@
-package structures;
+package gauthierUtils;
 
-import Utils.FilesUtils;
-import Utils.TrianglesOutils;
+import imranUtils.FilesUtils;
 
 public class Triangle {
 
@@ -16,6 +15,7 @@ public class Triangle {
 	private		double[] 	c = new double[3];
 	private		double[] 	vecteurNormal = new double[3];
 	private 	double 		pente;
+	private		int			type;
 	
 	/*******************************************************************************************************
 	 ******   CONSTRUCTEURS
@@ -69,7 +69,7 @@ public class Triangle {
 		
 	}
 	
-//	Construit le triangle en lui donnant :  trois points sous forme de tableau 
+//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
 	public Triangle ( double e[] , double f[] , double g[]  ){
 			
 		a[0] = e[0];
@@ -89,6 +89,8 @@ public class Triangle {
 		pente = TrianglesOutils.penteTriangle(vecteurNormal);
 		
 	}
+	
+	
 	
 	//	Construit le triangle en lui donnant :  indice ; trois points sous forme de tableau 
 	public Triangle ( int ind , double e[] , double f[] , double g[]  ){
@@ -144,6 +146,7 @@ public class Triangle {
 	/*******************************************************************************************************
 	 ******    METHODES
 	 *******************************************************************************************************/
+	
 	public 	double[] 	geta()			{return a;}
 	public 	double[] 	getb()			{return b;}
 	public 	double[] 	getc()			{return c;}
@@ -166,6 +169,24 @@ public class Triangle {
 	
 	public 	int 		getIndice()		{return indice;}
 	public 	double 		getPente()		{return pente;}
+	
+
+	public void classif(double zi){
+
+		/*if (  a[2]<zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 0;}*/
+		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]<zi  ||  a[2]==zi  &&   b[2]<zi   &&   c[2]>zi  ) {type = 1;}
+		if (  a[2]>zi   &&   b[2]==zi  &&   c[2]<zi  ||  a[2]<zi   &&   b[2]==zi  &&   c[2]>zi  ) {type = 2;}
+		if (  a[2]>zi   &&   b[2]<zi   &&   c[2]==zi ||  a[2]<zi   &&   b[2]>zi   &&   c[2]==zi ) {type = 3;}
+		if (  a[2]>zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]<zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 4;}
+		if (  a[2]<zi   &&   b[2]>zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]<zi   &&   c[2]>zi  ) {type = 5;}
+		if (  a[2]<zi   &&   b[2]<zi   &&   c[2]>zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]<zi  ) {type = 6;}
+		if (  a[2]>zi   &&   b[2]==zi  &&   c[2]==zi ||  a[2]<zi   &&   b[2]==zi  &&   c[2]==zi ) {type = 7;}
+		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]==zi ||  a[2]==zi  &&   b[2]<zi   &&   c[2]==zi ) {type = 8;}
+		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]>zi  ||  a[2]==zi  &&   b[2]==zi  &&   c[2]<zi  ) {type = 9;}
+		
+		
+	
+	} 
 	
 	
 	
@@ -265,8 +286,8 @@ public class Triangle {
 			def.afficherCaracteristiquesTriangle();
 			
 			
-			
-			System.out.println("\n Le triangle numéro "+ abc.indice);
+			abc.classif(450);
+			System.out.println("\n Le triangle numéro "+ abc.indice +" est de type : "+ abc.type);
 			
 		}	//fin du main
 		

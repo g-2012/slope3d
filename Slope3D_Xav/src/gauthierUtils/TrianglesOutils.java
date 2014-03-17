@@ -1,4 +1,4 @@
-package Utils;
+package gauthierUtils;
 //package premier_projet;
 
 public abstract class TrianglesOutils {
