@@ -37,7 +37,7 @@ public class PanneauControleRotation extends JPanel {
 	 */
 	public PanneauControleRotation(MenuReglage mReg /* permet de connaitre les valeurs des réglages */, Dimension d) {
 		super();
-		this.setSize(d);
+		this.setPreferredSize(d);
 		this.setBackground(new Color(225,225,225));
 		//this.setFont(new Font("TimesRoman", Font.PLAIN, 10));
 		
