@@ -66,8 +66,8 @@ public class MenuReglage extends JMenu {
 		titreCam.setHorizontalTextPosition(CENTER);
 		this.add(titreCam);
 		grpCamera = new ButtonGroup();
-		radCamOrtho = new JRadioButtonMenuItem("Vue de dessus", true);
-		radCamOrbite = new JRadioButtonMenuItem("En orbite");
+		radCamOrtho = new JRadioButtonMenuItem("Vue de dessus");
+		radCamOrbite = new JRadioButtonMenuItem("En orbite", true);
 		radCamPerso = new JRadioButtonMenuItem("Navigation 3D");
 		// Groupement des boutons
 		grpCamera.add(radCamOrtho);
@@ -98,7 +98,7 @@ public class MenuReglage extends JMenu {
 		
 		// Initialisation des valeurs de choix
 		choixObj = Constantes.OBJ_MNT;
-		choixCam = Constantes.CAM_DESSUS;
+		choixCam = Constantes.CAM_ORBITE;
 		choixCou = Constantes.COU_AUTO;
 
 

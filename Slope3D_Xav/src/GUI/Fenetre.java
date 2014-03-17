@@ -3,28 +3,38 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 
 
-public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'éxécute le programme.
-	// Attributs de la classe	
+public class Fenetre extends JFrame { /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1856636070468607309L;
+
+	/*
+	 * Classe d'affichage de la fenêtre où s'éxécute le programme.
+	 */
+	/* 
+	 * Attributs de la classe	
+	 */
 	private String TITRE = "Slope3D : affichage de MNT coloré selon la pente"; // Titre  de la fenêtre.
 	
-	private int LARGEUR_ENV = 800; // Largeur de la zone de dessin 3D.
-	private int HAUTEUR_ENV = 800; // Longueur de la zone de dessin 3D.
-	
+	/* private int LARGEUR_ENV = 800; // Largeur de la zone de dessin 3D.
+	* private int HAUTEUR_ENV = 800; // Longueur de la zone de dessin 3D.
+	*/	
 	
 	private Panneau3D panEnv; // Le panneau d'environnement 3D qui affichera la représentation graphique du MNT.
 	private PanneauControle panCtrl; // Panneau qui permet de paramétrer la vue
 	private BarreMenu bandeauMenu; // Barre de menu
 		
 	
-	// Constructeur.
+	/*
+	 *  Constructeur.
+	 */
 	public Fenetre() {
 		super(); // Crée une instance de JFrame.
 				
@@ -40,10 +50,11 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		panEnv = new Panneau3D(new Dimension(this.getContentPane().getWidth()-250,this.getContentPane().getHeight()-20)); // Création du panneau contenant l'environnement 3D.
 		this.getContentPane().add(panEnv, BorderLayout.CENTER);
 		
-		bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth(),20));
+		bandeauMenu = new BarreMenu(new Dimension(this.getContentPane().getWidth()-250,20));
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
 		
-		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250,this.getContentPane().getHeight()-20));
+		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250,this.getContentPane().getHeight()));
+		panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
 		
@@ -78,4 +89,10 @@ public class Fenetre extends JFrame { // Classe d'affichage de la fenêtre où s'é
 		return panEnv;
 	}
 	
+	/*
+	 * Getter pour le menu
+	 */
+	public BarreMenu getMenu(){
+		return bandeauMenu;
+	}
 }

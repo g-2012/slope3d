@@ -1,6 +1,9 @@
 package Test;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
 
 import GUI.*;
 
@@ -23,7 +26,13 @@ public class Lanceur {
 				}.start();
 			}
 		});
-
+		
+		JFrame fen2 = new JFrame();
+		fen2.setSize(250, 600);
+		PanneauControle pan = new PanneauControle(fen.getMenu().getMenuReglage(), new Dimension(250,575));
+		pan.setVisible(true);
+		fen2.add(pan);
+		fen2.setVisible(true);
 	}
 
 }
