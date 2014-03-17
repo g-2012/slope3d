@@ -10,9 +10,11 @@ import java.awt.GridLayout;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import Utils.Constantes;
 
@@ -57,14 +59,14 @@ public class PanneauControleRotation extends JPanel {
 		/*
 		 * Dimensionnement des boutons
 		 */
-		bSensHora.setSize(30,30);
-		bSensAnti.setSize(30,30);
-		bVitPlus.setSize(30,30);
-		bVitMoins.setSize(30,30);
-		bVPlus.setSize(30,30);
-		bVMoins.setSize(30,30);
-		bHPlus.setSize(30,30);
-		bHMoins.setSize(30,30);
+		bSensHora.setSize(60,60);
+		bSensAnti.setSize(60,60);
+		bVitPlus.setSize(60,60);
+		bVitMoins.setSize(60,60);
+		bVPlus.setSize(60,60);
+		bVMoins.setSize(60,60);
+		bHPlus.setSize(60,60);
+		bHMoins.setSize(60,60);
 
 
 		/*
@@ -118,7 +120,8 @@ public class PanneauControleRotation extends JPanel {
 
 		// Création des éléments
 		JLabel tRot = new JLabel("Rotation"); // Le titre du panneau
-		tRot.setSize(70, 25);
+		tRot.setSize(75, 30);
+		tRot.setBorder(new LineBorder(Color.GRAY, 1));
 		tRot.setHorizontalAlignment(AbstractButton.CENTER);
 		tRot.setVerticalAlignment(AbstractButton.CENTER);
 
@@ -168,68 +171,81 @@ public class PanneauControleRotation extends JPanel {
 
 		// Ajout des élements aux groupes :
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-				.addComponent(tRot)
-				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-								.addComponent(tHor)
-								.addComponent(bHPlus)
-								.addComponent(vHor)
-								.addComponent(bHMoins)	
-								)
-								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-										.addComponent(tVer)
-										.addComponent(bVPlus)
-										.addComponent(vVer)
-										.addComponent(bVMoins)
-										)
-						)
+				layout.createSequentialGroup()
+				.addContainerGap(20, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+						.addComponent(tRot)
 						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-										.addComponent(tSens)
-										.addComponent(bSensHora)
-										.addComponent(vSens)
-										.addComponent(bSensAnti)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+										.addComponent(tHor,70,70,70)
+										.addComponent(bHPlus,60,60,60)
+										.addComponent(vHor,60,60,60)
+										.addComponent(bHMoins,60,60,60)	
 										)
-										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-												.addComponent(tVit)
-												.addComponent(bVitPlus)
-												.addComponent(vVit)
-												.addComponent(bVitMoins)
-												)
+								.addGap(15)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+										.addComponent(tVer,70,70,70)
+										.addComponent(bVPlus,60,60,60)
+										.addComponent(vVer,60,60,60)
+										.addComponent(bVMoins,60,60,60)
+										)
 								)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+										.addComponent(tSens,70,70,70)
+										.addComponent(bSensHora,60,60,60)
+										.addComponent(vSens,60,60,60)
+										.addComponent(bSensAnti,60,60,60)
+										)
+								.addGap(15)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+										.addComponent(tVit,70,70,70)
+										.addComponent(bVitPlus,60,60,60)
+										.addComponent(vVit,60,60,60)
+										.addComponent(bVitMoins,60,60,60)
+										)						
+								)
+						)
+				.addContainerGap(20, Short.MAX_VALUE)	
 				);
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
+				.addContainerGap(20, 30)
 				.addComponent(tRot)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addGap(20)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+						
 						.addGroup(layout.createSequentialGroup()
-								.addComponent(tHor)
-								.addComponent(bHPlus)
-								.addComponent(vHor)
-								.addComponent(bHMoins)
+								.addComponent(tHor,25,25,25)
+								.addComponent(bHPlus,60,60,60)
+								.addComponent(vHor,25,25,25)
+								.addComponent(bHMoins,60,60,60)
 								)
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(tVer)
-										.addComponent(bVPlus)
-										.addComponent(vVer)
-										.addComponent(bVMoins)
-										)
+						.addGap(10)		
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(tVer,25,25,25)
+								.addComponent(bVPlus,60,60,60)
+								.addComponent(vVer,25,25,25)
+								.addComponent(bVMoins,60,60,60)
+								)
 						)
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(tSens)
-										.addComponent(bSensHora)
-										.addComponent(vSens)
-										.addComponent(bSensAnti)
-										)
-										.addGroup(layout.createSequentialGroup()
-												.addComponent(tVit)
-												.addComponent(bVitPlus)
-												.addComponent(vVit)
-												.addComponent(bVitMoins)
-												)
+				.addGap(15)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(tSens,25,25,25)
+								.addComponent(bSensHora,60,60,60)
+								.addComponent(vSens,25,25,25)
+								.addComponent(bSensAnti,60,60,60)
 								)
+						.addGap(10)
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(tVit,25,25,25)
+								.addComponent(bVitPlus,60,60,60)
+								.addComponent(vVit,25,25,25)
+								.addComponent(bVitMoins,60,60,60)
+								)
+						)
+				.addContainerGap(20, Short.MAX_VALUE)
 				);
 
 
