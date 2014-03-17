@@ -25,6 +25,7 @@ import javax.media.opengl.glu.GLU;
 import structures.Grille;
 import structures.Isoligne;
 import structures.Triangle;
+import Utils.Constantes;
 import Utils.FilesUtils;
 import Utils.GrilleATriangles;
 
@@ -41,6 +42,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
 	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
 	private Isoligne iso5 = new Isoligne( 5 , listeT );
 	private Isoligne iso9 = new Isoligne( 9 , listeT );
@@ -58,7 +60,25 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	private double ratio; // Ratio entre le champ de vison horizontal et le champ vertical = ratio largeur / hauteur de la zone d'affichage.
     private double profProche; // Profondeur (en unités de distance de l'environnement 3D) du plus proche plan visible. (Doit être strictement positif)
     private double profLoin; // Profondeur du plan visible le plus éloigné. (Doit être supérieur à profProche)
+    
+    /* Paramètres définissant la nature de l'affichage */
+    private MenuReglage mReg; // Menu de reglage, contenant les différents réglages généraux d'affichage.
 	
+    /* Paramètres de la grille */
+    double pas = grille.pas,
+    		x0 = grille.x0,
+    		y0 = grille.x0,
+    		zMin = grille.zMinMax()[0],
+    		zMax = grille.zMinMax()[1];
+    int nLig = grille.nLig,
+    		nCol = grille.nCol;
+    double xCentre = x0+pas*(nCol-1)/2,
+    		yCentre = y0-pas*(nLig-1)/2,
+    		empriseX = pas*(nCol-1),
+    		empriseY = pas*(nLig-1),
+    		empriseZ = zMax-zMin;
+    
+    
 	
     /*****************************************************************************************************************************************/
     
@@ -67,7 +87,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
      */
     
 	// Constructeur
-	public Panneau3D(Dimension d) {
+	public Panneau3D(MenuReglage mReg, Dimension d) {
 		super(caps);
 		caps.setDepthBits(64);
 		this.setPreferredSize(d);
@@ -77,6 +97,8 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		ratio = (double) (d.getWidth() / d.getHeight());
 		profProche = 1;
 		profLoin = 100;
+		this.mReg=mReg;
+
 	}
 	
 	
@@ -138,54 +160,72 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		GL2 gl = dessin.getGL().getGL2();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         
+        double[] cam = {0,0,20};
+        double[] cible = {0,0,5};
+        //setCameraOrtho(gl, glu, cam, cible );
+        setCameraOrbite(gl, glu, angleRot, 20, 75, cible);
         
-        double[] cible = {0,0,0.1};
-        setCameraOrbite(gl, glu, angleRot, 5, 7*Math.sqrt(2), cible );
-        
-        gl.glBegin(GL_TRIANGLES); // Début du dessin des triangles
-
-		for (int compteur = 0; compteur < listeT.size(); compteur++){
+        if(mReg.getChoixObj()==Constantes.OBJ_MNT || mReg.getChoixObj()==Constantes.OBJ_TOUT){
+	        gl.glBegin(GL_TRIANGLES); // Début du dessin des triangles
+			for (int compteur = 0; compteur < listeT.size(); compteur++){
+				
+				Triangle triangle = listeT.get(compteur);
+				double nivGris = 0.25;
+				double pente = triangle.getPente();
+				double penteNorm = pente/90;
+				double penteReduite = penteNorm;
+				nivGris = penteReduite;
+				
+				gl.glColor3d(nivGris, nivGris, nivGris); 
+				gl.glVertex3d(
+						(triangle.getx1()-xCentre)/(empriseX/100),
+						(triangle.gety1()-yCentre)/(empriseY/100),
+						triangle.getz1()/(empriseZ/10)
+						);
+				gl.glVertex3d(
+						(triangle.getx2()-xCentre)/(empriseX/100),
+						(triangle.gety2()-yCentre)/(empriseY/100),
+						triangle.getz2()/(empriseZ/10)
+						);
+				gl.glVertex3d(
+						(triangle.getx3()-xCentre)/(empriseX/100),
+						(triangle.gety3()-yCentre)/(empriseY/100),
+						triangle.getz3()/(empriseZ/10)
+						);
+			}	
+			gl.glEnd(); // fin du MNT
+        }
+        if(mReg.getChoixObj()==Constantes.OBJ_ISOLIGNES || mReg.getChoixObj()==Constantes.OBJ_TOUT){
+			gl.glBegin(GL2.GL_LINES);
+			gl.glColor3d(1, 0, 0);
+			for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
+				gl.glVertex3d(
+						(iso5.segments.get(compteur)[0][0]-xCentre)/(empriseX/100),
+						(iso5.segments.get(compteur)[0][1]-yCentre)/(empriseY/100),
+						iso5.segments.get(compteur)[0][2]/(empriseZ/10)
+						);
+				gl.glVertex3d(
+						(iso5.segments.get(compteur)[1][0]-xCentre)/(empriseX/100),
+						(iso5.segments.get(compteur)[1][1]-yCentre)/(empriseY/100),
+						iso5.segments.get(compteur)[1][2]/(empriseZ/10)
+						);
+			}
+			gl.glColor3d(0, 1, 0);
+			for (int compteur = 0; compteur < iso9.segments.size() ; compteur++) {
+				gl.glVertex3d(
+						(iso9.segments.get(compteur)[0][0]-xCentre)/(empriseX/100),
+						(iso9.segments.get(compteur)[0][1]-yCentre)/(empriseY/100),
+						iso9.segments.get(compteur)[0][2]/(empriseZ/10)
+						);
+				gl.glVertex3d(
+						(iso9.segments.get(compteur)[1][0]-xCentre)/(empriseX/100),
+						(iso9.segments.get(compteur)[1][1]-yCentre)/(empriseY/100),
+						iso9.segments.get(compteur)[1][2]/(empriseZ/10)
+						);
+			}
 			
-			Triangle triangle = listeT.get(compteur);
-			double nivGris = 0.25;
-			double pente = triangle.getPente();
-			double penteNorm = pente/90;
-			double penteReduite = penteNorm;
-			nivGris = penteReduite;
-			
-			gl.glColor3d(nivGris, nivGris, nivGris); 
-			gl.glVertex3d(triangle.getx1()/100-(473000+500)/100, triangle.gety1()/100-(6914001.000-500)/100, triangle.getz1()/100);
-			gl.glVertex3d(triangle.getx2()/100-(473000+500)/100, triangle.gety2()/100-(6914001.000-500)/100, triangle.getz2()/100);
-			gl.glVertex3d(triangle.getx3()/100-(473000+500)/100, triangle.gety3()/100-(6914001.000-500)/100, triangle.getz3()/100);
-
-			
-			
-		}
-	
-		gl.glEnd(); // fin du MNT
-		
-		gl.glBegin(GL2.GL_LINES);
-		gl.glColor3d(1, 0, 0);
-		for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
-			gl.glVertex3d(iso5.segments.get(compteur)[0][0]/100-(473000+500)/100,
-					iso5.segments.get(compteur)[0][1]/100-(6914001.000-500)/100,
-					iso5.segments.get(compteur)[0][2]/100);
-			gl.glVertex3d(iso5.segments.get(compteur)[1][0]/100-(473000+500)/100,
-					iso5.segments.get(compteur)[1][1]/100-(6914001.000-500)/100,
-					iso5.segments.get(compteur)[1][2]/100);
-		}
-		gl.glColor3d(0, 1, 0);
-		for (int compteur = 0; compteur < iso9.segments.size() ; compteur++) {
-			gl.glVertex3d(iso9.segments.get(compteur)[0][0]/100-(473000+500)/100,
-					iso9.segments.get(compteur)[0][1]/100-(6914001.000-500)/100,
-					iso9.segments.get(compteur)[0][2]/100);
-			gl.glVertex3d(iso9.segments.get(compteur)[1][0]/100-(473000+500)/100,
-					iso9.segments.get(compteur)[1][1]/100-(6914001.000-500)/100,
-					iso9.segments.get(compteur)[1][2]/100);
-		}
-		
-		gl.glEnd();
-
+			gl.glEnd();
+        }
 		angleRot += vitRot;
         
 	}
