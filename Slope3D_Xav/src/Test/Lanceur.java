@@ -27,12 +27,12 @@ public class Lanceur {
 			}
 		});
 		
-		JFrame fen2 = new JFrame();
+		/*JFrame fen2 = new JFrame();
 		fen2.setSize(250, 600);
 		PanneauControle pan = new PanneauControle(fen.getMenu().getMenuReglage(), new Dimension(250,575));
 		pan.setVisible(true);
 		fen2.add(pan);
-		fen2.setVisible(true);
+		fen2.setVisible(true);*/
 	}
 
 }
