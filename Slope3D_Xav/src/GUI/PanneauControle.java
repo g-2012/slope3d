@@ -39,7 +39,7 @@ public class PanneauControle extends JPanel {
 
 		// Ajout des composants au conteneur
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
 				.addComponent(panTra, dPanTra.width, dPanTra.width, dPanTra.width)
 				.addComponent(sep1)
 				.addComponent(sep2)
