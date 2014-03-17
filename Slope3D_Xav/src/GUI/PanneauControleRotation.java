@@ -3,11 +3,13 @@ package GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -106,6 +108,8 @@ public class PanneauControleRotation extends JPanel {
 		/*
 		 * Mise en page et intégration de boutons
 		 */
+		/* pas de Layout*/
+		/*
 		this.setLayout(null);
 		
 		JLabel tRot = new JLabel("Rotation"); // Le titre du panneau
@@ -186,6 +190,133 @@ public class PanneauControleRotation extends JPanel {
 		this.add(vVit);
 		bVitMoins.setLocation(160, 135+140); // bouton -
 		this.add(bVitMoins);
+		*/
+		
+		/* Layout = GroupLayout */
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		
+		// Espacements entre composants et bordure puis entre composants
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+		
+		// Création des éléments
+		JLabel tRot = new JLabel("Rotation"); // Le titre du panneau
+		tRot.setSize(70, 25);
+		tRot.setHorizontalAlignment(AbstractButton.CENTER);
+		tRot.setVerticalAlignment(AbstractButton.CENTER);
+		
+		//Boutons liés à l'angle horizontal
+		JLabel tHor = new JLabel("Horizontal"); // Titre
+		tHor.setSize(70,25);
+		tHor.setHorizontalAlignment(AbstractButton.CENTER);
+		tHor.setVerticalAlignment(AbstractButton.CENTER);
+
+		JLabel vHor = new JLabel("XXX"); // Valeur
+		vHor.setSize(40, 25);
+		vHor.setHorizontalAlignment(AbstractButton.CENTER);
+		vHor.setVerticalAlignment(AbstractButton.CENTER);
+		
+		//Boutons liés à l'angle vertical
+		JLabel tVer = new JLabel("Vertical"); // Titre
+		tVer.setSize(70,25);
+		tVer.setHorizontalAlignment(AbstractButton.CENTER);
+		tVer.setVerticalAlignment(AbstractButton.CENTER);
+
+		JLabel vVer = new JLabel("XXX"); // Valeur
+		vVer.setSize(40, 25);
+		vVer.setHorizontalAlignment(AbstractButton.CENTER);
+		vVer.setVerticalAlignment(AbstractButton.CENTER);
+		
+		//Boutons liés au sens de rotation
+		JLabel tSens = new JLabel("Sens"); // Titre
+		tSens.setSize(70,25);
+		tSens.setHorizontalAlignment(AbstractButton.CENTER);
+		tSens.setVerticalAlignment(AbstractButton.CENTER);
+
+		JLabel vSens = new JLabel("XXX"); // Valeur
+		vSens.setSize(40, 25);
+		vSens.setHorizontalAlignment(AbstractButton.CENTER);
+		vSens.setVerticalAlignment(AbstractButton.CENTER);
+
+		//Boutons liés à la vitesse
+		JLabel tVit = new JLabel("Vitesse"); // Titre
+		tVit.setSize(70,25);
+		tVit.setHorizontalAlignment(AbstractButton.CENTER);
+		tVit.setVerticalAlignment(AbstractButton.CENTER);
+
+		JLabel vVit = new JLabel("XXX"); // Valeur
+		vVit.setSize(40, 25);
+		vVit.setHorizontalAlignment(AbstractButton.CENTER);
+		vVit.setVerticalAlignment(AbstractButton.CENTER);
+
+		// Ajout des élements aux groupes :
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addComponent(tRot)
+				.addGroup(layout.createSequentialGroup()
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+								.addComponent(tHor)
+								.addComponent(bHPlus)
+								.addComponent(vHor)
+								.addComponent(bHMoins)	
+								)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+										.addComponent(tVer)
+										.addComponent(bVPlus)
+										.addComponent(vVer)
+										.addComponent(bVMoins)
+										)
+						)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+										.addComponent(tSens)
+										.addComponent(bSensHora)
+										.addComponent(vSens)
+										.addComponent(bSensAnti)
+										)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+												.addComponent(tVit)
+												.addComponent(bVitPlus)
+												.addComponent(vVit)
+												.addComponent(bVitMoins)
+												)
+								)
+				);
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				.addComponent(tRot)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(tHor)
+								.addComponent(bHPlus)
+								.addComponent(vHor)
+								.addComponent(bHMoins)
+								)
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(tVer)
+										.addComponent(bVPlus)
+										.addComponent(vVer)
+										.addComponent(bVMoins)
+										)
+						)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(tSens)
+										.addComponent(bSensHora)
+										.addComponent(vSens)
+										.addComponent(bSensAnti)
+										)
+										.addGroup(layout.createSequentialGroup()
+												.addComponent(tVit)
+												.addComponent(bVitPlus)
+												.addComponent(vVit)
+												.addComponent(bVitMoins)
+												)
+								)
+				);
+		
 				
 		this.setVisible(true);
 		
