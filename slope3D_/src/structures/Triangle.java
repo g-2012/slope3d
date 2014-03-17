@@ -16,7 +16,6 @@ public class Triangle {
 	private		double[] 	c = new double[3];
 	private		double[] 	vecteurNormal = new double[3];
 	private 	double 		pente;
-	//private		int			type;
 	
 	/*******************************************************************************************************
 	 ******   CONSTRUCTEURS
@@ -167,24 +166,6 @@ public class Triangle {
 	
 	public 	int 		getIndice()		{return indice;}
 	public 	double 		getPente()		{return pente;}
-	
-
-	/*public void classif(double zi){
-
-		if (  a[2]<zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 0;}
-		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]<zi  ||  a[2]==zi  &&   b[2]<zi   &&   c[2]>zi  ) {type = 1;}
-		if (  a[2]>zi   &&   b[2]==zi  &&   c[2]<zi  ||  a[2]<zi   &&   b[2]==zi  &&   c[2]>zi  ) {type = 2;}
-		if (  a[2]>zi   &&   b[2]<zi   &&   c[2]==zi ||  a[2]<zi   &&   b[2]>zi   &&   c[2]==zi ) {type = 3;}
-		if (  a[2]>zi   &&   b[2]<zi   &&   c[2]<zi  ||  a[2]<zi   &&   b[2]>zi   &&   c[2]>zi  ) {type = 4;}
-		if (  a[2]<zi   &&   b[2]>zi   &&   c[2]<zi  ||  a[2]>zi   &&   b[2]<zi   &&   c[2]>zi  ) {type = 5;}
-		if (  a[2]<zi   &&   b[2]<zi   &&   c[2]>zi  ||  a[2]>zi   &&   b[2]>zi   &&   c[2]<zi  ) {type = 6;}
-		if (  a[2]>zi   &&   b[2]==zi  &&   c[2]==zi ||  a[2]<zi   &&   b[2]==zi  &&   c[2]==zi ) {type = 7;}
-		if (  a[2]==zi  &&   b[2]>zi   &&   c[2]==zi ||  a[2]==zi  &&   b[2]<zi   &&   c[2]==zi ) {type = 8;}
-		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]>zi  ||  a[2]==zi  &&   b[2]==zi  &&   c[2]<zi  ) {type = 9;}
-		
-		if (  a[2]==zi  &&   b[2]==zi  &&   c[2]==zi ) {type = 0;}
-	
-	} */
 	
 	
 	
