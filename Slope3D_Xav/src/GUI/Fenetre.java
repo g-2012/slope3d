@@ -54,7 +54,7 @@ public class Fenetre extends JFrame { /**
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
 		
 		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250,this.getContentPane().getHeight()));
-		panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
+		//panCtrl.setPreferredSize(new Dimension(250,this.getContentPane().getHeight()));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
 		
