@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
@@ -21,22 +22,36 @@ public class PanneauControle extends JPanel {
 		super();
 		this.setBackground(Color.GRAY);
 		this.setPreferredSize(d);
-		this.setLayout(new FlowLayout());
 		
-		panTra = new PanneauControleDeplacement(mReg, new Dimension(d.width, 200));
-		//panTra.setLocation(0,0);
-		this.add(panTra);
+		// Definition du gestionnaire de mise en page
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
 		
-		/*JSeparator sep = new JSeparator();
-		sep.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-		sep.setLocation(0,200);
-		this.add(sep);*/
-		
-		panRot = new PanneauControleRotation(mReg, new Dimension(d.width, d.height-200));
-		//panRot.setVisible(true);
-		//panRot.setLocation(0,203);
-		this.add(panRot);
-		
+		// Création des composants
+		Dimension dPanTra = new Dimension(d.width, 200);
+		panTra = new PanneauControleDeplacement(mReg, dPanTra);
+
+		JSeparator sep1 = new JSeparator();
+		JSeparator sep2 = new JSeparator();
+				
+		Dimension dPanRot = new Dimension(d.width, d.height-202  /*prend en compte la taille des 2 séparateurs*/);
+		panRot = new PanneauControleRotation(mReg, dPanRot);
+
+		// Ajout des composants au conteneur
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addComponent(panTra, dPanTra.width, dPanTra.width, dPanTra.width)
+				.addComponent(sep1)
+				.addComponent(sep2)
+				.addComponent(panRot, dPanRot.width, dPanRot.width, dPanRot.width)				
+				);
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				.addComponent(panTra, dPanTra.height, dPanTra.height, dPanTra.height)
+				.addComponent(sep1)
+				.addComponent(sep2)
+				.addComponent(panRot, dPanRot.height, dPanRot.height, dPanRot.height)
+				);
 		
 	}
 	
