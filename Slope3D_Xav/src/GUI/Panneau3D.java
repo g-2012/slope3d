@@ -23,6 +23,7 @@ import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 
 import structures.Grille;
+import structures.Isoligne;
 import structures.Triangle;
 import Utils.FilesUtils;
 import Utils.GrilleATriangles;
@@ -41,6 +42,8 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	// Création des polygones qui seront dessinés, à partir de la grille
 	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
+	private Isoligne iso5 = new Isoligne( 5 , listeT );
+	private Isoligne iso9 = new Isoligne( 9 , listeT );
 
 	// Création de l'animateur :
 	private final FPSAnimator animateur;
@@ -160,6 +163,28 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		}
 	
 		gl.glEnd(); // fin du MNT
+		
+		gl.glBegin(GL2.GL_LINES);
+		gl.glColor3d(1, 0, 0);
+		for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
+			gl.glVertex3d(iso5.segments.get(compteur)[0][0]/100-(473000+500)/100,
+					iso5.segments.get(compteur)[0][1]/100-(6914001.000-500)/100,
+					iso5.segments.get(compteur)[0][2]/100);
+			gl.glVertex3d(iso5.segments.get(compteur)[1][0]/100-(473000+500)/100,
+					iso5.segments.get(compteur)[1][1]/100-(6914001.000-500)/100,
+					iso5.segments.get(compteur)[1][2]/100);
+		}
+		gl.glColor3d(0, 1, 0);
+		for (int compteur = 0; compteur < iso9.segments.size() ; compteur++) {
+			gl.glVertex3d(iso9.segments.get(compteur)[0][0]/100-(473000+500)/100,
+					iso9.segments.get(compteur)[0][1]/100-(6914001.000-500)/100,
+					iso9.segments.get(compteur)[0][2]/100);
+			gl.glVertex3d(iso9.segments.get(compteur)[1][0]/100-(473000+500)/100,
+					iso9.segments.get(compteur)[1][1]/100-(6914001.000-500)/100,
+					iso9.segments.get(compteur)[1][2]/100);
+		}
+		
+		gl.glEnd();
 
 		angleRot += vitRot;
         
