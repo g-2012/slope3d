@@ -32,7 +32,7 @@ public class PanneauControleDeplacement extends JPanel {
 	 */
 	public PanneauControleDeplacement(MenuReglage mReg, Dimension d) {
 		super();
-		this.setSize(d);
+		this.setPreferredSize(d);
 		this.setBackground(new Color(225,225,225));
 		
 		bHaut = new JButton("Haut");
