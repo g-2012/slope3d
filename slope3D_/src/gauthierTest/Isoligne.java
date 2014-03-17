@@ -5,16 +5,11 @@ import gauthierTest.Grille;
 import gauthierUtils.GrilleATriangles;
 import gauthierUtils.Triangle;
 import gauthierUtils.TrianglesOutils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JFrame;
-
 import Utils.FilesUtils;
-
-
 
 public class Isoligne {
 
@@ -30,6 +25,7 @@ public class Isoligne {
 	 ******   CONSTRUCTEURS
 	 *******************************************************************************************************/				
 	
+	// consruit une isoligne de cote zi à partir d'une liste de triangles
 	public Isoligne ( double zi , List<Triangle> listeT ){
 		
 		z = zi;
@@ -152,7 +148,129 @@ public class Isoligne {
 		}     // end for i
 	}
 	
-
+	
+	// consruit une isoligne de cote zi à partir d'un tableau de triangles
+	public Isoligne ( double zi , Triangle[] triangles ){
+		
+		z = zi;
+		double[] pi = new double[3];
+		double[] pf = new double[3];
+		pi[0] = pi[1] = pi[2] = 0;
+		pf[0] = pf[1] = pf[2] = 0;
+		int k = 0;
+		boolean rien = false;
+		for (int i = 0 ; i<triangles.length ; i++){
+			System.out.print("\n"+i+"eme triangle \n");
+			System.out.print(triangles[i].geta()[0]+" ");
+			System.out.print(triangles[i].geta()[1]+" ");
+			System.out.println(triangles[i].geta()[2]+" ");
+			
+			System.out.print(triangles[i].getb()[0]+" ");
+			System.out.print(triangles[i].getb()[1]+" ");
+			System.out.println(triangles[i].getb()[2]+" ");
+			
+			System.out.print(triangles[i].getc()[0]+" ");
+			System.out.print(triangles[i].getc()[1]+" ");
+			System.out.println(triangles[i].getc()[2]+"\n ");
+			
+			//1
+			if (	triangles[i].getz1()==zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()<zi  ||  
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()>zi  ) {
+					
+					pi =  triangles[i].geta();
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].getb() , triangles[i].getc() );
+			} 
+			
+			//2
+			if (	triangles[i].getz1()>zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()<zi  ||  
+					triangles[i].getz1()<zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()>zi  ) {
+					
+					pi =  triangles[i].getb();
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getc() );
+				} 
+			//3
+			if (	triangles[i].getz1()>zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()==zi  ||  
+					triangles[i].getz1()<zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()==zi  ) {
+					
+					pi =  triangles[i].getc();
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getb() );
+			} 
+			
+			//4
+			if (	triangles[i].getz1()>zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()<zi  ||  
+					triangles[i].getz1()<zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()>zi  ) {
+				
+					pi =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getb() );
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getc() );
+			} 
+			
+			//5
+			if (	triangles[i].getz1()<zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()<zi  ||  
+					triangles[i].getz1()>zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()>zi  ) {
+				
+					pi =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getb() );
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].getb() , triangles[i].getc() );
+			} 
+			
+			//6
+			if (	triangles[i].getz1()<zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()>zi  ||  
+					triangles[i].getz1()>zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()<zi  ) {
+				
+					pi =  TrianglesOutils.interpol(  zi , triangles[i].geta() , triangles[i].getc() );
+					pf =  TrianglesOutils.interpol(  zi , triangles[i].getb() , triangles[i].getc() );
+			} 
+			
+			//7
+			if (	triangles[i].getz1()>zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()==zi  ||  
+					triangles[i].getz1()<zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()==zi  ) {
+				
+					pi =  triangles[i].getb();
+					pf =  triangles[i].getc();
+			} 
+			
+			//8
+			if (	triangles[i].getz1()==zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()==zi  ||  
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()==zi  ) {
+				
+					pi =  triangles[i].geta();
+					pf =  triangles[i].getc();
+			} 
+			
+			//9
+			if (	triangles[i].getz1()==zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()>zi  ||  
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()==zi   &&   triangles[i].getz3()<zi  ) {
+				
+					pi =  triangles[i].geta();
+					pf =  triangles[i].getb();
+			} 
+			
+			//10
+			if (	triangles[i].getz1()<zi   &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()<zi   ||  
+					triangles[i].getz1()>zi   &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()>zi   ||
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()>zi   ||  
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()<zi   ||
+					triangles[i].getz1()>zi   &&   triangles[i].getz2()==zi  &&   triangles[i].getz3()>zi   ||  
+					triangles[i].getz1()<zi   &&   triangles[i].getz2()==zi  &&   triangles[i].getz3()<zi   ||
+					triangles[i].getz1()>zi   &&   triangles[i].getz2()>zi   &&   triangles[i].getz3()==zi  ||  
+					triangles[i].getz1()<zi   &&   triangles[i].getz2()<zi   &&   triangles[i].getz3()==zi  ||
+					triangles[i].getz1()==zi  &&   triangles[i].getz2()==zi  &&   triangles[i].getz3()==zi  ) {
+				
+					rien = true;
+					//pi[0] = pi[1] = pi[2] = 0;
+					//pf[0] = pf[1] = pf[2] = 0;
+			} 
+			
+			
+			
+		double[][] seg = new double[2][3];
+		seg[0] = pi;
+		seg[1] = pf;
+		if (!rien)	
+			segments.add(seg);
+		rien = false;
+			
+		}     // end for i
+	}
 	
 	
 	
