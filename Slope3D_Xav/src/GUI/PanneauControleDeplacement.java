@@ -73,7 +73,15 @@ public class PanneauControleDeplacement extends JPanel {
 		// case 0,0
 		this.add(new JLabel(" "));
 		// case 0,1
-		this.add(new JLabel("Déplacement"));
+		JPanel pTitre = new JPanel();
+		pTitre.setBackground(new Color(225,225,225));
+		JLabel tTra = new JLabel("Déplacement"); 
+		tTra.setSize(75, 30);
+		tTra.setAlignmentX(CENTER_ALIGNMENT);
+		tTra.setAlignmentY(CENTER_ALIGNMENT);
+		tTra.setBorder(new LineBorder(Color.GRAY, 1));
+		pTitre.add(tTra);
+		this.add(pTitre);
 		// case 0,2
 		this.add(new JLabel(" "));
 		// case 1,0
