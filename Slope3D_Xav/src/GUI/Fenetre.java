@@ -48,12 +48,12 @@ public class Fenetre extends JFrame { /**
 		this.setLayout(new BorderLayout()); // Choix de la mise en page des composants.
 		Dimension dimFenetre = new Dimension(dimEcran.width*9/10,dimEcran.height*9/10-25);
 		
-		panEnv = new Panneau3D(new Dimension(dimFenetre.width-250, dimFenetre.height-20)); // Création du panneau contenant l'environnement 3D.
-		this.getContentPane().add(panEnv, BorderLayout.CENTER);
-		
 		bandeauMenu = new BarreMenu(new Dimension(dimFenetre.width, 20));
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
 		
+		panEnv = new Panneau3D(bandeauMenu.getMenuReglage(), new Dimension(dimFenetre.width-250, dimFenetre.height-20)); // Création du panneau contenant l'environnement 3D.
+		this.getContentPane().add(panEnv, BorderLayout.CENTER);
+	
 		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250, dimFenetre.height));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
