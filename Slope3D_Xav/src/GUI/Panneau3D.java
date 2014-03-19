@@ -9,6 +9,7 @@ import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_SMOOTH;
 import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
 import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		profProche = 0.1;
 		profLoin = 1000;
 		this.mReg=mReg;
-		grossissementZ = 1;
+		grossissementZ = 5;
 
 	}
 	
@@ -158,10 +159,14 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	 *  Méthodes implémentées pour l'écouteur GLEventListener
 	 */
     
+    /* Méthode appelée à chaque foix que l'environnement est dessiné, c'est à dire idéalement toutes les 1/IPS secondes. */
 	public void display(GLAutoDrawable dessin) {
 		GL2 gl = dessin.getGL().getGL2();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         
+        /*
+         * Paramétrage de la caméra
+         */
         double[] cam = {0, 0, 20};
         double[] cible = {0, 0, 5};
         if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
@@ -171,18 +176,52 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         	setCameraOrbite(gl, glu, angleRot, 80, 190, cible);
         }
         
+        /*
+         * Dessin du MNT si l'utilisateur a choisi de l'affiché, ou n'a encore rien choisi (défaut)
+         */
         if(mReg.getChoixObj()==Constantes.OBJ_MNT || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 	        gl.glBegin(GL_TRIANGLES); // Début du dessin des triangles
-			for (int compteur = 0; compteur < listeT.size(); compteur++){
-				
+			for (int compteur = 0; compteur < listeT.size(); compteur++){		
 				Triangle triangle = listeT.get(compteur);
 				double nivGris = 0.25;
 				double pente = triangle.getPente();
-				double penteNorm = pente/90;
-				double penteReduite = penteNorm;
-				nivGris = penteReduite;
-				
-				gl.glColor3d(nivGris, nivGris, nivGris); 
+				/* Définition de la couleur du triangle en cours de dessin */
+				if (mReg.getChoixCou() == Constantes.COU_AUTO) { // Niveau de gris automatique
+					nivGris = pente/90;
+					gl.glColor3d(nivGris, nivGris, nivGris); 
+				}
+				if (mReg.getChoixCou() == Constantes.COU_AUTO) { // Couleur choisie selon la plage de valeur
+					Color couleur = new Color(255,255,255);
+					if (pente<10) {
+						couleur = mReg.getCouleurs()[0];
+					}
+					if ((pente >=10) && (pente<20)) {
+						couleur = mReg.getCouleurs()[1];
+					}
+					if ((pente >=20) && (pente<30)) {
+						couleur = mReg.getCouleurs()[2];
+					}
+					if ((pente >=30) && (pente<40)) {
+						couleur = mReg.getCouleurs()[3];
+					}
+					if ((pente >=40) && (pente<50)) {
+						couleur = mReg.getCouleurs()[4];
+					}
+					if ((pente >=50) && (pente<60)) {
+						couleur = mReg.getCouleurs()[5];
+					}
+					if ((pente >=60) && (pente<70)) {
+						couleur = mReg.getCouleurs()[6];
+					}
+					if ((pente >=70) && (pente<80)) {
+						couleur = mReg.getCouleurs()[7];
+					}
+					if (pente >=80) {
+						couleur = mReg.getCouleurs()[8];
+					}
+					gl.glColor3i(couleur.getRed(), couleur.getGreen(), couleur.getBlue());
+				}
+				/* Dessin du triangle */
 				gl.glVertex3d(
 						200*(triangle.getx1()-xCentre)/empriseX,
 						200*(triangle.gety1()-yCentre)/empriseX,
@@ -202,6 +241,10 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 			}	
 			gl.glEnd(); // fin du MNT
         }
+        
+        /*
+         * Dessin des isolignes si l'utilisateur veut les afficher
+         */
         if(mReg.getChoixObj()==Constantes.OBJ_ISOLIGNES || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 			gl.glBegin(GL2.GL_LINES);
 			gl.glColor3d(1, 0, 0);
