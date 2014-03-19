@@ -127,12 +127,9 @@ public abstract class FilesUtils {
 		// crée liste de string à partir de l'adresse du fichier sous forme de string
 		List<String> liste;
 		liste = FilesUtils.tabLines(file);		
+		
 		// parse la liste de string
-
-
-
 		// recuperation des metadonnées
-
 		String line;
 		line = liste.get(0);
 		//ligne 1 : la nombre de colonnes

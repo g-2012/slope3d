@@ -1,3 +1,5 @@
+package test;
+
 import imranUtils.SimpleFrame;
 
 import java.awt.EventQueue;
@@ -11,8 +13,7 @@ import structures.Triangle;
 import Utils.FilesUtils;
 import Utils.GrilleATriangles;
 
-
-public class Exec{
+public class IsosTest {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -24,28 +25,13 @@ public class Exec{
 		
 		//chargement d'une grille depuis un fichier
 		long startTime = System.nanoTime();
-		final Grille grille = FilesUtils.loadMNTxyz2(file4);
-		//final Grille grille = FilesUtils.loadMNTAsc(file5);
+		//final Grille grille = FilesUtils.loadMNTxyz2(file4);
+		final Grille grille = FilesUtils.loadMNTAsc(file3);
 		long endTime = System.nanoTime();
 		System.out.print("Chargement MNT xyz en grille : ");
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
 		System.out.println(grille);
 		
-		
-		
-		/* 
-		startTime = System.nanoTime();
-		FilesUtils.triangles2file(triangles, file);
-		endTime = System.nanoTime();
-		System.out.print("Ecriture liste de (env 2 000 000) triangles  dans un fichier : ");
-		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
-				
-		startTime = System.nanoTime();
-		List<Triangle> triangles2 = FilesUtils.loadTriangles(file);
-		endTime = System.nanoTime();
-		System.out.print("Chargement d'env 2 000 000 triangles d'un fichier vers une liste : ");
-		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
-		*/
 		
 		//Transfo grille en triangles
 		/*
@@ -74,7 +60,7 @@ public class Exec{
 		
 		startTime = System.nanoTime();
 		final ArrayList<List<Point2D.Double[]>> segments = new ArrayList<List<Point2D.Double[]>>();
-		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 150){
+		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 2.5){
 			segments.add(grille.makeIsoZt(i));
 			//System.out.println(i);
 		}

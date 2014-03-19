@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 
 public class SimpleFrame extends JFrame{
-	private static int DEFAULT_WIDTH = 300;//= 200;
+	private static int DEFAULT_WIDTH = 800;//= 200;
 	private static int DEFAULT_HEIGHT; //= 1000;
 
 	public SimpleFrame()
