@@ -44,10 +44,10 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	// Spécification des paramètres OpenGL basés sur le profil chargé
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
-	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+	//private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
 	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
-	//private Grille grille = new Grille();
-	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
+	private Grille grille = new Grille();
+	private List<Triangle> listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
 	//private Isoligne iso5 = new Isoligne( 5 , listeT );
 	//private Isoligne iso9 = new Isoligne( 9 , listeT );
 	private List<Point2D.Double[]> iso5 = grille.makeIsoZt(5);
@@ -113,14 +113,14 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		profProche = 0.1;
 		profLoin = 1000;
 		this.mReg=mReg;
-		grossissementZ = 5;
+		grossissementZ = 2;
 		cam = new double[]{0, 0, 250};
         cible = new double[]{0, 0, 5};
         
         angleRot = 0;
-        vitRot = 0.05;
-        rayonOrbite = 100;
-        zPlanOrbital = 80;
+        vitRot = 0.001;
+        rayonOrbite = 200;
+        zPlanOrbital = 200*Math.sqrt(2);
         
         if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
         	System.out.println("Choix caméra : vue de dessus.");
@@ -163,7 +163,6 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         gl.glLoadIdentity();
 
         // Perspective.
-        ratio = (double) (this.getWidth() / this.getHeight());
         glu.gluPerspective(champVertical, ratio, profProche, profLoin);
         
         // Définit la matrice active comme étant à nouveau la matrice de modélisation et d'affichage GL_MODELVIEW.
@@ -266,7 +265,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 					gl.glColor3f(couleur[0], couleur[1], couleur[2]);
 				}
 				/* Dessin du triangle */
-				gl.glVertex3d(
+				/*gl.glVertex3d(
 						200*(triangle.getx1()-xCentre)/empriseX,
 						200*(triangle.gety1()-yCentre)/empriseX,
 						200*grossissementZ*(triangle.getz1()-zMin)/empriseX
@@ -281,7 +280,26 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 						200*(triangle.getx3()-xCentre)/empriseX,
 						200*(triangle.gety3()-yCentre)/empriseX,
 						200*grossissementZ*(triangle.getz3()-zMin)/empriseX
+						);*/
+				gl.glVertex3d(
+						triangle.getx1(),
+						triangle.gety1(),
+						grossissementZ*triangle.getz1()
 						);
+				//System.out.println("Coordonnées du sommet A : ("+triangle.getx1()+", "+triangle.gety1()+", "+triangle.getz1()*grossissementZ+")");
+				gl.glVertex3d(
+						triangle.getx2(),
+						triangle.gety2(),
+						grossissementZ*triangle.getz2()
+						);
+				//System.out.println("Coordonnées du sommet B : ("+triangle.getx2()+", "+triangle.gety2()+", "+triangle.getz2()*grossissementZ+")");
+				gl.glVertex3d(
+						triangle.getx3(),
+						triangle.gety3(),
+						grossissementZ*triangle.getz3()
+						);
+				//System.out.println("Coordonnées du sommet C : ("+triangle.getx3()+", "+triangle.gety3()+", "+triangle.getz3()*grossissementZ+")");
+				
 			}	
 			gl.glEnd(); // fin du MNT
         }
@@ -374,7 +392,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		GL2 gl = dessin.getGL().getGL2();  // Obtention du contexte graphique OpenGL 2
 
 		if (hauteur == 0) { hauteur = 1; }   // évite la division par zéro
-		float aspect = (float)largeur / hauteur;
+		ratio = (double)largeur / hauteur;
 
 		// Définit la zone de visualisation comme l'intégralité du panneau
 		gl.glViewport(0, 0, largeur, hauteur);
