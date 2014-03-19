@@ -45,15 +45,7 @@ public class MenuReglage extends JMenu {
 	/*
 	 * Paramètres : couleurs choisies pour la coloration personnalisée, en fonction de la valeur de la pente
 	 */
-	private Color 	coul0, // [0°, 10°[
-					coul1, // [10°, 20°[
-					coul2, // [20°, 30°[
-					coul3, // [30°, 40°[
-					coul4, // [40°, 50°[
-					coul5, // [50°, 60°[
-					coul6, // [60°, 70°[
-					coul7, // [70°, 80°[
-					coul8; // [80°, 90°]
+	private Color[] couleurs; // { [0°, 10°[ , [10°, 20°[ , [20°, 30°[ , [30°, 40°[ , [40°, 50°[ , [50°, 60°[ ,  [60°, 70°[ , [70°, 80°[ , [80°, 90°] }
 
 
 	/*
@@ -113,18 +105,19 @@ public class MenuReglage extends JMenu {
 		// Initialisation des valeurs de choix
 		choixObj = Constantes.OBJ_MNT;
 		choixCam = Constantes.CAM_ORBITE;
-		choixCou = Constantes.COU_AUTO;
+		choixCou = Constantes.COU_PERSO;
 		
 		// Initialisation des couleurs par défaut
-		coul0 = new Color(0, 0, 0);
-		coul1 = new Color(30, 30, 30);
-		coul2 = new Color(60, 60, 60);
-		coul3 = new Color(90, 90, 90);
-		coul4 = new Color(120, 120, 120);
-		coul5 = new Color(150, 150, 150);
-		coul6 = new Color(180, 180, 180);
-		coul7 = new Color(210, 210, 210);
-		coul8 = new Color(240, 240, 240);
+		couleurs = new Color[9];
+		couleurs[0] = new Color(0, 0, 0); 		// [0°, 10°[
+		couleurs[1] = new Color(30, 30, 30); 	// [10°, 20°[
+		couleurs[2] = new Color(60, 60, 60); 	// [20°, 30°[
+		couleurs[3] = new Color(90, 90, 90);	// [30°, 40°[
+		couleurs[4] = new Color(120, 120, 120);	// [40°, 50°[
+		couleurs[5] = new Color(150, 150, 150);	// [50°, 60°[
+		couleurs[6] = new Color(180, 180, 180);	// [60°, 70°[
+		couleurs[7] = new Color(210, 210, 210);	// [70°, 80°[
+		couleurs[8] = new Color(240, 240, 240);	// [80°, 90°]
 
 	}
 	
@@ -145,8 +138,7 @@ public class MenuReglage extends JMenu {
 	}
 	
 	public Color[] getCouleurs(){
-		Color[] tabCouleurs = {coul0, coul1, coul2, coul3, coul4, coul5, coul6, coul7, coul8};
-		return tabCouleurs;
+		return couleurs;
 	}
 
 }
