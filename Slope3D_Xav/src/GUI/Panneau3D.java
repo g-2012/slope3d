@@ -11,6 +11,7 @@ import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.geom.Point2D;
 import java.util.List;
 
 import javax.media.opengl.DebugGL2;
@@ -47,8 +48,10 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
 	//private Grille grille = new Grille();
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
-	private Isoligne iso5 = new Isoligne( 5 , listeT );
-	private Isoligne iso9 = new Isoligne( 9 , listeT );
+	//private Isoligne iso5 = new Isoligne( 5 , listeT );
+	//private Isoligne iso9 = new Isoligne( 9 , listeT );
+	private List<Point2D.Double[]> iso5 = grille.makeIsoZt(5);
+	private List<Point2D.Double[]> iso9 = grille.makeIsoZt(9);
 
 	// Création de l'animateur :
 	private final FPSAnimator animateur;
@@ -289,29 +292,55 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         if(mReg.getChoixObj()==Constantes.OBJ_ISOLIGNES || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 			gl.glBegin(GL2.GL_LINES);
 			gl.glColor3d(1, 0, 0);
-			for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
+			/*for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
 				gl.glVertex3d(
-						(iso5.segments.get(compteur)[0][0]-xCentre)/(empriseX/100),
-						(iso5.segments.get(compteur)[0][1]-yCentre)/(empriseY/100),
-						iso5.segments.get(compteur)[0][2]/(empriseZ/10)
+						200*(iso5.segments.get(compteur)[0][0]-xCentre)/empriseX,
+						200*(iso5.segments.get(compteur)[0][1]-yCentre)/empriseX,
+						200*grossissementZ*(iso5.segments.get(compteur)[0][2]-zMin)/empriseX
 						);
 				gl.glVertex3d(
-						(iso5.segments.get(compteur)[1][0]-xCentre)/(empriseX/100),
-						(iso5.segments.get(compteur)[1][1]-yCentre)/(empriseY/100),
-						iso5.segments.get(compteur)[1][2]/(empriseZ/10)
+						200*(iso5.segments.get(compteur)[1][0]-xCentre)/empriseX,
+						200*(iso5.segments.get(compteur)[1][1]-yCentre)/empriseX,
+						200*grossissementZ*(iso5.segments.get(compteur)[1][2]-zMin)/empriseX
 						);
 			}
 			gl.glColor3d(0, 1, 0);
 			for (int compteur = 0; compteur < iso9.segments.size() ; compteur++) {
 				gl.glVertex3d(
-						(iso9.segments.get(compteur)[0][0]-xCentre)/(empriseX/100),
-						(iso9.segments.get(compteur)[0][1]-yCentre)/(empriseY/100),
-						iso9.segments.get(compteur)[0][2]/(empriseZ/10)
+						200*(iso9.segments.get(compteur)[0][0]-xCentre)/empriseX,
+						200*(iso9.segments.get(compteur)[0][1]-yCentre)/empriseX,
+						200*grossissementZ*(iso9.segments.get(compteur)[0][2]-zMin)/empriseX
 						);
 				gl.glVertex3d(
-						(iso9.segments.get(compteur)[1][0]-xCentre)/(empriseX/100),
-						(iso9.segments.get(compteur)[1][1]-yCentre)/(empriseY/100),
-						iso9.segments.get(compteur)[1][2]/(empriseZ/10)
+						200*(iso9.segments.get(compteur)[1][0]-xCentre)/empriseX,
+						200*(iso9.segments.get(compteur)[1][1]-yCentre)/empriseX,
+						200*grossissementZ*(iso9.segments.get(compteur)[1][2]-zMin)/empriseX
+						);
+			}*/
+			
+			for (int compteur = 0; compteur < iso5.size() ; compteur++) {
+				gl.glVertex3d(
+						200*(iso5.get(compteur)[0].x-xCentre)/empriseX,
+						200*(iso5.get(compteur)[0].y-yCentre)/empriseX,
+						200*grossissementZ*(5-zMin)/empriseX
+						);
+				gl.glVertex3d(
+						200*(iso5.get(compteur)[1].x-xCentre)/empriseX,
+						200*(iso5.get(compteur)[1].y-yCentre)/empriseX,
+						200*grossissementZ*(5-zMin)/empriseX
+						);
+			}
+			gl.glColor3d(0, 1, 0);
+			for (int compteur = 0; compteur < iso9.size() ; compteur++) {
+				gl.glVertex3d(
+						200*(iso9.get(compteur)[0].x-xCentre)/empriseX,
+						200*(iso9.get(compteur)[0].y-yCentre)/empriseX,
+						200*grossissementZ*(9-zMin)/empriseX
+						);
+				gl.glVertex3d(
+						200*(iso9.get(compteur)[1].x-xCentre)/empriseX,
+						200*(iso9.get(compteur)[1].y-yCentre)/empriseX,
+						200*grossissementZ*(9-zMin)/empriseX
 						);
 			}
 			
