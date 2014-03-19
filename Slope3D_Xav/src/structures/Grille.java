@@ -98,6 +98,8 @@ public class Grille {
 		chaine	+= " nombre de colonnes: " 	+ 	nCol 	+ 	"\n";
 		chaine	+= " x0= " 					+ 	x0 		+ 	"\n";
 		chaine	+= " y0= " 					+ 	y0 		+ 	"\n";
+		chaine	+= " z min = " 					+ 	zMinMax()[0] + 	"\n";
+		chaine	+= " z max = " 					+ 	zMinMax()[1] + 	"\n";
 		
 		/*for (double[] l: valeurs)
 			chaine += Arrays.toString(l)+"\n";*/
