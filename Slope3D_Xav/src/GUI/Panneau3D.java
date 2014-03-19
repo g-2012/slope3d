@@ -41,8 +41,8 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	// Spécification des paramètres OpenGL basés sur le profil chargé
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
-	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
-	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
+	//private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+	private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
 	private Isoligne iso5 = new Isoligne( 5 , listeT );
 	private Isoligne iso9 = new Isoligne( 9 , listeT );
@@ -67,16 +67,17 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
     /* Paramètres de la grille */
     double pas = grille.pas,
     		x0 = grille.x0,
-    		y0 = grille.x0,
+    		y0 = grille.y0,
     		zMin = grille.zMinMax()[0],
     		zMax = grille.zMinMax()[1];
     int nLig = grille.nLig,
     		nCol = grille.nCol;
-    double xCentre = x0+pas*(nCol-1)/2,
-    		yCentre = y0-pas*(nLig-1)/2,
-    		empriseX = pas*(nCol-1),
+    double 	empriseX = pas*(nCol-1),
     		empriseY = pas*(nLig-1),
-    		empriseZ = zMax-zMin;
+    		xCentre = x0 + (empriseX/2),
+    		yCentre = y0 - (empriseY/2),
+    	 	empriseZ = zMax-zMin,
+    		grossissementZ;
     
     
 	
@@ -92,12 +93,13 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		caps.setDepthBits(64);
 		this.setPreferredSize(d);
 		this.addGLEventListener(this);
-		animateur = new FPSAnimator(this, 60, true);
+		animateur = new FPSAnimator(this, IPS, true);
 		champVertical = 50;
 		ratio = (double) (d.getWidth() / d.getHeight());
-		profProche = 1;
-		profLoin = 100;
+		profProche = 0.1;
+		profLoin = 1000;
 		this.mReg=mReg;
+		grossissementZ = 1;
 
 	}
 	
@@ -160,10 +162,14 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		GL2 gl = dessin.getGL().getGL2();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         
-        double[] cam = {0,0,20};
-        double[] cible = {0,0,5};
-        //setCameraOrtho(gl, glu, cam, cible );
-        setCameraOrbite(gl, glu, angleRot, 20, 75, cible);
+        double[] cam = {0, 0, 20};
+        double[] cible = {0, 0, 5};
+        if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
+        	setCameraOrtho(gl, glu, cam, cible );
+        }
+        if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
+        	setCameraOrbite(gl, glu, angleRot, 80, 190, cible);
+        }
         
         if(mReg.getChoixObj()==Constantes.OBJ_MNT || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 	        gl.glBegin(GL_TRIANGLES); // Début du dessin des triangles
@@ -178,19 +184,20 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 				
 				gl.glColor3d(nivGris, nivGris, nivGris); 
 				gl.glVertex3d(
-						(triangle.getx1()-xCentre)/(empriseX/100),
-						(triangle.gety1()-yCentre)/(empriseY/100),
-						triangle.getz1()/(empriseZ/10)
+						200*(triangle.getx1()-xCentre)/empriseX,
+						200*(triangle.gety1()-yCentre)/empriseX,
+						200*grossissementZ*(triangle.getz1()-zMin)/empriseX
+						);
+						//System.out.println("Coordonnées du sommet A : ("+200*(triangle.getx1()-xCentre)/empriseX+", "+200*(triangle.gety1()-yCentre)/empriseX+", "+20*triangle.getz1()/empriseZ+")");
+				gl.glVertex3d(
+						200*(triangle.getx2()-xCentre)/empriseX,
+						200*(triangle.gety2()-yCentre)/empriseX,
+						200*grossissementZ*(triangle.getz2()-zMin)/empriseX
 						);
 				gl.glVertex3d(
-						(triangle.getx2()-xCentre)/(empriseX/100),
-						(triangle.gety2()-yCentre)/(empriseY/100),
-						triangle.getz2()/(empriseZ/10)
-						);
-				gl.glVertex3d(
-						(triangle.getx3()-xCentre)/(empriseX/100),
-						(triangle.gety3()-yCentre)/(empriseY/100),
-						triangle.getz3()/(empriseZ/10)
+						200*(triangle.getx3()-xCentre)/empriseX,
+						200*(triangle.gety3()-yCentre)/empriseX,
+						200*grossissementZ*(triangle.getz3()-zMin)/empriseX
 						);
 			}	
 			gl.glEnd(); // fin du MNT
