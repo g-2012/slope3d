@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.ButtonGroup;
@@ -21,7 +22,7 @@ public class MenuReglage extends JMenu {
 	 *		° Caméra personnalisée déplaçable par rotation et translation
 	 *	- Le réglage des plages de couleurs affectées aux différentes pentes :
 	 *		° Mode automatique : nuance de gris de valeur proportionnelle à la pente.
-	 *		° Mode utilisateur : l'utilisateur choisit des plages de valeurs et y associe des couleurs
+	 *		° Mode utilisateur : l'utilisateur choisit les couleurs associées à des plages de valeurs (10° d'amplitude)
 	 */
 	
 	/* 
@@ -40,6 +41,19 @@ public class MenuReglage extends JMenu {
 	 */
 	private byte choixObj, choixCam;
 	private boolean choixCou;
+	
+	/*
+	 * Paramètres : couleurs choisies pour la coloration personnalisée, en fonction de la valeur de la pente
+	 */
+	private Color 	coul0, // [0°, 10°[
+					coul1, // [10°, 20°[
+					coul2, // [20°, 30°[
+					coul3, // [30°, 40°[
+					coul4, // [40°, 50°[
+					coul5, // [50°, 60°[
+					coul6, // [60°, 70°[
+					coul7, // [70°, 80°[
+					coul8; // [80°, 90°]
 
 
 	/*
@@ -100,7 +114,17 @@ public class MenuReglage extends JMenu {
 		choixObj = Constantes.OBJ_MNT;
 		choixCam = Constantes.CAM_ORBITE;
 		choixCou = Constantes.COU_AUTO;
-
+		
+		// Initialisation des couleurs par défaut
+		coul0 = new Color(0, 0, 0);
+		coul1 = new Color(30, 30, 30);
+		coul2 = new Color(60, 60, 60);
+		coul3 = new Color(90, 90, 90);
+		coul4 = new Color(120, 120, 120);
+		coul5 = new Color(150, 150, 150);
+		coul6 = new Color(180, 180, 180);
+		coul7 = new Color(210, 210, 210);
+		coul8 = new Color(240, 240, 240);
 
 	}
 	
@@ -118,6 +142,11 @@ public class MenuReglage extends JMenu {
 	
 	public boolean getChoixCou() {
 		return choixCou;
+	}
+	
+	public Color[] getCouleurs(){
+		Color[] tabCouleurs = {coul0, coul1, coul2, coul3, coul4, coul5, coul6, coul7, coul8};
+		return tabCouleurs;
 	}
 
 }
