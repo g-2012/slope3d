@@ -26,6 +26,7 @@ import javax.media.opengl.glu.GLU;
 import structures.Grille;
 import structures.Isoligne;
 import structures.Triangle;
+import Test.GrilleTest;
 import Utils.Constantes;
 import Utils.FilesUtils;
 import Utils.GrilleATriangles;
@@ -35,22 +36,23 @@ import com.jogamp.opengl.util.FPSAnimator;
 public class Panneau3D extends GLJPanel implements GLEventListener {
 	
 	private GLU glu;  // Utilitaire GLU
-	private double angleRot = 0; // Angle de rotation
-	private double vitRot = 0.05; // Vitesse de rotation
+	private double angleRot; // Angle de rotation
+	private double vitRot; // Vitesse de rotation
 	// Récupération du profil OpenGL par défaut de la machine
 	private static GLProfile glp = GLProfile.getDefault();
 	// Spécification des paramètres OpenGL basés sur le profil chargé
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
-	//private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
-	private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
+	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
+	//private Grille grille = new Grille();
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTriangles(grille);
 	private Isoligne iso5 = new Isoligne( 5 , listeT );
 	private Isoligne iso9 = new Isoligne( 9 , listeT );
 
 	// Création de l'animateur :
 	private final FPSAnimator animateur;
-	private static final int IPS = 60; // Taux d'images par secondes voulu pour l'animateur
+	private static int IPS; // Taux d'images par secondes voulu pour l'animateur
 	
 	/* Paramètres liés à la zone d'affichage (projection sur l'écran, ou plus exactement sur le composant.
 	Au composant / A l'écran est associé un repère orthonormal (x,y,z).
@@ -61,6 +63,13 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	private double ratio; // Ratio entre le champ de vison horizontal et le champ vertical = ratio largeur / hauteur de la zone d'affichage.
     private double profProche; // Profondeur (en unités de distance de l'environnement 3D) du plus proche plan visible. (Doit être strictement positif)
     private double profLoin; // Profondeur du plan visible le plus éloigné. (Doit être supérieur à profProche)
+    
+    /* Paramètres de la caméra (hors projection */
+    private double[] cam; // Coordonnées de la caméra
+    private double[] cible; // Coordonnées du point visé
+    double rayonOrbite; // Rayon de l'orbite plane de la caméra
+    double zPlanOrbital; // Hauteur (en repère environnement) de la caméra en orbite
+    
     
     /* Paramètres définissant la nature de l'affichage */
     private MenuReglage mReg; // Menu de reglage, contenant les différents réglages généraux d'affichage.
@@ -94,6 +103,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		caps.setDepthBits(64);
 		this.setPreferredSize(d);
 		this.addGLEventListener(this);
+		IPS = 60;
 		animateur = new FPSAnimator(this, IPS, true);
 		champVertical = 50;
 		ratio = (double) (d.getWidth() / d.getHeight());
@@ -101,7 +111,34 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		profLoin = 1000;
 		this.mReg=mReg;
 		grossissementZ = 5;
-
+		cam = new double[]{0, 0, 250};
+        cible = new double[]{0, 0, 5};
+        
+        angleRot = 0;
+        vitRot = 0.05;
+        rayonOrbite = 100;
+        zPlanOrbital = 80;
+        
+        if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
+        	System.out.println("Choix caméra : vue de dessus.");
+        } else if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
+        	System.out.println("Choix caméra : caméra en orbite.");
+        }
+        
+        if (mReg.getChoixCou() == Constantes.COU_AUTO) {
+        	System.out.println("Choix couleurs : automatique.");
+        } else if (mReg.getChoixCou() == Constantes.COU_PERSO) {
+        	System.out.println("Choix couleurs : personnalisé.");
+        	System.out.println(mReg.getCouleurs()[0]
+        			+"\n"+mReg.getCouleurs()[1]
+        			+"\n"+mReg.getCouleurs()[2]
+        			+"\n"+mReg.getCouleurs()[3]
+					+"\n"+mReg.getCouleurs()[4]
+        			+"\n"+mReg.getCouleurs()[5]
+        			+"\n"+mReg.getCouleurs()[6]
+        			+"\n"+mReg.getCouleurs()[7]
+        			);
+        }
 	}
 	
 	
@@ -167,13 +204,13 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         /*
          * Paramétrage de la caméra
          */
-        double[] cam = {0, 0, 20};
-        double[] cible = {0, 0, 5};
-        if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
-        	setCameraOrtho(gl, glu, cam, cible );
-        }
-        if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
-        	setCameraOrbite(gl, glu, angleRot, 80, 190, cible);
+        switch (mReg.getChoixCam()) {
+        	case Constantes.CAM_DESSUS:
+        		setCameraOrtho(gl, glu, cam, cible);
+        		break;
+        	case Constantes.CAM_ORBITE:
+        		setCameraOrbite(gl, glu, angleRot, zPlanOrbital, rayonOrbite, cible);
+        		break;
         }
         
         /*
@@ -181,45 +218,49 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
          */
         if(mReg.getChoixObj()==Constantes.OBJ_MNT || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 	        gl.glBegin(GL_TRIANGLES); // Début du dessin des triangles
+	        double nivGris;
+	        double pente;
 			for (int compteur = 0; compteur < listeT.size(); compteur++){		
 				Triangle triangle = listeT.get(compteur);
-				double nivGris = 0.25;
-				double pente = triangle.getPente();
+				pente = triangle.getPente();
+				//System.out.println(pente);
 				/* Définition de la couleur du triangle en cours de dessin */
 				if (mReg.getChoixCou() == Constantes.COU_AUTO) { // Niveau de gris automatique
 					nivGris = pente/90;
 					gl.glColor3d(nivGris, nivGris, nivGris); 
 				}
-				if (mReg.getChoixCou() == Constantes.COU_AUTO) { // Couleur choisie selon la plage de valeur
-					Color couleur = new Color(255,255,255);
+				else { // Couleur choisie selon la plage de valeur
+					float rouge, vert, bleu;
+					float[] couleur = {1f,0f,0f};
+					Color[] couleurs = this.mReg.getCouleurs();
 					if (pente<10) {
-						couleur = mReg.getCouleurs()[0];
+						couleur = couleurs[0].getRGBColorComponents(null);
 					}
-					if ((pente >=10) && (pente<20)) {
-						couleur = mReg.getCouleurs()[1];
+					else if ((pente >=10) && (pente<20)) {
+						couleur = couleurs[1].getRGBColorComponents(null);
 					}
-					if ((pente >=20) && (pente<30)) {
-						couleur = mReg.getCouleurs()[2];
+					else if ((pente >=20) && (pente<30)) {
+						couleur = couleurs[2].getRGBColorComponents(null);
 					}
-					if ((pente >=30) && (pente<40)) {
-						couleur = mReg.getCouleurs()[3];
+					else if ((pente >=30) && (pente<40)) {
+						couleur = couleurs[3].getRGBColorComponents(null);
 					}
-					if ((pente >=40) && (pente<50)) {
-						couleur = mReg.getCouleurs()[4];
+					else if ((pente >=40) && (pente<50)) {
+						couleur = couleurs[4].getRGBColorComponents(null);
 					}
-					if ((pente >=50) && (pente<60)) {
-						couleur = mReg.getCouleurs()[5];
+					else if ((pente >=50) && (pente<60)) {
+						couleur = couleurs[5].getRGBColorComponents(null);
 					}
-					if ((pente >=60) && (pente<70)) {
-						couleur = mReg.getCouleurs()[6];
+					else if ((pente >=60) && (pente<70)) {
+						couleur = couleurs[6].getRGBColorComponents(null);
 					}
-					if ((pente >=70) && (pente<80)) {
-						couleur = mReg.getCouleurs()[7];
+					else if ((pente >=70) && (pente<80)) {
+						couleur = couleurs[7].getRGBColorComponents(null);
 					}
-					if (pente >=80) {
-						couleur = mReg.getCouleurs()[8];
+					else if (pente >=80) {
+						couleur = couleurs[8].getRGBColorComponents(null);
 					}
-					gl.glColor3i(couleur.getRed(), couleur.getGreen(), couleur.getBlue());
+					gl.glColor3f(couleur[0], couleur[1], couleur[2]);
 				}
 				/* Dessin du triangle */
 				gl.glVertex3d(
@@ -297,6 +338,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		gl.glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // meilleure correction de perspective
 		gl.glShadeModel(GL_SMOOTH); // Gestion douce du mélange de couleurs et de l'éclairage
 		animateur.start(); // boucle d'animation
+		
 	}
 
 	public void reshape(GLAutoDrawable dessin, int x, int y, int largeur, int hauteur) {
