@@ -399,7 +399,36 @@ public class Grille {
 		}
 		return segments;
 	}
-
+	
+	/*
+	 * Méthode permettant de transformer les coordonnées des isolignes.
+	 * Les isolignes obtenues avec la méthode makeIsoZt() sont ainsi converties en listes de segments,
+	 * eux-même formés d'un tableau 2*3 exprimant les coordonnées du point initial et du point final dans le repère du modèle 3D.
+	 * Les isolignes ainsi transformés seront directement exploitables par le moteur de modélisation de la classe Panneau3D.
+	 */
+	public ArrayList<double[][]> transfoIso(List<Point2D.Double[]> isoI, double z) {
+		// isoI = isoligne initiale
+		// z = altitude de cette isoligne
+		ArrayList<double[][]> isoF = new ArrayList<>(); // isoligne transformée
+		
+		double empriseX = pas*(nCol-1), // Emprise Nord-Sud de la grille
+				empriseY = pas*(nLig-1),// Emprise Est-Ouest de la grille
+	    		xCentre = x0 + (empriseX/2), // Coordonnée Easting du centre de la grille
+	    		yCentre = y0 - (empriseY/2), // Coordonnée Northing du centre de la grille
+				zMin = this.zMinMax()[0]; // Altitude la plus basse du MNT
+		
+		for(int i=0; i<isoI.size(); i++){
+			double[][] segment = {
+					{200*(isoI.get(i)[0].x-xCentre)/empriseX, 200*(isoI.get(i)[0].y-yCentre)/empriseX, 200*(z-zMin)/empriseX},
+					{200*(isoI.get(i)[1].x-xCentre)/empriseX, 200*(isoI.get(i)[1].y-yCentre)/empriseX, 200*(z-zMin)/empriseX}
+			};
+			isoF.add(segment);
+		}
+		
+		
+		return isoF;
+	}
+	
 	
 	 	
 	
