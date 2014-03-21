@@ -24,8 +24,8 @@ public class IsosTest {
 		
 		//chargement d'une grille depuis un fichier
 		long startTime = System.nanoTime();
-		//final Grille grille = FilesUtils.loadMNTxyz2(file4);
-		final Grille grille = FilesUtils.loadMNTAsc(file2);
+		final Grille grille = FilesUtils.loadMNTxyz2(file4);
+		//final Grille grille = FilesUtils.loadMNTAsc(file2);
 		long endTime = System.nanoTime();
 		System.out.print("Chargement MNT xyz en grille : ");
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
@@ -59,7 +59,7 @@ public class IsosTest {
 		
 		startTime = System.nanoTime();
 		final ArrayList<List<Point2D.Double[]>> segments = new ArrayList<List<Point2D.Double[]>>();
-		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 0.5){
+		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 150){
 			segments.add(grille.makeIsoZt(i));
 			//System.out.println(i);
 		}
@@ -68,7 +68,11 @@ public class IsosTest {
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
 		System.out.println("Nb isolignes :"+segments.size());
 		
-		
+		int nbSeg = 0;
+		for(List<Point2D.Double[]> iso : segments)
+				for (Point2D.Double[] seg : iso)
+					++nbSeg;
+		System.out.println("nbre total de segments pour toutes les isolignes : " +nbSeg);
 		
 		EventQueue.invokeLater(new Runnable()
 		{
