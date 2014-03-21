@@ -25,15 +25,21 @@ public class PanneauControleDeplacement extends JPanel {
 		bHaut, bBas, // translation haut <-> bas
 		bVitPlus, bVitMoins, // sensibilité des boutons / vitesse de déplacement
 		bOrigine; // retour à la position par défaut
+	/*
+	 * Autres attributs
+	 */
+	MenuReglage mReg;
+	
 	
 	
 	/*
 	 * Constructeur
 	 */
-	public PanneauControleDeplacement(MenuReglage mReg, Dimension d) {
+	public PanneauControleDeplacement(MenuReglage Reglages, Dimension d) {
 		super();
 		this.setPreferredSize(d);
 		this.setBackground(new Color(225,225,225));
+		this.mReg = Reglages;
 		
 		bHaut = new JButton("Haut");
 		bOrigine = new JButton("Origine");
@@ -103,10 +109,41 @@ public class PanneauControleDeplacement extends JPanel {
 		// case 3,2		
 		this.add(bDroit);
 		
-		this.setVisible(true);
-		
-		
-		
+		this.setVisible(true);		
+	}
+	
+	
+	
+	
+	/*
+	 * Méthode de rafrachissement des boutons quand les réglages ont été modifiés
+	 */
+	public void rafraichitBoutons(){
+		/*
+		 * Activation ou désactivation des boutons selon la vue choisie
+		 */
+		if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
+			bHaut.setEnabled(false);
+			bOrigine.setEnabled(false);
+			bVitPlus.setEnabled(false);
+			bBas.setEnabled(false);
+			bAvant.setEnabled(false);
+			bVitMoins.setEnabled(false);
+			bGauche.setEnabled(false);
+			bArriere.setEnabled(false);
+			bDroit.setEnabled(false);
+		}
+		else {
+			bHaut.setEnabled(true);
+			bOrigine.setEnabled(true);
+			bVitPlus.setEnabled(true);
+			bBas.setEnabled(true);
+			bAvant.setEnabled(true);
+			bVitMoins.setEnabled(true);
+			bGauche.setEnabled(true);
+			bArriere.setEnabled(true);
+			bDroit.setEnabled(true);
+		}
 	}
 
 }
