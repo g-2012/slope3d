@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -9,12 +11,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 
 import Utils.Constantes;
 
-public class MenuReglage extends JMenu implements ItemListener{
+public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 	/** Menu permettant d'accéder aux réglages de la visualisation.
 	 * Ces réglages incluent :
 	 *	- Le réglage des objets affichés (MNT et/ou courbes de niveau)
@@ -39,6 +42,8 @@ public class MenuReglage extends JMenu implements ItemListener{
 	// Boutons radio
 	JRadioButtonMenuItem radCamOrtho, radCamOrbite, radCamPerso, // pour les réglages caméra
 	radCouAuto, radCouPerso; // pour les réglages couleurs
+	// Item normal de menu, pour ouvrir la boîte de dialogue de choix des couleurs.
+	JMenuItem bRegCouleurs;
 	
 	/*
 	 * Paramètres : valeurs des choix
@@ -111,15 +116,19 @@ public class MenuReglage extends JMenu implements ItemListener{
 		grpCouleurs = new ButtonGroup();
 		radCouAuto = new JRadioButtonMenuItem("Auto", true);
 		radCouPerso = new JRadioButtonMenuItem("Personnalisé");
+		bRegCouleurs = new JMenuItem("Table des couleurs");
 		// Ajout de l'écouteur
 		radCouAuto.addItemListener(this);
 		radCouPerso.addItemListener(this);
+		bRegCouleurs.setActionCommand("reglageCouleurs");
+		bRegCouleurs.addActionListener(this);
 		// Groupement des boutons
 		grpCouleurs.add(radCouAuto);
 		grpCouleurs.add(radCouPerso);
 		// Ajout des boutons
 		this.add(radCouAuto);
 		this.add(radCouPerso);
+		this.add(bRegCouleurs);
 		
 		// Initialisation des valeurs de choix
 		choixObj = Constantes.OBJ_MNT;
@@ -224,5 +233,28 @@ public class MenuReglage extends JMenu implements ItemListener{
 		this.parent.getFenetreMere().getControles().getPanCtrlRotation().rafraichitBoutons();
 		this.parent.getFenetreMere().getControles().getPanCtrlTranslation().rafraichitBoutons();
 	}
+	
+	/*
+	 * Setter non-Irlandais
+	 */
+	public void setCouleurs(Color[] nvlCouleurs) {
+		if (nvlCouleurs.length == couleurs.length){
+			couleurs = nvlCouleurs;
+			System.out.println("Couleurs personnalisées mise à jour.");
+		}else{
+			System.out.println("Erreur : la nouvelle table de couleurs ne contient pas le bon nombre de couleurs.");
+		}
+	}
+
+
+	public void actionPerformed(ActionEvent action) {
+		if(action.getActionCommand() == "reglageCouleurs"){
+			DialogueCouleurs dial = new DialogueCouleurs(this);
+			dial.setVisible(true);
+		}
+		
+	}
+	
+
 
 }
