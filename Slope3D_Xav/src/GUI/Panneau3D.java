@@ -12,6 +12,7 @@ import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.media.opengl.DebugGL2;
@@ -44,15 +45,13 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	// Spécification des paramètres OpenGL basés sur le profil chargé
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
-	//private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
 	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
-	private Grille grille = new Grille();
+	//private Grille grille = new Grille();
 	private List<Triangle> listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
-	//private Isoligne iso5 = new Isoligne( 5 , listeT );
-	//private Isoligne iso9 = new Isoligne( 9 , listeT );
-	private List<Point2D.Double[]> iso5 = grille.makeIsoZt(5);
-	private List<Point2D.Double[]> iso9 = grille.makeIsoZt(9);
-
+	private ArrayList<double[][]> iso5 = grille.transfoIso(grille.makeIsoZt(5), 5);
+	private ArrayList<double[][]> iso9 = grille.transfoIso(grille.makeIsoZt(9), 9);
+	
 	// Création de l'animateur :
 	private final FPSAnimator animateur;
 	private static int IPS; // Taux d'images par secondes voulu pour l'animateur
@@ -118,7 +117,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         cible = new double[]{0, 0, 5};
         
         angleRot = 0;
-        vitRot = 0.001;
+        vitRot = 0.01;
         rayonOrbite = 200;
         zPlanOrbital = 200*Math.sqrt(2);
         
@@ -225,7 +224,6 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 			for (int compteur = 0; compteur < listeT.size(); compteur++){		
 				Triangle triangle = listeT.get(compteur);
 				pente = triangle.getPente();
-				//System.out.println(pente);
 				/* Définition de la couleur du triangle en cours de dessin */
 				if (mReg.getChoixCou() == Constantes.COU_AUTO) { // Niveau de gris automatique
 					nivGris = pente/90;
@@ -265,40 +263,21 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 					gl.glColor3f(couleur[0], couleur[1], couleur[2]);
 				}
 				/* Dessin du triangle */
-				/*gl.glVertex3d(
-						200*(triangle.getx1()-xCentre)/empriseX,
-						200*(triangle.gety1()-yCentre)/empriseX,
-						200*grossissementZ*(triangle.getz1()-zMin)/empriseX
-						);
-						//System.out.println("Coordonnées du sommet A : ("+200*(triangle.getx1()-xCentre)/empriseX+", "+200*(triangle.gety1()-yCentre)/empriseX+", "+20*triangle.getz1()/empriseZ+")");
-				gl.glVertex3d(
-						200*(triangle.getx2()-xCentre)/empriseX,
-						200*(triangle.gety2()-yCentre)/empriseX,
-						200*grossissementZ*(triangle.getz2()-zMin)/empriseX
-						);
-				gl.glVertex3d(
-						200*(triangle.getx3()-xCentre)/empriseX,
-						200*(triangle.gety3()-yCentre)/empriseX,
-						200*grossissementZ*(triangle.getz3()-zMin)/empriseX
-						);*/
 				gl.glVertex3d(
 						triangle.getx1(),
 						triangle.gety1(),
 						grossissementZ*triangle.getz1()
 						);
-				//System.out.println("Coordonnées du sommet A : ("+triangle.getx1()+", "+triangle.gety1()+", "+triangle.getz1()*grossissementZ+")");
 				gl.glVertex3d(
 						triangle.getx2(),
 						triangle.gety2(),
 						grossissementZ*triangle.getz2()
 						);
-				//System.out.println("Coordonnées du sommet B : ("+triangle.getx2()+", "+triangle.gety2()+", "+triangle.getz2()*grossissementZ+")");
 				gl.glVertex3d(
 						triangle.getx3(),
 						triangle.gety3(),
 						grossissementZ*triangle.getz3()
 						);
-				//System.out.println("Coordonnées du sommet C : ("+triangle.getx3()+", "+triangle.gety3()+", "+triangle.getz3()*grossissementZ+")");
 				
 			}	
 			gl.glEnd(); // fin du MNT
@@ -310,55 +289,30 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
         if(mReg.getChoixObj()==Constantes.OBJ_ISOLIGNES || mReg.getChoixObj()==Constantes.OBJ_TOUT){
 			gl.glBegin(GL2.GL_LINES);
 			gl.glColor3d(1, 0, 0);
-			/*for (int compteur = 0; compteur < iso5.segments.size() ; compteur++) {
-				gl.glVertex3d(
-						200*(iso5.segments.get(compteur)[0][0]-xCentre)/empriseX,
-						200*(iso5.segments.get(compteur)[0][1]-yCentre)/empriseX,
-						200*grossissementZ*(iso5.segments.get(compteur)[0][2]-zMin)/empriseX
-						);
-				gl.glVertex3d(
-						200*(iso5.segments.get(compteur)[1][0]-xCentre)/empriseX,
-						200*(iso5.segments.get(compteur)[1][1]-yCentre)/empriseX,
-						200*grossissementZ*(iso5.segments.get(compteur)[1][2]-zMin)/empriseX
-						);
-			}
-			gl.glColor3d(0, 1, 0);
-			for (int compteur = 0; compteur < iso9.segments.size() ; compteur++) {
-				gl.glVertex3d(
-						200*(iso9.segments.get(compteur)[0][0]-xCentre)/empriseX,
-						200*(iso9.segments.get(compteur)[0][1]-yCentre)/empriseX,
-						200*grossissementZ*(iso9.segments.get(compteur)[0][2]-zMin)/empriseX
-						);
-				gl.glVertex3d(
-						200*(iso9.segments.get(compteur)[1][0]-xCentre)/empriseX,
-						200*(iso9.segments.get(compteur)[1][1]-yCentre)/empriseX,
-						200*grossissementZ*(iso9.segments.get(compteur)[1][2]-zMin)/empriseX
-						);
-			}*/
 			
 			for (int compteur = 0; compteur < iso5.size() ; compteur++) {
 				gl.glVertex3d(
-						200*(iso5.get(compteur)[0].x-xCentre)/empriseX,
-						200*(iso5.get(compteur)[0].y-yCentre)/empriseX,
-						200*grossissementZ*(5-zMin)/empriseX
+						iso5.get(compteur)[0][0],
+						iso5.get(compteur)[0][1],
+						grossissementZ*iso5.get(compteur)[0][2]
 						);
 				gl.glVertex3d(
-						200*(iso5.get(compteur)[1].x-xCentre)/empriseX,
-						200*(iso5.get(compteur)[1].y-yCentre)/empriseX,
-						200*grossissementZ*(5-zMin)/empriseX
+						iso5.get(compteur)[1][0],
+						iso5.get(compteur)[1][1],
+						grossissementZ*iso5.get(compteur)[1][2]
 						);
 			}
 			gl.glColor3d(0, 1, 0);
 			for (int compteur = 0; compteur < iso9.size() ; compteur++) {
 				gl.glVertex3d(
-						200*(iso9.get(compteur)[0].x-xCentre)/empriseX,
-						200*(iso9.get(compteur)[0].y-yCentre)/empriseX,
-						200*grossissementZ*(9-zMin)/empriseX
+						iso9.get(compteur)[0][0],
+						iso9.get(compteur)[0][1],
+						grossissementZ*iso9.get(compteur)[0][2]
 						);
 				gl.glVertex3d(
-						200*(iso9.get(compteur)[1].x-xCentre)/empriseX,
-						200*(iso9.get(compteur)[1].y-yCentre)/empriseX,
-						200*grossissementZ*(9-zMin)/empriseX
+						iso9.get(compteur)[1][0],
+						iso9.get(compteur)[1][1],
+						grossissementZ*iso9.get(compteur)[1][2]
 						);
 			}
 			
