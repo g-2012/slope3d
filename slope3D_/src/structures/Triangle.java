@@ -1,9 +1,11 @@
 package structures;
 
+import java.io.Serializable;
+
 import Utils.FilesUtils;
 import Utils.TrianglesOutils;
 
-public class Triangle {
+public class Triangle implements Serializable{
 
 	
 	/*******************************************************************************************************

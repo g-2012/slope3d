@@ -1,7 +1,6 @@
 package test;
 
-import imranUtils.SimpleFrame;
-
+import GUI.SimpleFrame;
 import java.awt.EventQueue;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class IsosTest {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String file = "/test/MNT_ios200_test.asc";
+		String file = "/test/mnt_test02.asc";
 		String file2 = "/test/fakemnt.asc";
 		String file3 = "/test/0473_6915_MNT.asc";
 		String file4 = "/test/Ecrins2.xyz";
@@ -26,7 +25,7 @@ public class IsosTest {
 		//chargement d'une grille depuis un fichier
 		long startTime = System.nanoTime();
 		//final Grille grille = FilesUtils.loadMNTxyz2(file4);
-		final Grille grille = FilesUtils.loadMNTAsc(file3);
+		final Grille grille = FilesUtils.loadMNTAsc(file2);
 		long endTime = System.nanoTime();
 		System.out.print("Chargement MNT xyz en grille : ");
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
@@ -60,7 +59,7 @@ public class IsosTest {
 		
 		startTime = System.nanoTime();
 		final ArrayList<List<Point2D.Double[]>> segments = new ArrayList<List<Point2D.Double[]>>();
-		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 2.5){
+		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 0.5){
 			segments.add(grille.makeIsoZt(i));
 			//System.out.println(i);
 		}
