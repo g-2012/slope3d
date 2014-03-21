@@ -45,12 +45,10 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	// Spécification des paramètres OpenGL basés sur le profil chargé
 	private static GLCapabilities caps = new GLCapabilities(glp);
 	// Création des polygones qui seront dessinés, à partir de la grille
-	private Grille grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
-	//private Grille grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
-	//private Grille grille = new Grille();
-	private List<Triangle> listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
-	private ArrayList<double[][]> iso5 = grille.transfoIso(grille.makeIsoZt(5), 5);
-	private ArrayList<double[][]> iso9 = grille.transfoIso(grille.makeIsoZt(9), 9);
+	private Grille grille;
+	private List<Triangle> listeT;
+	private ArrayList<double[][]> iso5;
+	private ArrayList<double[][]> iso9;
 	
 	// Création de l'animateur :
 	private final FPSAnimator animateur;
@@ -65,31 +63,34 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	private double ratio; // Ratio entre le champ de vison horizontal et le champ vertical = ratio largeur / hauteur de la zone d'affichage.
     private double profProche; // Profondeur (en unités de distance de l'environnement 3D) du plus proche plan visible. (Doit être strictement positif)
     private double profLoin; // Profondeur du plan visible le plus éloigné. (Doit être supérieur à profProche)
+    private double zV, zH, zM;  // Servent à régler la hauteur par défaut de la caméra
     
     /* Paramètres de la caméra (hors projection */
     private double[] cam; // Coordonnées de la caméra
     private double[] cible; // Coordonnées du point visé
     double rayonOrbite; // Rayon de l'orbite plane de la caméra
     double zPlanOrbital; // Hauteur (en repère environnement) de la caméra en orbite
+  
     
     
     /* Paramètres définissant la nature de l'affichage */
     private MenuReglage mReg; // Menu de reglage, contenant les différents réglages généraux d'affichage.
 	
     /* Paramètres de la grille */
-    double pas = grille.pas,
-    		x0 = grille.x0,
-    		y0 = grille.y0,
-    		zMin = grille.zMinMax()[0],
-    		zMax = grille.zMinMax()[1];
-    int nLig = grille.nLig,
-    		nCol = grille.nCol;
-    double 	empriseX = pas*(nCol-1),
-    		empriseY = pas*(nLig-1),
-    		xCentre = x0 + (empriseX/2),
-    		yCentre = y0 - (empriseY/2),
-    	 	empriseZ = zMax-zMin,
+    double 	pas,
+    		x0,
+    		y0,
+    		zMin,
+    		zMax;
+    int 	nLig,
+    		nCol;
+    double 	empriseX,
+    		empriseY,
+    		xCentre,
+    		yCentre,
+    	 	empriseZ,
     		grossissementZ;
+  
     
     
 	
@@ -107,19 +108,69 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		this.addGLEventListener(this);
 		IPS = 60;
 		animateur = new FPSAnimator(this, IPS, true);
-		champVertical = 50;
+		
+		/*
+		 * Initialisation de la grille, des triangles et des isolignes
+		 */
+		grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
+		//grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
+		//grille = new Grille();
+		listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
+		iso5 = grille.transfoIso(grille.makeIsoZt(5), 5);
+		iso9 = grille.transfoIso(grille.makeIsoZt(9), 9);
+		// Paramètres
+		pas = grille.pas;
+		x0 = grille.x0;
+		y0 = grille.y0;
+		zMin = grille.zMinMax()[0];
+		zMax = grille.zMinMax()[1];
+	    nLig = grille.nLig;
+		nCol = grille.nCol;
+	    empriseX = pas*(nCol-1);
+		empriseY = pas*(nLig-1);
+		xCentre = x0 + (empriseX/2);
+		yCentre = y0 - (empriseY/2);
+	 	empriseZ = zMax-zMin;
+	    
+	 	champVertical = 50;
 		ratio = (double) (d.getWidth() / d.getHeight());
 		profProche = 0.1;
 		profLoin = 1000;
 		this.mReg=mReg;
-		grossissementZ = 2;
-		cam = new double[]{0, 0, 250};
+		
+	 	angleRot = 0;
+        vitRot = 0.01;
+        rayonOrbite = 125*Math.sqrt(2);
+        grossissementZ = 2;
+        
+        // Définition de la hauteur par défaut de la caméra
+        if (Math.tan(champVertical*Math.PI/360) != 0) {
+        	zV = (10+(200*empriseY/empriseX)) / (2 * Math.tan(champVertical*Math.PI/360));
+        } else {
+        	zV=1;
+        }
+        if (Math.tan(ratio*champVertical*Math.PI/360) != 0) {
+        	zH = 210 / (2 * Math.tan(ratio*champVertical*Math.PI/360));
+        } else {
+        	zH=1;
+        }
+        zM = 50+200*zMax/empriseX;
+        
+        if ((zM > zV) && (zM > zH)){
+        	zPlanOrbital = zM;
+        } else if((zV >= zM) && (zV >= zH)) {
+        	zPlanOrbital = zV;
+        } else {
+        	zPlanOrbital = zH;
+        }
+       
+        System.out.println("zV = "+zV+"\nzH = "+zH+"\nzM = "+(zM)+"\n=> zPlanOrbital = "+zPlanOrbital);
+        
+		
+		cam = new double[]{0, 0, zPlanOrbital};
         cible = new double[]{0, 0, 5};
         
-        angleRot = 0;
-        vitRot = 0.01;
-        rayonOrbite = 200;
-        zPlanOrbital = 200*Math.sqrt(2);
+        
         
         if (mReg.getChoixCam() == Constantes.CAM_DESSUS) {
         	System.out.println("Choix caméra : vue de dessus.");
