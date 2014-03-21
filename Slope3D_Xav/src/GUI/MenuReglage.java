@@ -87,8 +87,8 @@ public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 		titreCam.setHorizontalTextPosition(CENTER);
 		this.add(titreCam);
 		grpCamera = new ButtonGroup();
-		radCamOrtho = new JRadioButtonMenuItem("Vue de dessus");
-		radCamOrbite = new JRadioButtonMenuItem("En orbite", true);
+		radCamOrtho = new JRadioButtonMenuItem("Vue de dessus", true);
+		radCamOrbite = new JRadioButtonMenuItem("En orbite");
 		radCamPerso = new JRadioButtonMenuItem("Navigation 3D");
 		// Ajout de l'écouteur
 		radCamOrtho.addItemListener(this);
@@ -132,7 +132,7 @@ public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 		
 		// Initialisation des valeurs de choix
 		choixObj = Constantes.OBJ_MNT;
-		choixCam = Constantes.CAM_ORBITE;
+		choixCam = Constantes.CAM_DESSUS;
 		choixCou = Constantes.COU_AUTO;
 		
 		// Initialisation des couleurs par défaut
