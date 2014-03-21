@@ -34,15 +34,19 @@ public class PanneauControleRotation extends JPanel {
 	bVitPlus, bVitMoins,  // Vitesse de rotation / sensibilité des commandes de rotation
 	bHPlus, bHMoins, // Rotation par rapport au plan vertical (dans le plan horizontal)
 	bVPlus, bVMoins; // Rotation par rapport au plan horizontal (dans le plan vertical)
-
+	/*
+	 * Autres attributs
+	 */
+	MenuReglage mReg;
 
 	/*
 	 * Constructeur
 	 */
-	public PanneauControleRotation(MenuReglage mReg /* permet de connaitre les valeurs des réglages */, Dimension d) {
+	public PanneauControleRotation(MenuReglage Reglages /* permet de connaitre les valeurs des réglages */, Dimension d) {
 		super();
 		this.setPreferredSize(d);
 		this.setBackground(new Color(225,225,225));
+		this.mReg = Reglages;
 
 		/*
 		 * Création des boutons
@@ -251,6 +255,49 @@ public class PanneauControleRotation extends JPanel {
 
 		this.setVisible(true);
 
+	}
+	
+	
+	/*
+	 * Méthode de rafrachissement des boutons quand les réglages ont été modifiés
+	 */
+	public void rafraichitBoutons(){
+		/*
+		 * Activation ou désactivation des boutons selon la vue choisie
+		 */
+		if (mReg.getChoixCam() == Constantes.CAM_DESSUS) { // Vue du dessus
+			// Aucune rotation autorisée
+			bSensAnti.setEnabled(false);
+			bSensHora.setEnabled(false);
+			bVitMoins.setEnabled(false);
+			bVitPlus.setEnabled(false);
+			bHPlus.setEnabled(false);
+			bHMoins.setEnabled(false);
+			bVPlus.setEnabled(false);
+			bVMoins.setEnabled(false);			
+		}
+		else if (mReg.getChoixCam() == Constantes.CAM_ORBITE) { // Caméra en orbite
+			// L'utilisateur peut régler le sens et la vitesse de rotation
+			bSensAnti.setEnabled(true);
+			bSensHora.setEnabled(true);
+			bVitMoins.setEnabled(true);
+			bVitPlus.setEnabled(true);
+			bHPlus.setEnabled(false);
+			bHMoins.setEnabled(false);
+			bVPlus.setEnabled(false);
+			bVMoins.setEnabled(false);			
+		}
+		else if (mReg.getChoixCam() == Constantes.CAM_PERSO) { // Vue libre
+			// L'utilisateur fait librement tourner la caméra
+			bSensAnti.setEnabled(false); // Inutile ici
+			bSensHora.setEnabled(false); // Inutile ici
+			bVitMoins.setEnabled(true);
+			bVitPlus.setEnabled(true);
+			bHPlus.setEnabled(true);
+			bHMoins.setEnabled(true);
+			bVPlus.setEnabled(true);
+			bVMoins.setEnabled(true);			
+		}
 	}
 
 }
