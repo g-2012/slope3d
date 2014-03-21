@@ -30,6 +30,8 @@ public class MenuReglage extends JMenu implements ItemListener{
 	/* 
 	 * Composants du menu
 	 */
+	// Menu parent :
+	BarreMenu parent;
 	// Cases à cocher pour le choix des objets affichés
 	JCheckBoxMenuItem chkObjMNT, chkObjIsoligne;
 	// Groupes de boutons radio pour s'assurer que seule une option soit sélectionnable par groupe.
@@ -53,10 +55,10 @@ public class MenuReglage extends JMenu implements ItemListener{
 	/*
 	 * Constructeur
 	 */
-	public MenuReglage() {
+	public MenuReglage(BarreMenu parent) {
 		super("Reglages");
-
 		
+		this.parent = parent;
 		// Menu de sélection des objets affichés
 		JLabel titreObj = new JLabel("  Objets affichés  ", CENTER);
 		titreObj.setHorizontalTextPosition(CENTER);
@@ -129,7 +131,7 @@ public class MenuReglage extends JMenu implements ItemListener{
 		couleurs[0] = new Color(0, 0, 0); 		// [0°, 10°[
 		couleurs[1] = new Color(30, 0, 30); 	// [10°, 20°[
 		couleurs[2] = new Color(60, 0, 60); 	// [20°, 30°[
-		couleurs[3] = new Color(90, 0, 90);	// [30°, 40°[
+		couleurs[3] = new Color(90, 0, 90);		// [30°, 40°[
 		couleurs[4] = new Color(120, 0, 120);	// [40°, 50°[
 		couleurs[5] = new Color(150, 0, 150);	// [50°, 60°[
 		couleurs[6] = new Color(180, 0, 180);	// [60°, 70°[
@@ -215,6 +217,12 @@ public class MenuReglage extends JMenu implements ItemListener{
 		}else if (source == radCouPerso){
 			choixCou = Constantes.COU_PERSO;
 		}
+		
+		/*
+		 * Actualisation des boutons du panneau de controle
+		 */
+		this.parent.getFenetreMere().getControles().getPanCtrlRotation().rafraichitBoutons();
+		this.parent.getFenetreMere().getControles().getPanCtrlTranslation().rafraichitBoutons();
 	}
 
 }
