@@ -55,4 +55,15 @@ public class PanneauControle extends JPanel {
 		
 	}
 	
+	/*
+	 * Getters
+	 */
+	public PanneauControleDeplacement getPanCtrlTranslation(){
+		return panTra;
+	}
+	
+	public PanneauControleRotation getPanCtrlRotation(){
+		return panRot;
+	}
+	
 }
