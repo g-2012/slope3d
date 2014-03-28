@@ -53,7 +53,8 @@ public class Fenetre extends JFrame { /**
 		
 		panEnv = new Panneau3D(bandeauMenu.getMenuReglage(), new Dimension(dimFenetre.width-250, dimFenetre.height-20)); // Création du panneau contenant l'environnement 3D.
 		this.getContentPane().add(panEnv, BorderLayout.CENTER);
-	
+		bandeauMenu.getMenuFichier().setPanEnv(panEnv);
+		
 		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250, dimFenetre.height));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
 		
