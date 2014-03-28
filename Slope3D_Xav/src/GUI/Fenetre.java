@@ -3,14 +3,18 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import Utils.Constantes;
+
 
 
 public class Fenetre extends JFrame { /**
+
 	 * 
 	 */
 	private static final long serialVersionUID = -1856636070468607309L;
@@ -37,6 +41,8 @@ public class Fenetre extends JFrame { /**
 	 */
 	public Fenetre() {
 		super(); // Crée une instance de JFrame.
+		this.setLocale(Locale.FRANCE);
+		Constantes.langueFR();
 				
 		Toolkit tk = this.getToolkit(); // Chargement d'une boîte à outils pour extraire les dimensions de l'écran.
 		Dimension dimEcran = tk.getScreenSize(); // Dimensions de l'écran actif.
