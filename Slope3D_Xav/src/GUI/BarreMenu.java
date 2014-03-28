@@ -32,6 +32,10 @@ public class BarreMenu extends JMenuBar {
 		return mReglages;
 	}
 	
+	public MenuFichier getMenuFichier() {
+		return mFichier;
+	}
+	
 	public Fenetre getFenetreMere() {
 		return parent;
 	}
