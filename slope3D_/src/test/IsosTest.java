@@ -56,7 +56,7 @@ public class IsosTest {
 		*/
 		
 		//calcul isolignes à partir de la grille directoss
-		
+		/*
 		startTime = System.nanoTime();
 		final ArrayList<List<Point2D.Double[]>> segments = new ArrayList<List<Point2D.Double[]>>();
 		for (double i = (int)grille.zMinMax()[0] ; i < (int)grille.zMinMax()[1]; i += 150){
@@ -67,7 +67,9 @@ public class IsosTest {
 		System.out.print("Creation isolignes : ");
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
 		System.out.println("Nb isolignes :"+segments.size());
-		
+		*/
+		//calcul isolignes à partir de la grille directoss, interpolées entre zmin et zmax
+		final ArrayList<List<Point2D.Double[]>> segments = grille.makeListIsos(20);
 		int nbSeg = 0;
 		for(List<Point2D.Double[]> iso : segments)
 				for (Point2D.Double[] seg : iso)

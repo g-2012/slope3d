@@ -400,9 +400,55 @@ public class Grille {
 		return segments;
 	}
 
-	
+	// renvoie une liste de n isolignes interpolées entre zmin et zmax 
+	public ArrayList<List<Point2D.Double[]>> makeListIsos(int nombre){
+		ArrayList<List<Point2D.Double[]>> isos = new ArrayList<List<Point2D.Double[]>>();
+		int zmin = (int)this.zMinMax()[0];
+		int zmax = (int)this.zMinMax()[1];
+		long startTime = System.nanoTime();
+		if (nombre <= 1) //si on en veut 1 ou moins on genere que dalle
+			return isos;
+		for (double i = zmin ; i < zmax; i += (zmax-zmin)/(nombre -1)){
+			isos.add(this.makeIsoZt(i));
+		}
+		long endTime = System.nanoTime();
+		System.out.print("Creation isolignes : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println("Nb isolignes :"+isos.size());
+		return isos;
+	}
 	 	
-	
+	/*
+	 * Méthode permettant de transformer les coordonnées des isolignes.
+	 * Les isolignes obtenues avec la méthode makeIsoZt() sont ainsi converties en listes de segments,
+	 * eux-même formés d'un tableau 2*3 exprimant les coordonnées du point initial et du point final dans le repère du modèle 3D.
+	 * Les isolignes ainsi transformés seront directement exploitables par le moteur de modélisation de la classe Panneau3D.
+	 */
+	public ArrayList<double[][]> transfoIso(List<Point2D.Double[]> isoI, double z) {
+		// isoI = isoligne initiale
+		// z = altitude de cette isoligne
+		ArrayList<double[][]> isoF = new ArrayList<>(); // isoligne transformée
+
+		double empriseX = pas*(nCol-1), // Emprise Nord-Sud de la grille
+				empriseY = pas*(nLig-1),// Emprise Est-Ouest de la grille
+				xCentre = x0 + (empriseX/2), // Coordonnée Easting du centre de la grille
+				yCentre = y0 - (empriseY/2), // Coordonnée Northing du centre de la grille
+				zMin = this.zMinMax()[0]; // Altitude la plus basse du MNT
+
+		for(int i=0; i<isoI.size(); i++){
+			double[][] segment = {
+					{200*(isoI.get(i)[0].x-xCentre)/empriseX, 200*(isoI.get(i)[0].y-yCentre)/empriseX, 200*(z-zMin)/empriseX},
+					{200*(isoI.get(i)[1].x-xCentre)/empriseX, 200*(isoI.get(i)[1].y-yCentre)/empriseX, 200*(z-zMin)/empriseX}
+			};
+			isoF.add(segment);
+		}
+
+
+		return isoF;
+	}
+
+
+
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/

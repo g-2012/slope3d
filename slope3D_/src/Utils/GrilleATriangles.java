@@ -131,5 +131,77 @@ public abstract class GrilleATriangles {
 			t.afficherCaracteristiquesTriangle();*/
 		return listeT;
 		}
+	
+	public static List<Triangle> grilleVersTrianglesStandard(Grille grille) {
+		/*
+		 * Extrait une liste d'objets Triangle depuis la la grille de MNT fournie en entrée.
+		 * Les coordonnées des points sont ici ramenées à l'échelle du modéle affiché sous OpenGL,
+		 * le centre du MNT est ramené à l'origine planimétrique du repère de l'environnement 3D,
+		 * et l'altitude minimale est ramenée à 0.
+		 * Ceci permet d'exprimer les coordonnées des points du MNT dans un repère et une échelle plus pratique pour la modélisation 3D,
+		 * et ainsi d'éviter de recalculer le changement de repère à chaque tic de l'animateur OpenGL.
+		 */
+
+		int nTL = 2*(grille.nCol-1); // nombre de triangles par ligne
+		int nTT = nTL*(grille.nLig-1); // nombre total de triangles dans la grille
+		//System.out.println(nTL+" triangles par ligne, "+nTT+" triangles au total.");
+		ArrayList<Triangle> listeT = new ArrayList<>();
+		int i,j;
+		double empriseX = grille.pas*(grille.nCol-1),
+				empriseY = grille.pas*(grille.nLig-1),
+				zMin = grille.zMinMax()[0];
+		System.out.println("Emprise X : "+empriseX+"m, Emprise Y : "+empriseY+"m");
+
+		for (int n = 0; n < nTT; n++){
+			i = n / nTL; // indice de la ligne du coin supérieur gauche de la case dans la grille
+			j = (n - i*nTL) / 2; // indice de la colonne du coin supérieur gauche de la case dans la grille
+
+			if (n%2 == 0){ // indice pair -> triangle droit
+				double a[] = { //sommet supérieur gauche du triangle
+						(j * grille.pas - (empriseX/2)) * 200/empriseX, // absisse du sommet (Easting)
+						(-i * grille.pas + (empriseY/2)) * 200/empriseX, // ordonnée du sommet (Northing)
+						(grille.valeurs[i][j] - zMin) * 200/empriseX // altitude du sommet
+				};
+
+				double b[] = { //sommet supérieur droit du triangle
+						((j+1) * grille.pas - (empriseX/2)) * 200/empriseX,
+						(0 - i * grille.pas + (empriseY/2)) * 200/empriseX,
+						(grille.valeurs[i][j+1] - zMin) * 200/empriseX
+				};
+
+				double c[] = { //sommet inférieur gauche du triangle
+						(j * grille.pas - (empriseX/2)) * 200/empriseX,
+						(0 - (i+1) * grille.pas + (empriseY/2)) * 200/empriseX,
+						(grille.valeurs[i+1][j] - zMin) * 200/empriseX
+				};
+
+				listeT.add(new Triangle( n , a , b , c ));
+			}
+
+			else if(n%2 == 1) { // indice impair -> triangle inversé
+				double d[] = { //sommet inférieur droit du triangle
+						((j+1) * grille.pas - (empriseX/2)) * 200/empriseX, // absisse du sommet en m (Easting)
+						(- (i+1) * grille.pas + (empriseY/2)) * 200/empriseX, // ordonnée du sommet en m (Northing)
+						(grille.valeurs[i+1][j+1] - zMin) * 200/empriseX // altitude du sommet
+				};
+
+				double b[] = { //sommet supérieur droit du triangle
+						((j+1) * grille.pas - (empriseX/2)) * 200/empriseX,
+						(0 - i * grille.pas + (empriseY/2)) * 200/empriseX,
+						(grille.valeurs[i][j+1] - zMin) * 200/empriseX
+				};
+
+				double c[] = { //sommet inférieur gauche du triangle
+						(j * grille.pas - (empriseX/2)) * 200/empriseX,
+						(0 - (i+1) * grille.pas + (empriseY/2)) * 200/empriseX,
+						(grille.valeurs[i+1][j] - zMin) * 200/empriseX
+				};
+
+				listeT.add(new Triangle( n , d , b , c ));
+			}
+
+		}
+		return listeT;
+	}
 	}
 
