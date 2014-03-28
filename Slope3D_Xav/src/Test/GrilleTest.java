@@ -1,5 +1,7 @@
 package Test;
 
+// classe test utilisee au debut
+// DEPRECATED
 public class GrilleTest {  // MNT fictif créé pour les tests
 	
 	public 		double 		pas  = 30	; 		// pas du MNT (m)

@@ -28,23 +28,23 @@ public class Grille {
 	public Grille(){
 		
 		pas		=	25;//1	;
-		nLig	=	10;//4	;
-		nCol	=	10;//4	;
+		nLig	=	5;//4	;
+		nCol	=	5;//4	;
 		x0		=	0;//0	;
 		y0		=	100;//0	;
 		
 		valeurs = new double[][]{ 
 				
-				{  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,   70  }, // altitudes des points du MNT (m)
+				/*{  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,  70   ,   70  }, // altitudes des points du MNT (m)
 				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  },
 				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
 				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
 				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
-				{  70   ,  92   ,  94   ,  95   ,  96   ,  130  ,  96   ,  95   ,  95   ,   95  },
+				{  70   ,  92   ,  94   ,  95   ,  96   ,  500  ,  96   ,  95   ,  95   ,   95  },
 				{  70   ,  90   ,  94   ,  95   ,  96   ,  96   ,  96   ,  95   ,  95   ,   95  },
 				{  70   ,  90   ,  94   ,  95   ,  95   ,  95   ,  95   ,  95   ,  95   ,   94  },
 				{  70   ,  90   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,  94   ,   91  },
-				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  }
+				{  70   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,  90   ,   90  }*/
 		
 				
 				/*{  350   ,  400   ,  425   ,  400     }, // grille test pour isolignes 500
@@ -52,11 +52,11 @@ public class Grille {
 				{  350   ,  600   ,  650   ,  440     },
 				{  400   ,  450   ,  500   ,  460     },*/
 				
-				/* {0.5, 1.0, 1.0, 3.0, 2.0},
+				 {0.5, 1.0, 1.0, 3.0, 2.0},
 				 {1.0, 3.0, 6.0, 6.0, 3.0},
 				 {3.0, 7.0, 9.0, 7.0, 3.0},
 				 {5.0, 7.0, 8.0, 6.0, 2.0},
-				 {1.0, 2.0, 3.0, 4.0, 3.0},*/
+				 {1.0, 2.0, 3.0, 4.0, 3.0},
 				
 				
 				
@@ -399,7 +399,25 @@ public class Grille {
 		}
 		return segments;
 	}
-	
+
+	// renvoie une liste de n isolignes interpolées entre zmin et zmax 
+	public ArrayList<List<Point2D.Double[]>> makeListIsos(int nombre){
+		ArrayList<List<Point2D.Double[]>> isos = new ArrayList<List<Point2D.Double[]>>();
+		int zmin = (int)this.zMinMax()[0];
+		int zmax = (int)this.zMinMax()[1];
+		long startTime = System.nanoTime();
+		if (nombre <= 1) //si on en veut 1 ou moins on genere que dalle
+			return isos;
+		for (double i = zmin ; i < zmax; i += (zmax-zmin)/(nombre -1)){
+			isos.add(this.makeIsoZt(i));
+		}
+		long endTime = System.nanoTime();
+		System.out.print("Creation isolignes : ");
+		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
+		System.out.println("Nb isolignes :"+isos.size());
+		return isos;
+	}
+	 	
 	/*
 	 * Méthode permettant de transformer les coordonnées des isolignes.
 	 * Les isolignes obtenues avec la méthode makeIsoZt() sont ainsi converties en listes de segments,
@@ -410,13 +428,13 @@ public class Grille {
 		// isoI = isoligne initiale
 		// z = altitude de cette isoligne
 		ArrayList<double[][]> isoF = new ArrayList<>(); // isoligne transformée
-		
+
 		double empriseX = pas*(nCol-1), // Emprise Nord-Sud de la grille
 				empriseY = pas*(nLig-1),// Emprise Est-Ouest de la grille
-	    		xCentre = x0 + (empriseX/2), // Coordonnée Easting du centre de la grille
-	    		yCentre = y0 - (empriseY/2), // Coordonnée Northing du centre de la grille
+				xCentre = x0 + (empriseX/2), // Coordonnée Easting du centre de la grille
+				yCentre = y0 - (empriseY/2), // Coordonnée Northing du centre de la grille
 				zMin = this.zMinMax()[0]; // Altitude la plus basse du MNT
-		
+
 		for(int i=0; i<isoI.size(); i++){
 			double[][] segment = {
 					{200*(isoI.get(i)[0].x-xCentre)/empriseX, 200*(isoI.get(i)[0].y-yCentre)/empriseX, 200*(z-zMin)/empriseX},
@@ -424,14 +442,13 @@ public class Grille {
 			};
 			isoF.add(segment);
 		}
-		
-		
+
+
 		return isoF;
 	}
-	
-	
-	 	
-	
+
+
+
 	/*******************************************************************************************************
 	 ******    MAIN   
 	 *******************************************************************************************************/
