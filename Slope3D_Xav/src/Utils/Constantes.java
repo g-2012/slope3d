@@ -1,5 +1,7 @@
 package Utils;
 
+import javax.swing.UIManager;
+
 /**
  * Classe contenant des valeurs de constantes utilisées dans le programme
  */
@@ -25,4 +27,26 @@ public class Constantes {
 	 */
 	public static final boolean COU_AUTO = false; // Nuances de gris de valeur proportionnelle à la pente
 	public static final boolean COU_PERSO = true; // Plages de couleurs définies par l'utilisateur
+	
+	public static void langueFR(){
+		UIManager.put("FileChooser.saveButtonText","Enregistrer");
+		UIManager.put("FileChooser.openButtonText","Ouvrir");
+		UIManager.put("FileChooser.cancelButtonText","Annuler");
+		UIManager.put("FileChooser.updateButtonText","Actualiser");
+		UIManager.put("FileChooser.helpButtonText","Aide");
+		UIManager.put("FileChooser.saveButtonToolTipText","Enregistre le fichier");
+		UIManager.put("FileChooser.fileNameLabelText","Nom du fichier");
+		UIManager.put("FileChooser.homeFolderToolTipText","Dossier personnel");
+		UIManager.put("FileChooser.newFolderToolTipText","Nouveau dossier");
+		UIManager.put("FileChooser.listViewButtonToolTipText","Liste");
+		UIManager.put("FileChooser.detailsViewButtonToolTipText","Détails");
+		UIManager.put("FileChooser.openButtonToolTipText","Ouvrir le fichier sélectionné");
+		UIManager.put("FileChooser.cancelButtonToolTipText","Annuler et fermer la boîte de dialogue");
+		UIManager.put("FileChooser.updateButtonToolTipText","Rafraichir");
+		UIManager.put("FileChooser.helpButtonToolTipText","Ouvrir l'aide");
+		UIManager.put("FileChooser.lookInLabelText","Courant");
+		UIManager.put("FileChooser.filesOfTypeLabelText","Type de fichiers");
+		UIManager.put("FileChooser.upFolderToolTipText","Dossier parent");
+		UIManager.put("FileChooser.openDialogTitleText","Ouvrir un fichier");
+	}
 }
