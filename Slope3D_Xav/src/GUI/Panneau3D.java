@@ -112,9 +112,7 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 		/*
 		 * Initialisation de la grille, des triangles et des isolignes
 		 */
-		grille = FilesUtils.loadMNTAsc("/test/testMNT.asc");
-		//grille = FilesUtils.loadMNTxyz2("/test/Ecrins2.xyz");
-		//grille = new Grille();
+		grille = new Grille(); // Valeur par défaut donnée à la grille
 		listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
 		iso5 = grille.transfoIso(grille.makeIsoZt(5), 5);
 		iso9 = grille.transfoIso(grille.makeIsoZt(9), 9);
@@ -199,6 +197,61 @@ public class Panneau3D extends GLJPanel implements GLEventListener {
 	public FPSAnimator getAnimateur(){
 		return animateur;
 	}
+	
+	/*****************************************************************************************************************************************/
+	/*
+	 * Methodes getter / setter
+	 */
+	
+	public void setGrille(Grille gr){
+		grille = gr;
+		listeT = GrilleATriangles.grilleVersTrianglesStandard(grille);
+		iso5 = grille.transfoIso(grille.makeIsoZt(5), 5);
+		iso9 = grille.transfoIso(grille.makeIsoZt(9), 9);
+		
+		pas = grille.pas;
+		x0 = grille.x0;
+		y0 = grille.y0;
+		zMin = grille.zMinMax()[0];
+		zMax = grille.zMinMax()[1];
+	    nLig = grille.nLig;
+		nCol = grille.nCol;
+	    empriseX = pas*(nCol-1);
+		empriseY = pas*(nLig-1);
+		xCentre = x0 + (empriseX/2);
+		yCentre = y0 - (empriseY/2);
+	 	empriseZ = zMax-zMin;
+	 	
+	 // Définition de la hauteur par défaut de la caméra
+        if (Math.tan(champVertical*Math.PI/360) != 0) {
+        	zV = (10+(200*empriseY/empriseX)) / (2 * Math.tan(champVertical*Math.PI/360));
+        } else {
+        	zV=1;
+        }
+        if (Math.tan(ratio*champVertical*Math.PI/360) != 0) {
+        	zH = 210 / (2 * Math.tan(ratio*champVertical*Math.PI/360));
+        } else {
+        	zH=1;
+        }
+        zM = 50+200*zMax/empriseX;
+        
+        if ((zM > zV) && (zM > zH)){
+        	zPlanOrbital = zM;
+        } else if((zV >= zM) && (zV >= zH)) {
+        	zPlanOrbital = zV;
+        } else {
+        	zPlanOrbital = zH;
+        }
+       
+        System.out.println("zV = "+zV+"\nzH = "+zH+"\nzM = "+(zM)+"\n=> zPlanOrbital = "+zPlanOrbital);
+        
+		
+		cam = new double[]{0, 0, zPlanOrbital};
+		
+		System.out.println(grille);
+	}
+	
+	
 	
 	/*****************************************************************************************************************************************/
 	
