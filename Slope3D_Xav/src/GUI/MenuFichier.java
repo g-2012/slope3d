@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -36,7 +37,7 @@ public class MenuFichier extends JMenu {
 			public void actionPerformed(ActionEvent event) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new File("/")); // Repertoire par defaut : sous-dossier de la racine du programme contenant les images.
-				
+				System.out.println(chooser.getLocale().toLanguageTag());
 				//Configuration des filtres par extension
 				FileNameExtensionFilter filterAsc = new FileNameExtensionFilter("Fichiers ASCII", "asc");
 				chooser.setFileFilter(filterAsc);
@@ -48,6 +49,9 @@ public class MenuFichier extends JMenu {
 				chooser.addChoosableFileFilter(filterTout);
 				chooser.setFileHidingEnabled(true);
 				chooser.setAcceptAllFileFilterUsed(false); // Suppression du filtre affichant tous les types de fichiers.
+				chooser.setMultiSelectionEnabled(false);
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				
 				
 				int result = chooser.showOpenDialog(ouvrir); // Valeur du choix fait par l'utilisateur.
 				if (result == JFileChooser.APPROVE_OPTION){ // En cas de validation (bouton "Ouvrir").
