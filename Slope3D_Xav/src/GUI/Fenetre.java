@@ -3,10 +3,13 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 
 import Utils.Constantes;
@@ -17,78 +20,79 @@ public class Fenetre extends JFrame { /**
 
 	 * 
 	 */
+	/*
+	 * Classe d'affichage de la fenÃªtre oÃ¹ s'Ã©xÃ©cute le programme.
+	 */
+	
 	private static final long serialVersionUID = -1856636070468607309L;
 
-	/*
-	 * Classe d'affichage de la fenêtre où s'éxécute le programme.
-	 */
 	/* 
-	 * Attributs de la classe	
+	 * Attributs de la classe.
 	 */
-	private String TITRE = "Slope3D : affichage de MNT coloré selon la pente"; // Titre  de la fenêtre.
-	
-	/* private int LARGEUR_ENV = 800; // Largeur de la zone de dessin 3D.
-	* private int HAUTEUR_ENV = 800; // Longueur de la zone de dessin 3D.
-	*/	
-	
-	private Panneau3D panEnv; // Le panneau d'environnement 3D qui affichera la représentation graphique du MNT.
-	private PanneauControle panCtrl; // Panneau qui permet de paramétrer la vue
+	private String TITRE = "Slope3D : affichage de MNT colorÃ© selon la pente"; // Titre  de la fenÃªtre.
+	private Panneau3D panEnv; // Le panneau d'environnement 3D qui affichera la reprÃ©sentation graphique du MNT.
+	private PanneauControle panCtrl; // Panneau qui permet de paramÃ©trer la vue
 	private BarreMenu bandeauMenu; // Barre de menu
-		
-	
+	private JMenu mIsolignes; // Menu permettant d'ouvrir dans une fenÃªtre sÃ©parÃ©e la carte des isolignes en 2D
+	private JMenuItem iIso2D; // Bouton assoiciÃ© Ã  ce menu.
+
 	/*
 	 *  Constructeur.
 	 */
 	public Fenetre() {
-		super(); // Crée une instance de JFrame.
+		super(); // CrÃ©e une instance de JFrame.
+		/*
+		 * Localisation, particuliÃ¨rement pour la langue des textes par dÃ©faut des boutons.
+		 */
 		this.setLocale(Locale.FRANCE);
 		Constantes.langueFR();
-				
-		Toolkit tk = this.getToolkit(); // Chargement d'une boîte à outils pour extraire les dimensions de l'écran.
-		Dimension dimEcran = tk.getScreenSize(); // Dimensions de l'écran actif.
 		
-		this.setPreferredSize(new Dimension(dimEcran.width*9/10 ,dimEcran.height*9/10)); // La fenêtre fait la taille de l'écran.
+		/*
+		 * Extraction des dimensions de l'Ã©cran sur lequel s'exÃ©cute le programme.
+		 */
+		Toolkit tk = this.getToolkit(); // Chargement d'une boÃ®te Ã  outils pour extraire les dimensions de l'Ã©cran.
+		Dimension dimEcran = tk.getScreenSize(); // Dimensions de l'Ã©cran actif.
+		
+		/*
+		 * ParamÃ©trage de la fenÃªtre.
+		 */
+		Dimension dimFenetre = new Dimension(dimEcran.width*9/10,dimEcran.height*9/10);
+		this.setPreferredSize(dimFenetre); // La fenÃªtre occupe 9/10 de l'Ã©cran.
 		this.setResizable(true);
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);	
 		this.setLayout(new BorderLayout()); // Choix de la mise en page des composants.
-		Dimension dimFenetre = new Dimension(dimEcran.width*9/10,dimEcran.height*9/10-25);
 		
+		
+		/*
+		 * CrÃ©ation et ajout des composants.
+		 */
 		bandeauMenu = new BarreMenu(new Dimension(dimFenetre.width, 20), this);
 		this.getContentPane().add(bandeauMenu, BorderLayout.NORTH);
 		
-		panEnv = new Panneau3D(bandeauMenu.getMenuReglage(), new Dimension(dimFenetre.width-250, dimFenetre.height-20)); // Création du panneau contenant l'environnement 3D.
+		panEnv = new Panneau3D(bandeauMenu.getMenuReglage(), new Dimension(dimFenetre.width-250, dimFenetre.height-25-20)); // Crï¿½ation du panneau contenant l'environnement 3D.
 		this.getContentPane().add(panEnv, BorderLayout.CENTER);
-		bandeauMenu.getMenuFichier().setPanEnv(panEnv);
+		bandeauMenu.getMenuFichier().setPanEnv(panEnv);		
+		// Affichage des informations sur la grille extraite du fichier MNT dans la console.
+		System.out.println(panEnv.getGrille());
 		
-		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250, dimFenetre.height));
+		mIsolignes = new JMenu("Isolignes");
+		iIso2D = new JMenuItem("Afficher les Isolignes 2D");	
+		iIso2D.addActionListener(new ActionListener() { // Actions engendrees par le clic sur l'item iIso2D.
+			public void actionPerformed(ActionEvent event) {
+				System.out.println("Ouverture du plan des isolignes 2D en cours...");
+				SimpleFrame frame = new SimpleFrame(panEnv.getSegments(), panEnv.getGrille());
+				frame.setVisible(true);
+			}
+		});
+		mIsolignes.add(iIso2D);
+		bandeauMenu.add(mIsolignes);
+		
+		panCtrl = new PanneauControle(bandeauMenu.getMenuReglage(), new Dimension(250, dimFenetre.height-25));
 		this.getContentPane().add(panCtrl, BorderLayout.EAST);
-		
-		
-			
-		/* A ajouter au main pour fermer l'animateur en même temps que la fenêtre */
-//		this.addWindowListener(new WindowAdapter() {
-//			@Override
-//			public void windowClosing(WindowEvent e) {
-//				// Use a dedicate thread to run the stop() to ensure that the
-//				// animator stops before program exits.
-//				new Thread() {
-//					@Override
-//					public void run() {
-//						if (((Panneau3D) panEnv).getAnimateur().isStarted()) ((Panneau3D) panEnv).getAnimateur().stop();
-//						System.exit(0);
-//					}
-//				}.start();
-//			}
-//		});
 		
 		this.setTitle(TITRE);
 		this.pack();
 		this.setVisible(true);
-		
-		
-		
-		
 	}
 	
 	/*
@@ -106,3 +110,19 @@ public class Fenetre extends JFrame { /**
 		return panCtrl;
 	}
 }
+
+/* A ajouter au main pour fermer l'animateur en mÃªme temps que la fenÃªtre */
+//this.addWindowListener(new WindowAdapter() {
+//	@Override
+//	public void windowClosing(WindowEvent e) {
+//		// Use a dedicate thread to run the stop() to ensure that the
+//		// animator stops before program exits.
+//		new Thread() {
+//			@Override
+//			public void run() {
+//				if (((Panneau3D) panEnv).getAnimateur().isStarted()) ((Panneau3D) panEnv).getAnimateur().stop();
+//				System.exit(0);
+//			}
+//		}.start();
+//	}
+//});
