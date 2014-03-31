@@ -2,12 +2,10 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.border.LineBorder;
 
 public class PanneauControle extends JPanel {
 
@@ -17,53 +15,59 @@ public class PanneauControle extends JPanel {
 	private static final long serialVersionUID = 4760065352215783253L;
 	private PanneauControleDeplacement panTra;
 	private PanneauControleRotation panRot;
-	
-	public PanneauControle(MenuReglage mReg, Dimension d){ 
+
+	public PanneauControle(MenuReglage mReg, Dimension d) {
 		super();
 		this.setBackground(Color.GRAY);
 		this.setPreferredSize(d);
-		
-		// Definition du gestionnaire de mise en page
+
+		// DÃ©finition du gestionnaire de mise en page
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-		
-		// Création des composants
+
+		// CrÃ©ation des composants
 		Dimension dPanTra = new Dimension(d.width, 200);
 		panTra = new PanneauControleDeplacement(mReg, dPanTra);
 
 		JSeparator sep1 = new JSeparator();
 		JSeparator sep2 = new JSeparator();
-				
-		Dimension dPanRot = new Dimension(d.width, d.height-202  /*prend en compte la taille des 2 séparateurs*/);
+
+		Dimension dPanRot = new Dimension(d.width, d.height - 202 /*
+																 * prend en
+																 * compte la
+																 * taille des 2
+																 * sÃ©parateurs
+																 */);
 		panRot = new PanneauControleRotation(mReg, dPanRot);
 
 		// Ajout des composants au conteneur
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.CENTER,false)
-				.addComponent(panTra, dPanTra.width, dPanTra.width, dPanTra.width)
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(GroupLayout.Alignment.CENTER, false)
+				.addComponent(panTra, dPanTra.width, dPanTra.width,
+						dPanTra.width)
 				.addComponent(sep1)
 				.addComponent(sep2)
-				.addComponent(panRot, dPanRot.width, dPanRot.width, dPanRot.width)				
-				);
-		layout.setVerticalGroup(
-				layout.createSequentialGroup()
-				.addComponent(panTra, dPanTra.height, dPanTra.height, dPanTra.height)
+				.addComponent(panRot, dPanRot.width, dPanRot.width,
+						dPanRot.width));
+		layout.setVerticalGroup(layout
+				.createSequentialGroup()
+				.addComponent(panTra, dPanTra.height, dPanTra.height,
+						dPanTra.height)
 				.addComponent(sep1)
 				.addComponent(sep2)
-				.addComponent(panRot, dPanRot.height, dPanRot.height, dPanRot.height)
-				);
-		
+				.addComponent(panRot, dPanRot.height, dPanRot.height,
+						dPanRot.height));
 	}
-	
+
 	/*
 	 * Getters
 	 */
-	public PanneauControleDeplacement getPanCtrlTranslation(){
+	public PanneauControleDeplacement getPanCtrlTranslation() {
 		return panTra;
 	}
-	
-	public PanneauControleRotation getPanCtrlRotation(){
+
+	public PanneauControleRotation getPanCtrlRotation() {
 		return panRot;
 	}
-	
+
 }
