@@ -15,7 +15,8 @@ public class SimpleFrame extends JFrame{
 	public SimpleFrame()
 	{
 		//setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Isolignes 2D");
 	}
 	

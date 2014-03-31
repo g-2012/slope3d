@@ -1,194 +1,236 @@
 package Utils;
-//package premier_projet;
 
+/**
+ * Classe abstraite utilitaire permettant un certain nombre d'op√©rations
+ * math√©matiques utiles pour la g√©om√©trie d'un triangle
+ * <p>
+ * <ul>
+ * <li>Calculer coordonn√©es du vecteur
+ * <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>AB</mi>
+	 * <mo>&rarr;</mo> </mover> </math> √† partir des points A et B</li>
+ * <li>Calculer la norme d'un vecteur</li>
+ * <li>Calculer le produit scalaire de 2 vecteurs</li>
+ * <li>Calculer le produit vectoriel de 2 vecteurs</li>
+ * <li>Calculer le vecteur normal unitaire √† un triangle</li>
+ * <li>Interpoler coordonn√©es d'un point de cote zi entre M de cote zm et N de
+ * cote zn</li>
+ * </ul>
+ * </p>
+ * <p>
+ * 
+ * @author Jigx
+ * @version 0.6
+ */
 public abstract class TrianglesOutils {
-	
-	
-	// Retourne les coordonnÈes du vecteur AB ‡ partir des points A et B
-	public static double[] coordVecteur(double A[], double B[]){
+
+	/**
+	 * Calcule les coordonnees du vecteur <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>AB</mi>
+	 * <mo>&rarr;</mo> </mover> </math> √† partir de A et B
+	 * 
+	 * @param A
+	 *            tableau des coordonnees x,y,z du point A
+	 * @param B
+	 *            tableau des coordonnees x,y,z du point B
+	 * 
+	 * @return un tableau de 3 double, contenant x,y,z du vecteur <math
+	 *         xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>AB</mi>
+	 *         <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 */
+	public static double[] coordVecteur(double A[], double B[]) {
 		double[] coord = new double[3];
 		coord[0] = B[0] - A[0];
 		coord[1] = B[1] - A[1];
 		coord[2] = B[2] - A[2];
-		return coord;	
+		return coord;
 	}
-	
-	
-	// Retourne la norme du vecteur V
-	public static double norme(double V[]){
+
+	/**
+	 * Calcule la norme du vecteur <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 * <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * @param V
+	 *            tableau des coordonnees x,y,z du vecteur <math
+	 *            xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 *            <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * @return la norme de <math xmlns="http://www.w3.org/1998/Math/MathML">
+	 *         <mover> <mi>V</mi> <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 */
+	public static double norme(double V[]) {
 		double norme;
-		norme = Math.sqrt(  Math.pow(V[0], 2) + Math.pow(V[1], 2) + Math.pow(V[2], 2)  );
-		return norme;	
+		norme = Math.sqrt(Math.pow(V[0], 2) + Math.pow(V[1], 2)
+				+ Math.pow(V[2], 2));
+		return norme;
 	}
-	
-	
-	// Retourne le Produit Scalaire des vecteurs U et V
-	public static double produitScalaire(double U[],double V[]){
+
+	/**
+	 * Calcule le produit scalaire des vecteurs <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>U</mi>
+	 * <mo>&rarr;</mo> </mover> </math> et <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 * <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * @param U
+	 *            tableau des coordonnees x,y,z du vecteur <math
+	 *            xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>U</mi>
+	 *            <mo>&rarr;</mo> </mover> </math>
+	 * @param V
+	 *            tableau des coordonnees x,y,z du vecteur <math
+	 *            xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 *            <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * 
+	 * @return le produit scalaire des vecteurs en entr√©e
+	 */
+	public static double produitScalaire(double U[], double V[]) {
 		double produitScalaire;
-		produitScalaire = U[0]*V[0] + U[1]*V[1] + U[2]*V[2];
-		return produitScalaire;	
+		produitScalaire = U[0] * V[0] + U[1] * V[1] + U[2] * V[2];
+		return produitScalaire;
 	}
-	
-	
-	// Retourne le Produit Vectoriel des vecteurs U et V
-	public static double[] produitVectoriel(double U[],double V[]){
+
+	/**
+	 * Calcule le produit vectoriel des vecteurs <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>U</mi>
+	 * <mo>&rarr;</mo> </mover> </math> et <math
+	 * xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 * <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * @param U
+	 *            tableau des coordonnees x,y,z du vecteur <math
+	 *            xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>U</mi>
+	 *            <mo>&rarr;</mo> </mover> </math>
+	 * @param V
+	 *            tableau des coordonnees x,y,z du vecteur <math
+	 *            xmlns="http://www.w3.org/1998/Math/MathML"> <mover> <mi>V</mi>
+	 *            <mo>&rarr;</mo> </mover> </math>
+	 * 
+	 * 
+	 * @return un tableau contenant les coordonnees du vecteur resultant du
+	 *         produit vectoriel des vecteurs en entr√©e
+	 */
+	public static double[] produitVectoriel(double U[], double V[]) {
 		double[] produitVect;
 		produitVect = new double[3];
-		produitVect[0]  =  U[1]*V[2] - U[2]*V[1];
-		produitVect[1]  =  U[2]*V[0] - U[0]*V[2];
-		produitVect[2]  =  U[0]*V[1] - U[1]*V[0];
-		//double n = norme(produitVect);
-		return	 produitVect;	
+		produitVect[0] = U[1] * V[2] - U[2] * V[1];
+		produitVect[1] = U[2] * V[0] - U[0] * V[2];
+		produitVect[2] = U[0] * V[1] - U[1] * V[0];
+		// double n = norme(produitVect);
+		return produitVect;
 	}
-	
-	
-	// Retourne le vecteur normal normalisÈ d'un triangle dÈfini par trois points
-	public static double[] vecteurNormalTriangle(double a[], double b[], double c[]){
-		double [] n;
-		n= new double[3];
-		n[0]=0;
-		n[1]=0;
-		n[2]=0;
-		
-		double[] ab, ac;
-		
-		ab = coordVecteur(a,b);
-		/*double xAB = AB[0];
-		double yAB = AB[1];
-		double zAB = AB[2];
-		System.out.println(" xAB = " +xAB);
-		System.out.println(" yAB = " +yAB);
-		System.out.println(" zAB = " +zAB);	
-		System.out.println(" ");*/	
 
-		ac = coordVecteur(a,c);
-		/*double xAC = AC[0];
-		double yAC = AC[1];
-		double zAC = AC[2];
-		System.out.println(" xAC = " +xAC);
-		System.out.println(" yAC = " +yAC);
-		System.out.println(" zAC = " +zAC);	
-		System.out.println(" ");*/	
-		
-		n = produitVectoriel(ab,ac);
-		
+	/**
+	 * Calcule le produit normal √† un plan defini par 3 points
+	 * 
+	 * @param a
+	 *            tableau des coordonnees x,y,z d'un point
+	 * @param b
+	 *            tableau des coordonnees x,y,z d'un point
+	 * @param c
+	 *            tableau des coordonnees x,y,z d'un point
+	 * 
+	 * @return un tableau contenant les coordonnees du vecteur normal unitaire
+	 *         au plan abc
+	 */
+	public static double[] vecteurNormalTriangle(double a[], double b[],
+			double c[]) {
+		double[] n;
+		n = new double[3];
+		n[0] = 0;
+		n[1] = 0;
+		n[2] = 0;
+
+		double[] ab, ac;
+
+		ab = coordVecteur(a, b);
+		ac = coordVecteur(a, c);
+		n = produitVectoriel(ab, ac);
+
 		double N = norme(n);
-		
-		if (n[2]<0){
-			for (int j=0;j<3;j++){
-				double  T = - n[j]/N;
+
+		if (n[2] < 0) {
+			for (int j = 0; j < 3; j++) {
+				double T = -n[j] / N;
 				n[j] = T;
 			}
-		}
-		else{
-			for (int i=0;i<3;i++){
-				double t = n[i]/N;
-				n[i] = t;	
+		} else {
+			for (int i = 0; i < 3; i++) {
+				double t = n[i] / N;
+				n[i] = t;
 			}
 		}
-		/*double xnn = n[0];
-		double ynn = n[1];
-		double znn = n[2];
-		System.out.println(" xn' = " +xnn);
-		System.out.println(" yn' = " +ynn);
-		System.out.println(" zn' = " +znn);	
-		System.out.println(" norme  n' =  " +norme(n));
-		System.out.println(" ");*/
-		
 		return n;
 	}
-	
-	
-	// Retourne la pente d'un triangle ABC
-	public static double penteTriangle(double n[]){
+
+	/**
+	 * Calcule la pente d'un vecteur
+	 * 
+	 * @param n
+	 *            tableau des coordonnees x,y,z du vecteur
+	 * 
+	 * @return la pente du vecteur par rapport √† l'horizontale
+	 */
+	public static double penteTriangle(double n[]) {
 		double pente;
-		pente=0;
+		pente = 0;
 		double[] k;
-		k  = new double[3];
-		k[0]=0;
-		k[1]=0;
-		k[2]=1;
-		
-		double nScalairek = produitScalaire(n,k);
-		pente = Math.acos(nScalairek) ;
+		k = new double[3];
+		k[0] = 0;
+		k[1] = 0;
+		k[2] = 1;
+
+		double nScalairek = produitScalaire(n, k);
+		pente = Math.acos(nScalairek);
 		pente = Math.toDegrees(pente);
-		return	pente;	
+		return pente;
 	}
-	
-	// Retourne le point I de cote zi  interpolÈ entre M de cote zm et n de cote zn
-	public static double[] interpol( double zi , double[] m , double[] n ){
-		
+
+	/**
+	 * Calcule les coordonn√©es d'un point I de cote zi, interpol√© entre m de
+	 * cote zm et n de cote zn
+	 * 
+	 * @param zi
+	 *            c√¥te zi voulue
+	 * @param m
+	 *            tableau des coordonnees x,y,z du point m
+	 * @param n
+	 *            tableau des coordonnees x,y,z du point n
+	 * 
+	 * @return coordonn√©es x,y,zi du point I entre m et n
+	 */
+	public static double[] interpol(double zi, double[] m, double[] n) {
+
 		double[] i = new double[3];
-		
-		if ( m[0] == n[0] ) { i[0] = m[0];}
-		else {
-				double ax , bx;
-				ax = (n[2]-m[2])/(n[0]-m[0]);
-				bx =  m[2] - ax * m[0];
-				//System.out.println(" ax = " +ax);	
-				//System.out.println(" bx = " +bx);
-				i[0] =	( zi - bx ) / ax ;
+
+		if (m[0] == n[0]) {
+			i[0] = m[0];
+		} else {
+			double ax, bx;
+			ax = (n[2] - m[2]) / (n[0] - m[0]);
+			bx = m[2] - ax * m[0];
+			// System.out.println(" ax = " +ax);
+			// System.out.println(" bx = " +bx);
+			i[0] = (zi - bx) / ax;
 		}
-		
-		if ( m[1] == n[1] ) { i[1] = m[1];}
-		else {
-				double ay , by;
-				ay = (n[2]-m[2])/(n[1]-m[1]);
-				by =  m[2] - ay * m[1];
-				//System.out.println(" ay = " +ay);	
-				//System.out.println(" by = " +by);
-				i[1] =	( zi - by ) / ay ;
+
+		if (m[1] == n[1]) {
+			i[1] = m[1];
+		} else {
+			double ay, by;
+			ay = (n[2] - m[2]) / (n[1] - m[1]);
+			by = m[2] - ay * m[1];
+			// System.out.println(" ay = " +ay);
+			// System.out.println(" by = " +by);
+			i[1] = (zi - by) / ay;
 		}
-		
+
 		i[2] = zi;
 
 		return i;
 	}
-	
-	
-	
-	public static void main(String[] args) {
-		
-		
-		/* 				Quelques exemples qui fonctionnent :
-		 * 
-		 * 		A(4,0,0)     B(2,-2,2)     C(0,0,4)      >>  45∞
-		 * 		A(6,0,2)     B(3,4,1)      C(0,0,0)      >>  18.44∞	
-		 * 		A(1,0,0)     B(0,1,0)      C(0,0,1)      >>  70.53∞
-		 * 		A(0,0,0)     B(1,0,0)      C(0,0,1)      >>  90.00∞
-		 * 		A(0,0,0)     B(9,2,0)      C(-1,6,0)     >>  00.00∞
-		 */
-		
-		double[] A = new double[3];
-		A[0] = 30  ;
-		A[1] = 0   ;
-		A[2] = 0   ;
-		
-		double[] B = new double[3];
-		B[0] = -20  ;
-		B[1] = 20  ;
-		B[2] = 10  ;
-		
-		double[] C = new double[3];
-		C[0] = 150  ;
-		C[1] = -180 ;
-		C[2] = 100  ;
-		
-		double[] I = new double[3];
-		
-		I = interpol ( 5 , A , B );
-		System.out.println(" xi = "+ I[0]);
-		System.out.println(" yi = "+ I[1]);
-		System.out.println(" zi = "+ I[2]);
-		
-		//double[] n = vecteurNormalTriangle(A,B,C);
-		 
-		//double p = penteTriangle(n);
-		
-		//System.out.println(" pente = " +p);
-		
-	}   //fin du main
 
-	
-	
-}       //fin de la classe
+} // fin de la classe
