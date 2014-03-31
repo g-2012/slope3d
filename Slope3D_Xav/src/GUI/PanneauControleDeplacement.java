@@ -13,34 +13,42 @@ import Utils.Constantes;
 
 public class PanneauControleDeplacement extends JPanel {
 	/*
-	 * Panneau de contrÙle permettant ‡ l'utilisateur de dÈplacer la camÈra par translation selon les 3 axes du repËre 3D,
-	 * de revenir ‡ la position par dÈfaut et de changer la sensibilitÈ des commandes
+	 * Panneau de contr√¥le permettant √† l'utilisateur de d√©placer la cam√©ra par
+	 * translation selon les 3 axes du rep√®re 3D, de revenir √† la position par
+	 * d√©faut et de changer la sensibilit√© des commandes
 	 */
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8356243999226995969L;
+
 	/*
 	 * Attributs : boutons
 	 */
-	JButton bAvant, bArriere, // translation avant <-> arriËre
-		bGauche, bDroit, // translation gauche <-> droite
-		bHaut, bBas, // translation haut <-> bas
-		bVitPlus, bVitMoins, // sensibilitÈ des boutons / vitesse de dÈplacement
-		bOrigine; // retour ‡ la position par dÈfaut
+	JButton bAvant, bArriere, // translation avant <-> arri√®re
+			bGauche, bDroit, // translation gauche <-> droite
+			bHaut, bBas, // translation haut <-> bas
+			bVitPlus, bVitMoins, // sensibilit√© des boutons / vitesse de
+									// d√©placement
+			bOrigine; // retour √† la position par d√©faut
 	/*
 	 * Autres attributs
 	 */
 	MenuReglage mReg;
-	
-	
-	
+
 	/*
 	 * Constructeur
 	 */
 	public PanneauControleDeplacement(MenuReglage Reglages, Dimension d) {
 		super();
 		this.setPreferredSize(d);
-		this.setBackground(new Color(225,225,225));
+		this.setBackground(new Color(225, 225, 225));
 		this.mReg = Reglages;
-		
+
+		/*
+		 * Cr√©ation des boutons
+		 */
 		bHaut = new JButton("Haut");
 		bOrigine = new JButton("Origine");
 		bVitPlus = new JButton("Vit +");
@@ -48,9 +56,12 @@ public class PanneauControleDeplacement extends JPanel {
 		bAvant = new JButton("Avant");
 		bVitMoins = new JButton("Vit -");
 		bGauche = new JButton("Gauche");
-		bArriere = new JButton("ArriËre");
+		bArriere = new JButton("Arri√®re");
 		bDroit = new JButton("Droite");
-		
+
+		/*
+		 * Activation ou d√©sactivation des boutons selon la vue choisie
+		 */
 		if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
 			bHaut.setEnabled(false);
 			bOrigine.setEnabled(false);
@@ -61,8 +72,7 @@ public class PanneauControleDeplacement extends JPanel {
 			bGauche.setEnabled(false);
 			bArriere.setEnabled(false);
 			bDroit.setEnabled(false);
-		}
-		else {
+		} else {
 			bHaut.setEnabled(true);
 			bOrigine.setEnabled(true);
 			bVitPlus.setEnabled(true);
@@ -73,15 +83,16 @@ public class PanneauControleDeplacement extends JPanel {
 			bArriere.setEnabled(true);
 			bDroit.setEnabled(true);
 		}
-		
-		// Mise en page sous forme d'une grille de 4 ligne et 3 colonnes, dont les cases sont de taille identique et espacÈes de 1 pÓxel
+
+		// Mise en page sous forme d'une grille de 4 ligne et 3 colonnes, dont
+		// les cases sont de taille identique et espac√©es de 1 pixel
 		this.setLayout(new GridLayout(4, 3, 1, 1));
 		// case 0,0
 		this.add(new JLabel(" "));
 		// case 0,1
 		JPanel pTitre = new JPanel();
-		pTitre.setBackground(new Color(225,225,225));
-		JLabel tTra = new JLabel("DÈplacement"); 
+		pTitre.setBackground(new Color(225, 225, 225));
+		JLabel tTra = new JLabel("D√©placement");
 		tTra.setSize(75, 30);
 		tTra.setAlignmentX(CENTER_ALIGNMENT);
 		tTra.setAlignmentY(CENTER_ALIGNMENT);
@@ -94,33 +105,31 @@ public class PanneauControleDeplacement extends JPanel {
 		this.add(bHaut);
 		// case 1,1
 		this.add(bOrigine);
-		// case 1,2		
+		// case 1,2
 		this.add(bVitPlus);
-		// case 2,0	
+		// case 2,0
 		this.add(bBas);
 		// case 2,1
 		this.add(bAvant);
-		// case 2,2		
+		// case 2,2
 		this.add(bVitMoins);
-		// case 3,0		
+		// case 3,0
 		this.add(bGauche);
-		// case 3,1		
+		// case 3,1
 		this.add(bArriere);
-		// case 3,2		
+		// case 3,2
 		this.add(bDroit);
-		
-		this.setVisible(true);		
+
+		this.setVisible(true);
 	}
-	
-	
-	
-	
+
 	/*
-	 * MÈthode de rafrachissement des boutons quand les rÈglages ont ÈtÈ modifiÈs
+	 * M√©thode de rafraichissement des boutons quand les r√©glages ont √©t√©
+	 * modifi√©s
 	 */
-	public void rafraichitBoutons(){
+	public void rafraichitBoutons() {
 		/*
-		 * Activation ou dÈsactivation des boutons selon la vue choisie
+		 * Activation ou d√©sactivation des boutons selon la vue choisie
 		 */
 		if (mReg.getChoixCam() == Constantes.CAM_ORBITE) {
 			bHaut.setEnabled(false);
@@ -132,8 +141,7 @@ public class PanneauControleDeplacement extends JPanel {
 			bGauche.setEnabled(false);
 			bArriere.setEnabled(false);
 			bDroit.setEnabled(false);
-		}
-		else {
+		} else {
 			bHaut.setEnabled(true);
 			bOrigine.setEnabled(true);
 			bVitPlus.setEnabled(true);
