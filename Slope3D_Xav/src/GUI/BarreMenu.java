@@ -5,28 +5,42 @@ import java.awt.Dimension;
 import javax.swing.JMenuBar;
 
 public class BarreMenu extends JMenuBar {
-	/* Cette classe correspond à la barre de menu qui sera affichée dans la fenêtre du programme. */
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6646521212364175899L;
+	/* Cette classe correspond Ã  la barre de menu qui sera affichÃ©e dans la fenÃªtre du programme. */
+	
+	/*
+	 * Attributs
+	 */
 	private MenuFichier mFichier;
 	private MenuReglage mReglages;
 	private Fenetre parent;
 	
+	/*
+	 * Constructeur.
+	 */
 	public BarreMenu(Dimension d, Fenetre parent) {
 		super();
 		this.parent = parent;
 		this.setPreferredSize(d);
 		
-		/* Menu relatif à l'ouverture de fichiers et à la fermeture du programme */
-		mFichier = new MenuFichier();
+		/* 
+		 * Menu relatif Ã  l'ouverture de fichiers et Ã  la fermeture du programme.
+		 */
+		mFichier = new MenuFichier(this);
 		this.add(mFichier);
 		
-		/* Menu donnant accès au paramétrage de la visualisation */
+		/* 
+		 * Menu donnant accÃ¨s au paramÃ©trage de la visualisation.
+		 */
 		mReglages = new MenuReglage(this);
 		this.add(mReglages);
-		
 	}
 	
 	/*
-	 * getters
+	 * Getters
 	 */
 	public MenuReglage getMenuReglage() {
 		return mReglages;
@@ -39,5 +53,4 @@ public class BarreMenu extends JMenuBar {
 	public Fenetre getFenetreMere() {
 		return parent;
 	}
-
 }
