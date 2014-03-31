@@ -402,14 +402,40 @@ public class Grille {
 
 	// renvoie une liste de n isolignes interpolées entre zmin et zmax 
 	public ArrayList<List<Point2D.Double[]>> makeListIsos(int nombre){
+		System.out.println("Entrée dans la fonction makeListIsos");
 		ArrayList<List<Point2D.Double[]>> isos = new ArrayList<List<Point2D.Double[]>>();
-		int zmin = (int)this.zMinMax()[0];
-		int zmax = (int)this.zMinMax()[1];
+		System.out.println("tableau initialisé");
+		double zmin = this.zMinMax()[0];
+		double zmax = this.zMinMax()[1];
+		System.out.println("zmin et zmax calculés");
+		System.out.println("zmin="+zmin+"m et zmax="+zmax+"m");
+		System.out.println("(zmax-zmin)/(nombre -1)="+(zmax-zmin)/(nombre -1));
 		long startTime = System.nanoTime();
 		if (nombre <= 1) //si on en veut 1 ou moins on genere que dalle
 			return isos;
-		for (double i = zmin ; i < zmax; i += (zmax-zmin)/(nombre -1)){
+		double increment=1;
+		double depart=0;
+		double arrivee=100;
+		double zMinInt=(int)zmin;
+		double zMaxInt=(int)zmax;
+		if(zmin - zMinInt == 0){ // zmin est un entier
+			depart = zmin;
+		}else{
+			depart = zMinInt+1;
+		}
+		if(zmax - zMaxInt == 0){ // zmax est un entier
+			arrivee = zmax;
+		}else{
+			arrivee = zMaxInt;
+		}
+		if((arrivee-depart)/(nombre -1)<1) {
+			increment = (arrivee-depart)/(nombre -1);
+		}else{
+			increment =  (int)(arrivee-depart)/(nombre -1);
+		}
+		for (double i = depart ; i < arrivee; i += increment){
 			isos.add(this.makeIsoZt(i));
+			//System.out.println("isoligne z="+i+"m créée");
 		}
 		long endTime = System.nanoTime();
 		System.out.print("Creation isolignes : ");
@@ -454,14 +480,14 @@ public class Grille {
 	 *******************************************************************************************************/
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
 		Grille grille = FilesUtils.loadMNTAsc("D:\\Slope3D\\testMNT.asc");
 		
 		System.out.println(grille.zMinMax()[0]);
 		System.out.println(grille.zMinMax()[1]);
 		
-	}	//fin du main
+	}*/	//fin du main
 	
 		
 	
