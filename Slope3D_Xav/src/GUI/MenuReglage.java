@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,84 +12,108 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSeparator;
 
 import Utils.Constantes;
 
-public class MenuReglage extends JMenu implements ItemListener, ActionListener{
-	/** Menu permettant d'accéder aux réglages de la visualisation.
-	 * Ces réglages incluent :
-	 *	- Le réglage des objets affichés (MNT et/ou courbes de niveau)
-	 * 	- Le réglage du type de Caméra :
-	 * 		° Vue de dessus, déplaçable uniquement par translation
-	 * 		° Caméra en orbite préréglée, vitesse de rotation paramétrable
-	 *		° Caméra personnalisée déplaçable par rotation et translation
-	 *	- Le réglage des plages de couleurs affectées aux différentes pentes :
-	 *		° Mode automatique : nuance de gris de valeur proportionnelle à la pente.
-	 *		° Mode utilisateur : l'utilisateur choisit les couleurs associées à des plages de valeurs (10° d'amplitude)
+/**
+ * Menu permettant d'accÃ©der aux rÃ©glages de la visualisation. Ces rÃ©glages
+ * incluent : - Le rÃ©glage des objets affichÃ©s (MNT et/ou courbes de niveau) -
+ * Le rÃ©glage du type de CamÃ©ra : Â¤ Vue de dessus, dÃ©plaÃ§able uniquement par
+ * translation Â¤ CamÃ©ra en orbite prÃ©rÃ©glÃ©e, vitesse de rotation paramÃ©trable Â¤
+ * CamÃ©ra personnalisÃ©e dÃ©plaÃ§able par rotation et translation - Le rÃ©glage des
+ * plages de couleurs affectÃ©es aux diffÃ©rentes pentes : Â¤ Mode automatique :
+ * nuance de gris de valeur proportionnelle Ã  la pente. Â¤ Mode utilisateur :
+ * l'utilisateur choisit les couleurs associÃ©es Ã  des plages de valeurs (10Â°
+ * d'amplitude)
+ */
+
+public class MenuReglage extends JMenu implements ItemListener, ActionListener {
+
+	/**
+	 * @param choixObj
+	 *            (byte) Choix des objets affichÃ©s. Valeurs possibles (issues de
+	 *            la classe Constantes) : OBJ_RIEN, OBJ_MNT, OBJ_ISOLIGNES,
+	 *            OBJ_TOUT
+	 * @param choixCam
+	 *            (byte) Choix du type de camÃ©ra. Valeurs possibles (issues de
+	 *            la classe Constantes) : CAM_DESSUS, CAM_ORBITE, CAM_PERSO
+	 * @param choixCou
+	 *            (boolean) Choix du type de coloration des pentes. Valeurs
+	 *            possibles (issues de la classe Constantes) : COU_AUTO,
+	 *            COU_PERSO
+	 * @param couleurs
+	 *            (Color[]) Tableau des couleurs utilisÃ©es pour la coloration
+	 *            personnalisÃ©e.
+	 * 
+	 * @see Constantes
 	 */
-	
-	/* 
+	private static final long serialVersionUID = 3545210095584024033L;
+
+	/*
 	 * Composants du menu
 	 */
 	// Menu parent :
 	BarreMenu parent;
-	// Cases à cocher pour le choix des objets affichés
+	// Cases Ã  cocher pour le choix des objets affichÃ©s
 	JCheckBoxMenuItem chkObjMNT, chkObjIsoligne;
-	// Groupes de boutons radio pour s'assurer que seule une option soit sélectionnable par groupe.
-	ButtonGroup grpCamera, grpCouleurs; 
+	// Groupes de boutons radio pour s'assurer que seule une option soit
+	// sÃ©lectionnable par groupe.
+	ButtonGroup grpCamera, grpCouleurs;
 	// Boutons radio
-	JRadioButtonMenuItem radCamOrtho, radCamOrbite, radCamPerso, // pour les réglages caméra
-	radCouAuto, radCouPerso; // pour les réglages couleurs
-	// Item normal de menu, pour ouvrir la boîte de dialogue de choix des couleurs.
+	JRadioButtonMenuItem radCamOrtho, radCamOrbite, radCamPerso, // pour les
+																	// rÃ©glages
+																	// camÃ©ra
+			radCouAuto, radCouPerso; // pour les rÃ©glages couleurs
+	// Item normal de menu, pour ouvrir la boÃ®te de dialogue de choix des
+	// couleurs.
 	JMenuItem bRegCouleurs;
-	
+
 	/*
-	 * Paramètres : valeurs des choix
+	 * ParamÃ¨tres : valeurs des choix
 	 */
 	private byte choixObj, choixCam;
 	private boolean choixCou;
-	
-	/*
-	 * Paramètres : couleurs choisies pour la coloration personnalisée, en fonction de la valeur de la pente
-	 */
-	private Color[] couleurs; // { [0°, 10°[ , [10°, 20°[ , [20°, 30°[ , [30°, 40°[ , [40°, 50°[ , [50°, 60°[ ,  [60°, 70°[ , [70°, 80°[ , [80°, 90°] }
 
+	/*
+	 * ParamÃ¨tres : couleurs choisies pour la coloration personnalisï¿½e, en
+	 * fonction de la valeur de la pente
+	 */
+	private Color[] couleurs; // { [0Â°, 10Â°[ , [10Â°, 20Â°[ , [20Â°, 30Â°[ , [30Â°,
+								// 40Â°[ , [40Â°, 50Â°[ , [50Â°, 60Â°[ , [60Â°, 70Â°[ ,
+								// [70Â°, 80Â°[ , [80Â°, 90Â°] }
 
 	/*
 	 * Constructeur
 	 */
 	public MenuReglage(BarreMenu parent) {
 		super("Reglages");
-		
+
 		this.parent = parent;
-		// Menu de sélection des objets affichés
-		JLabel titreObj = new JLabel("  Objets affichés  ", CENTER);
+		// Menu de sÃ©lection des objets affichÃ©s
+		JLabel titreObj = new JLabel("  Objets affichÃ©s  ", CENTER);
 		titreObj.setHorizontalTextPosition(CENTER);
 		this.add(titreObj);
-		// Création des cases à cocher
+		// CrÃ©ation des cases Ã  cocher
 		chkObjMNT = new JCheckBoxMenuItem("MNT", true);
 		chkObjIsoligne = new JCheckBoxMenuItem("Isolignes");
-		// Ajout de l'écouteur
+		// Ajout de l'Ã©couteur
 		chkObjMNT.addItemListener(this);
 		chkObjIsoligne.addItemListener(this);
 		// Ajout des cases au menu
 		this.add(chkObjMNT);
 		this.add(chkObjIsoligne);
 
-
 		this.addSeparator();
 
-
-		// Menu de sélection du type de vue
-		JLabel titreCam = new JLabel("  Type de caméra  ", CENTER);
+		// Menu de sÃ©lection du type de vue
+		JLabel titreCam = new JLabel("  Type de camÃ©ra  ", CENTER);
 		titreCam.setHorizontalTextPosition(CENTER);
 		this.add(titreCam);
 		grpCamera = new ButtonGroup();
 		radCamOrtho = new JRadioButtonMenuItem("Vue de dessus", true);
 		radCamOrbite = new JRadioButtonMenuItem("En orbite");
 		radCamPerso = new JRadioButtonMenuItem("Navigation 3D");
-		// Ajout de l'écouteur
+		// Ajout de l'Ã©couteur
 		radCamOrtho.addItemListener(this);
 		radCamOrbite.addItemListener(this);
 		radCamPerso.addItemListener(this);
@@ -98,16 +121,15 @@ public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 		grpCamera.add(radCamOrtho);
 		grpCamera.add(radCamOrbite);
 		grpCamera.add(radCamPerso);
-		// Désactivation du bouton de caméra libre en attendant l'implémentation de cette caméra
+		// DÃ©sactivation du bouton de camÃ©ra libre en attendant l'implÃ©mentation
+		// de cette camÃ©ra
 		radCamPerso.setEnabled(false);
 		// Ajout des boutons
 		this.add(radCamOrtho);
 		this.add(radCamOrbite);
 		this.add(radCamPerso);
 
-
 		this.addSeparator();
-
 
 		// Menu de choix des couleurs du MNT
 		JLabel titreCou = new JLabel("  Couleurs du MNT  ", CENTER);
@@ -115,9 +137,9 @@ public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 		this.add(titreCou);
 		grpCouleurs = new ButtonGroup();
 		radCouAuto = new JRadioButtonMenuItem("Auto", true);
-		radCouPerso = new JRadioButtonMenuItem("Personnalisé");
+		radCouPerso = new JRadioButtonMenuItem("PersonnalisÃ©");
 		bRegCouleurs = new JMenuItem("Table des couleurs");
-		// Ajout de l'écouteur
+		// Ajout de l'Ã©couteur
 		radCouAuto.addItemListener(this);
 		radCouPerso.addItemListener(this);
 		bRegCouleurs.setActionCommand("reglageCouleurs");
@@ -129,132 +151,125 @@ public class MenuReglage extends JMenu implements ItemListener, ActionListener{
 		this.add(radCouAuto);
 		this.add(radCouPerso);
 		this.add(bRegCouleurs);
-		
+
 		// Initialisation des valeurs de choix
 		choixObj = Constantes.OBJ_MNT;
 		choixCam = Constantes.CAM_DESSUS;
 		choixCou = Constantes.COU_AUTO;
-		
-		// Initialisation des couleurs par défaut
+
+		// Initialisation des couleurs par dÃ©faut
 		couleurs = new Color[9];
-		couleurs[0] = new Color(0, 0, 0); 		// [0°, 10°[
-		couleurs[1] = new Color(30, 0, 30); 	// [10°, 20°[
-		couleurs[2] = new Color(60, 0, 60); 	// [20°, 30°[
-		couleurs[3] = new Color(90, 0, 90);		// [30°, 40°[
-		couleurs[4] = new Color(120, 0, 120);	// [40°, 50°[
-		couleurs[5] = new Color(150, 0, 150);	// [50°, 60°[
-		couleurs[6] = new Color(180, 0, 180);	// [60°, 70°[
-		couleurs[7] = new Color(210, 0, 210);	// [70°, 80°[
-		couleurs[8] = new Color(240, 0, 240);	// [80°, 90°]
-
+		couleurs[0] = new Color(0, 0, 0); // [0Â°, 10Â°[
+		couleurs[1] = new Color(30, 0, 30); // [10Â°, 20Â°[
+		couleurs[2] = new Color(60, 0, 60); // [20Â°, 30Â°[
+		couleurs[3] = new Color(90, 0, 90); // [30Â°, 40Â°[
+		couleurs[4] = new Color(120, 0, 120); // [40Â°, 50Â°[
+		couleurs[5] = new Color(150, 0, 150); // [50Â°, 60Â°[
+		couleurs[6] = new Color(180, 0, 180); // [60Â°, 70Â°[
+		couleurs[7] = new Color(210, 0, 210); // [70Â°, 80Â°[
+		couleurs[8] = new Color(240, 0, 240); // [80Â°, 90Â°]
 	}
-	
-	
-	/*
-	 * Getters associés aux valeurs des choix
-	 */
-	public byte getChoixObj() {
-		return choixObj;
-	}
-	
-	public byte getChoixCam() {
-		return choixCam;
-	}
-	
-	public boolean getChoixCou() {
-		return choixCou;
-	}
-	
-	public Color[] getCouleurs(){
-		return couleurs;
-	}
-
 
 	/*
-	 * (non-Javadoc)
-	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
-	 * 
-	 * Actions à déclencher en cas de modification des items sélectionnés
+	 * Actions Ã  dÃ©clencher en cas de modification des items sÃ©lectionnÃ©s
 	 */
 	public void itemStateChanged(ItemEvent e) {
 		Object source = e.getItemSelectable();
 		int action = e.getStateChange();
-		
-		// Changement sur les cases cochées pour le choix des abjets affichés
-		if(source == chkObjMNT){
-			if(chkObjIsoligne.getState() == true){
-				if(action == ItemEvent.SELECTED){
+
+		// Changement sur les cases cochÃ©es pour le choix des objets affichÃ©s
+		if (source == chkObjMNT) {
+			if (chkObjIsoligne.getState() == true) {
+				if (action == ItemEvent.SELECTED) {
 					choixObj = Constantes.OBJ_TOUT;
-				}else{
+				} else {
 					choixObj = Constantes.OBJ_ISOLIGNES;
 				}
-			}else if(chkObjIsoligne.getState() == false){
-				if(action == ItemEvent.SELECTED){
+			} else if (chkObjIsoligne.getState() == false) {
+				if (action == ItemEvent.SELECTED) {
 					choixObj = Constantes.OBJ_MNT;
-				}else{
+				} else {
 					choixObj = Constantes.OBJ_RIEN;
 				}
 			}
-		}else if(source == chkObjIsoligne){
-			if(chkObjMNT.getState() == true){
-				if(action == ItemEvent.SELECTED){
+		} else if (source == chkObjIsoligne) {
+			if (chkObjMNT.getState() == true) {
+				if (action == ItemEvent.SELECTED) {
 					choixObj = Constantes.OBJ_TOUT;
-				}else{
+				} else {
 					choixObj = Constantes.OBJ_MNT;
 				}
-			}else if(chkObjMNT.getState() == false){
-				if(action == ItemEvent.SELECTED){
+			} else if (chkObjMNT.getState() == false) {
+				if (action == ItemEvent.SELECTED) {
 					choixObj = Constantes.OBJ_ISOLIGNES;
-				}else{
+				} else {
 					choixObj = Constantes.OBJ_RIEN;
 				}
 			}
 		}
-		
-		// Changement sur les boutons radio de choix de la caméra
-		if (source == radCamOrtho){
+
+		// Changement sur les boutons radio de choix de la camÃ©ra
+		if (source == radCamOrtho) {
 			choixCam = Constantes.CAM_DESSUS;
-		}else if(source == radCamOrbite){
+		} else if (source == radCamOrbite) {
 			choixCam = Constantes.CAM_ORBITE;
-		}else if (source == radCamPerso){
+		} else if (source == radCamPerso) {
 			choixCam = Constantes.CAM_PERSO;
 		}
-		
+
 		// Changement sur les boutons radio de choix de la coloration
-		if (source == radCouAuto){
+		if (source == radCouAuto) {
 			choixCou = Constantes.COU_AUTO;
-		}else if (source == radCouPerso){
+		} else if (source == radCouPerso) {
 			choixCou = Constantes.COU_PERSO;
 		}
-		
-		/*
-		 * Actualisation des boutons du panneau de controle
-		 */
-		this.parent.getFenetreMere().getControles().getPanCtrlRotation().rafraichitBoutons();
-		this.parent.getFenetreMere().getControles().getPanCtrlTranslation().rafraichitBoutons();
-	}
-	
-	/*
-	 * Setter non-Irlandais
-	 */
-	public void setCouleurs(Color[] nvlCouleurs) {
-		if (nvlCouleurs.length == couleurs.length){
-			couleurs = nvlCouleurs;
-			System.out.println("Couleurs personnalisées mise à jour.");
-		}else{
-			System.out.println("Erreur : la nouvelle table de couleurs ne contient pas le bon nombre de couleurs.");
-		}
-	}
 
+		/*
+		 * Actualisation des boutons du panneau de contrÃ´le
+		 */
+		this.parent.getFenetreMere().getControles().getPanCtrlRotation()
+				.rafraichitBoutons();
+		this.parent.getFenetreMere().getControles().getPanCtrlTranslation()
+				.rafraichitBoutons();
+	}
 
 	public void actionPerformed(ActionEvent action) {
-		if(action.getActionCommand() == "reglageCouleurs"){
+		if (action.getActionCommand() == "reglageCouleurs") {
 			DialogueCouleurs dial = new DialogueCouleurs(this);
 			dial.setVisible(true);
 		}
-		
 	}
-	
 
+	/*
+	 * Getters associÃ©s aux valeurs des choix
+	 */
+	public byte getChoixObj() {
+		return choixObj;
+	}
+
+	public byte getChoixCam() {
+		return choixCam;
+	}
+
+	public boolean getChoixCou() {
+		return choixCou;
+	}
+
+	public Color[] getCouleurs() {
+		return couleurs;
+	}
+
+	/*
+	 * Setter
+	 */
+	public void setCouleurs(Color[] nvlCouleurs) {
+		if (nvlCouleurs.length == couleurs.length) {
+			couleurs = nvlCouleurs;
+			System.out.println("Couleurs personnalisÃ©es mise Ã  jour.");
+		} else {
+			System.out
+					.println("Erreur : la nouvelle table de couleurs ne contient pas le bon nombre de couleurs.");
+		}
+	}
 
 }
