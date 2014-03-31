@@ -30,7 +30,7 @@ public class FilesTest {
 		System.out.println(((float)endTime-startTime)/1e9 +" secondes");
 		
 		/*
-		 //creation d'un tableau de triangles à partir de la grille
+		 //creation d'un tableau de triangles ï¿½ partir de la grille
 		startTime = System.nanoTime();
 		Triangle[] triangles = GrilleATriangles.grilleVersTriangles2(grille);
 		endTime = System.nanoTime();
@@ -39,7 +39,7 @@ public class FilesTest {
 		System.out.println("nb triangles : " + triangles.length);
 		*/
 		
-		//creation d'une liste de triangles à partir de la grille
+		//creation d'une liste de triangles ï¿½ partir de la grille
 		startTime = System.nanoTime();
 		List<Triangle> triangles = GrilleATriangles.grilleVersTriangles(grille);
 		endTime = System.nanoTime();

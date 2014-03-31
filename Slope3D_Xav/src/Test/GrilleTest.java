@@ -2,13 +2,13 @@ package Test;
 
 // classe test utilisee au debut
 // DEPRECATED
-public class GrilleTest {  // MNT fictif créé pour les tests
+public class GrilleTest {  // MNT fictif crï¿½ï¿½ pour les tests
 	
 	public 		double 		pas  = 30	; 		// pas du MNT (m)
 	public 		int 		nLig = 10	; 		// nombre de lignes   de la grille
 	public		int			nCol = 10	; 		// nombre de colonnes de la grille
-	public 		double 		x0   = 0	; 		// abcsisse  du coin supérieur gauche
-	public 		double 		y0   = 0	; 		// ordonnée  du coin supérieur gauche
+	public 		double 		x0   = 0	; 		// abcsisse  du coin supï¿½rieur gauche
+	public 		double 		y0   = 0	; 		// ordonnï¿½e  du coin supï¿½rieur gauche
 	
 	public double[][] valeurs = { 
 			

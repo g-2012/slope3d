@@ -10,14 +10,53 @@ import structures.Grille;
 import structures.Isoligne;
 import javax.swing.JComponent;
 
-
-
+/**
+ * Composant affichant des isolignes en 2D d'une Grille
+ * 
+ * @author Jigx
+ * @version 0.6
+ */
 public class SimplePanneauIsos2D extends JComponent {
+	/**
+	 * la grille consideree
+	 */
 	private Grille grille;
-	private int width, height; //taille de la frame mere 
+	
+	/**
+	 * largeur de la frame contenante
+	 */
+	private int width;
+	
+	/**
+	 * hauteur de la frame contenante
+	 */
+	private int height;
+	
+	/**
+	 * liste des isolignes
+	 * @deprecated structure non utilisee
+	 */
 	private List<Isoligne> listIsos;
+	
+	/**
+	 * liste des isolignes sous forme d'une liste de liste de segments de Point2D 
+	 */
 	private ArrayList<List<Point2D.Double[]>> listIsos2D; //ugly as fuck, i know.. voir commentaire ci dessous
 	
+	/**
+	 * Constructeur SimplePanneauIsos2D. 
+	 * 
+	 * @param listIsos
+	 * 	            liste des isolignes
+	 * @param grille
+	 *            Grille considérée
+	 * @param w
+	 *            largeur
+	 * @param h
+	 *            hauteur
+	 *            
+	 * @deprecated structure Isoligne depreciee
+	 */
 	public SimplePanneauIsos2D(List<Isoligne> listIsos, Grille grille, int w, int h){
 		this.listIsos = listIsos;
 		this.listIsos2D = null;
@@ -26,7 +65,20 @@ public class SimplePanneauIsos2D extends JComponent {
 		this.height = h;
 		System.out.println(w + " *** "+ h);
 	}
-	//ugly mais les types generiques de java ne sont pas reifies (list<E> et list<E'> ne sont pas differencies)
+
+	/**
+	 * Constructeur SimplePanneauIsos2D. 
+	 * ugly mais les types generiques de java ne sont pas reifies (list<E> et list<E'> ne sont pas differencies)
+	 * @param listIsos2D
+	 * 	            liste des isolignes
+	 * @param grille
+	 *            Grille considérée
+	 * @param w
+	 *            largeur
+	 * @param h
+	 *            hauteur
+	 *            
+	 */
 	public SimplePanneauIsos2D(ArrayList<List<Point2D.Double[]>> listIsos2D, Grille grille, int w, int h){
 		this.listIsos2D = listIsos2D;
 		this.listIsos = null;
@@ -37,6 +89,9 @@ public class SimplePanneauIsos2D extends JComponent {
 	}
 	
 
+	/**
+	 * Surcharge la méthode paintComponent de JComponent pour dessiner nos isolignes
+	 */
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		Line2D line = null;

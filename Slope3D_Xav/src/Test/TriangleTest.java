@@ -7,11 +7,11 @@ public class TriangleTest {
 	public static void main(String[] args) {
 		/* 				Quelques exemples qui fonctionnent :
 		 * 
-		 * 		A(4,0,0)     B(2,-2,2)     C(0,0,4)      >>  45°
-		 * 		A(6,0,2)     B(3,4,1)      C(0,0,0)      >>  18.44°	
-		 * 		A(1,0,0)     B(0,1,0)      C(0,0,1)      >>  54.73°
-		 * 		A(0,0,0)     B(1,0,0)      C(0,0,1)      >>  90.00°
-		 * 		A(0,0,0)     B(9,2,0)      C(-1,6,0)     >>  00.00°
+		 * 		A(4,0,0)     B(2,-2,2)     C(0,0,4)      >>  45ï¿½
+		 * 		A(6,0,2)     B(3,4,1)      C(0,0,0)      >>  18.44ï¿½	
+		 * 		A(1,0,0)     B(0,1,0)      C(0,0,1)      >>  54.73ï¿½
+		 * 		A(0,0,0)     B(1,0,0)      C(0,0,1)      >>  90.00ï¿½
+		 * 		A(0,0,0)     B(9,2,0)      C(-1,6,0)     >>  00.00ï¿½
 		 * 
 		 */
 
@@ -52,7 +52,7 @@ public class TriangleTest {
 
 
 
-		System.out.println("\n Le triangle numéro "+ abc.getIndice());
+		System.out.println("\n Le triangle numï¿½ro "+ abc.getIndice());
 
 	}
 
